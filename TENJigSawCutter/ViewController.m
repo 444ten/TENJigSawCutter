@@ -6,11 +6,9 @@
 //  Copyright © 2016 444ten. All rights reserved.
 //
 
-#define NSValueWithPoint(x, y)  [NSValue valueWithCGPoint:CGPointMake(x, y)]
-#define CGPointFromValue(value) [value CGPointValue]
-
-
 #import "ViewController.h"
+
+#import "TENCornerModel.h"
 
 //static NSString * const kImageName = @"04.jpg";
 static NSString * const kImageName = @"200x200";
@@ -20,6 +18,8 @@ static NSString * const kImageName = @"200x200";
 @property (strong, nonatomic) IBOutlet UIImageView *originalImageView;
 
 @property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
+
+@property (nonatomic, strong) TENCornerModel *cornerModel;
 
 @end
 
@@ -31,6 +31,8 @@ static NSString * const kImageName = @"200x200";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setupCornerModel];
+    
     UIImage *image = [UIImage imageNamed:kImageName];
     
 //    self.centerImageView.image = image;
@@ -41,6 +43,22 @@ static NSString * const kImageName = @"200x200";
     [super viewDidAppear:animated];
     
     [self cropOnlyImage];
+}
+
+#pragma mark -
+#pragma mark TENCornerModel
+
+- (void)setupCornerModel {
+    TENCornerModel *cornerModel = [TENCornerModel new];
+
+    cornerModel.fullWidth = 200.f;
+    cornerModel.fullHeight = 200.f;
+    cornerModel.countWidth = 3;
+    cornerModel.countHeight = 4;
+    
+    [cornerModel setup];
+    
+    self.cornerModel = cornerModel;
 }
 
 #pragma mark -
