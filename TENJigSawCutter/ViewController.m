@@ -74,15 +74,6 @@
 #pragma mark -
 #pragma mark Interface Handling
 
-- (IBAction)panCenterImage:(UIPanGestureRecognizer *)recognizer {
-    NSLog(@"Coordinate...");
-    [self.view bringSubviewToFront:recognizer.view];
-    
-    CGPoint translation = [recognizer translationInView:self.view];
-    recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x,
-                                         recognizer.view.center.y + translation.y);
-    [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
-}
 - (IBAction)tapOriginalImage:(UITapGestureRecognizer *)sender {
     [self.view bringSubviewToFront:sender.view];
 }
@@ -125,7 +116,7 @@
 
 - (UIPanGestureRecognizer *)panRecognizer {
     UIPanGestureRecognizer *result = [[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                                             action:@selector(panCenterImage:)];
+                                                                             action:@selector(panAction:)];
     [result setMinimumNumberOfTouches:1];
     [result setMaximumNumberOfTouches:1];
     
@@ -140,6 +131,16 @@
 
 - (void)tapAction:(UITapGestureRecognizer *)recognizer {
     [self.view bringSubviewToFront:recognizer.view];
+}
+
+- (void)panAction:(UIPanGestureRecognizer *)recognizer {
+    NSLog(@"Coordinate...");
+    [self.view bringSubviewToFront:recognizer.view];
+    
+    CGPoint translation = [recognizer translationInView:self.view];
+    recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x,
+                                         recognizer.view.center.y + translation.y);
+    [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
 }
 
 @end
