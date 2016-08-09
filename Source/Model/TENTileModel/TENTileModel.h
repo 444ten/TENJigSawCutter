@@ -6,8 +6,12 @@
 //  Copyright © 2016 444ten. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface TENTileModel : NSObject
+@property (nonatomic, assign)   CGFloat upLeft;
+@property (nonatomic, assign)   CGFloat upRight;
+@property (nonatomic, assign)   CGFloat downRight;
+@property (nonatomic, assign)   CGFloat downLeft;
 
 @end
