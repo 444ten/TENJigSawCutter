@@ -18,7 +18,7 @@
     CGPoint downRightPoint = CGPointFromValue(self.downRight);
     
     CGRect tileRect = CGRectMake(upLeftPoint.x, upLeftPoint.y,
-                                 downRightPoint.x - upLeftPoint.x, downRightPoint.y - downRightPoint.y);
+                                 downRightPoint.x - upLeftPoint.x, downRightPoint.y - upLeftPoint.y);
     
     CGImageRef imageRef = CGImageCreateWithImageInRect(originImage.CGImage, tileRect);
     

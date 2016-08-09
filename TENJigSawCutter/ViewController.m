@@ -38,12 +38,12 @@
     
 //    self.centerImageView.image = image;
     self.originalImageView.image = image;
+
+    [self addTilesOnView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [self cropOnlyImage];
 }
 
 #pragma mark -
@@ -81,15 +81,20 @@
 #pragma mark -
 #pragma mark Private Methods
 
-- (void)cropOnlyImage {
+- (void)addTilesOnView {
     UIView *rootView = self.view;
     
-    [rootView addSubview:[self tileViewWithRect:CGRectMake(  0,   0, 600, 600)]];
-//    [rootView addSubview:[self tileViewWithRect:CGRectMake(100,   0, 200, 100)]];
-//    [rootView addSubview:[self tileViewWithRect:CGRectMake(  0, 100, 100, 200)]];
-//    [rootView addSubview:[self tileViewWithRect:CGRectMake(100, 100, 200, 200)]];
-}
+    for (TENTileModel *tileModel in self.tiles.tiles) {
+        UIImageView *imageView = tileModel.imageView;
+        
+        imageView.userInteractionEnabled = YES;
 
+        [imageView addGestureRecognizer:[self panRecognizer]];
+        [imageView addGestureRecognizer:[self tapRecognizer]];
+        
+        [rootView addSubview:tileModel.imageView];
+    }
+}
 
 - (UIImageView *)tileViewWithRect:(CGRect)tileRect {
     UIImageView *result = [[UIImageView alloc] initWithImage:[self tileWithRect:tileRect]];
