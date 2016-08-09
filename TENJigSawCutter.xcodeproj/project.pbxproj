@@ -16,6 +16,7 @@
 		76C9BBD51D54A60B0067833D /* 04.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76C9BBD41D54A60B0067833D /* 04.jpg */; };
 		76C9BBD71D584A030067833D /* 200x200.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C9BBD61D584A030067833D /* 200x200.png */; };
 		76C9BBDD1D58AAA90067833D /* TENCornerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBDC1D58AAA90067833D /* TENCornerModel.m */; };
+		76C9BBE11D599D6D0067833D /* TENTileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBE01D599D6D0067833D /* TENTileModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,8 @@
 		76C9BBD61D584A030067833D /* 200x200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 200x200.png; sourceTree = "<group>"; };
 		76C9BBDB1D58AAA90067833D /* TENCornerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TENCornerModel.h; sourceTree = "<group>"; };
 		76C9BBDC1D58AAA90067833D /* TENCornerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TENCornerModel.m; sourceTree = "<group>"; };
+		76C9BBDF1D599D6D0067833D /* TENTileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TENTileModel.h; sourceTree = "<group>"; };
+		76C9BBE01D599D6D0067833D /* TENTileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TENTileModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +103,7 @@
 		76C9BBD91D58AA5A0067833D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				76C9BBDE1D599D120067833D /* TENTileModel */,
 				76C9BBDA1D58AA5A0067833D /* TENCornerModel */,
 			);
 			path = Model;
@@ -112,6 +116,15 @@
 				76C9BBDC1D58AAA90067833D /* TENCornerModel.m */,
 			);
 			path = TENCornerModel;
+			sourceTree = "<group>";
+		};
+		76C9BBDE1D599D120067833D /* TENTileModel */ = {
+			isa = PBXGroup;
+			children = (
+				76C9BBDF1D599D6D0067833D /* TENTileModel.h */,
+				76C9BBE01D599D6D0067833D /* TENTileModel.m */,
+			);
+			path = TENTileModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76C9BBDD1D58AAA90067833D /* TENCornerModel.m in Sources */,
+				76C9BBE11D599D6D0067833D /* TENTileModel.m in Sources */,
 				76C9BBC51D5498820067833D /* ViewController.m in Sources */,
 				76C9BBC21D5498820067833D /* AppDelegate.m in Sources */,
 				76C9BBBF1D5498820067833D /* main.m in Sources */,
