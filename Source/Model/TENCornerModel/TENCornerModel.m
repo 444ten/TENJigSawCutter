@@ -8,6 +8,8 @@
 
 #import "TENCornerModel.h"
 
+#import "TENMacros.h"
+
 @interface TENCornerModel ()
 
 @end

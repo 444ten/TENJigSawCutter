@@ -27,9 +27,6 @@
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lba-7j-VG9">
                                 <rect key="frame" x="87" y="234" width="200" height="200"/>
                                 <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="BGN-dL-zoZ" appends="YES" id="pww-Es-Fvu"/>
-                                </connections>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -41,11 +38,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="BGN-dL-zoZ">
-                    <connections>
-                        <action selector="panCenterImage:" destination="BYZ-38-t0r" id="bLX-z7-hsj"/>
-                    </connections>
-                </panGestureRecognizer>
                 <tapGestureRecognizer id="Bhk-H0-XVS">
                     <connections>
                         <action selector="tapOriginalImage:" destination="BYZ-38-t0r" id="uKN-Vo-7Zr"/>

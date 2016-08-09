@@ -6,9 +6,6 @@
 //  Copyright © 2016 444ten. All rights reserved.
 //
 
-#define NSValueWithPoint(x, y)  [NSValue valueWithCGPoint:CGPointMake(x, y)]
-#define CGPointFromValue(value) [value CGPointValue]
-
 #import <UIKit/UIKit.h>
 
 @interface TENCornerModel : NSObject

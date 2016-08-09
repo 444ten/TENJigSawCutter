@@ -14,26 +14,19 @@
 #pragma mark Public Methods
 
 - (void)setupImageViewWithOriginImage:(UIImage *)originImage {
-    UIImageView *result = [[UIImageView alloc] initWithImage:[self tileWithRect:tileRect]];
+    CGPoint upLeftPoint = CGPointFromValue(self.upLeft);
+    CGPoint downRightPoint = CGPointFromValue(self.downRight);
     
-    //    result.layer.borderWidth = 1.0;
-    result.userInteractionEnabled = YES;
-    
-    [result addGestureRecognizer:[self panRecognizer]];
-    [result addGestureRecognizer:[self tapRecognizer]];
-    
-    [self cropTileView:result];
-    
-    return result;
-    UIImage *originImage = [UIImage imageNamed:kImageName];
+    CGRect tileRect = CGRectMake(upLeftPoint.x, upLeftPoint.y,
+                                 downRightPoint.x - upLeftPoint.x, downRightPoint.y - downRightPoint.y);
     
     CGImageRef imageRef = CGImageCreateWithImageInRect(originImage.CGImage, tileRect);
     
-    UIImage *result = [UIImage imageWithCGImage:imageRef];
+    UIImage *tileImage = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);
     
-    return result;
-
+    
+    self.imageView = [[UIImageView alloc] initWithImage:tileImage];
 }
 
 @end
