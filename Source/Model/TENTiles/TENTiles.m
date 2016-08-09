@@ -45,6 +45,19 @@
             
             [tileModel setupImageViewWithOriginImage:originImage];
             
+            if (0 == col) {
+                tileModel.tileType |= PJWTileTypeLeft;
+            } else if (cornerModel.countWidth - 1 == col) {
+                tileModel.tileType |= PJWTileTypeRight;
+            }
+            
+            if (0 == row) {
+                tileModel.tileType |= PJWTileTypeUp;
+            } else if (cornerModel.countHeight - 1 == row) {
+                tileModel.tileType |= PJWTileTypeDown;
+            }
+            
+            
             [tiles addObject:tileModel];
         }
     }

@@ -14,26 +14,39 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aiZ-ho-XtM">
-                                <rect key="frame" x="87" y="447" width="200" height="200"/>
+                            <imageView alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aiZ-ho-XtM">
+                                <rect key="frame" x="62" y="34" width="900" height="700"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="900" id="7qu-6B-qje"/>
+                                    <constraint firstAttribute="height" constant="700" id="E8R-J0-zr7"/>
+                                </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="Bhk-H0-XVS" appends="YES" id="O0I-do-ZJG"/>
                                 </connections>
                             </imageView>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lba-7j-VG9">
-                                <rect key="frame" x="87" y="234" width="200" height="200"/>
-                                <gestureRecognizers/>
-                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0m8-QX-rIZ">
+                                <rect key="frame" x="2" y="738" width="42" height="30"/>
+                                <state key="normal" title="Ghost"/>
+                                <connections>
+                                    <action selector="onGhost:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ow6-AP-0CE"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aiZ-ho-XtM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FaH-XV-gH7"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0m8-QX-rIZ" secondAttribute="bottom" id="Ugu-lN-GHi"/>
+                            <constraint firstItem="aiZ-ho-XtM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="gJm-eh-T9R"/>
+                            <constraint firstItem="0m8-QX-rIZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="2" id="xdP-Uf-aI7"/>
+                        </constraints>
                     </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
                     <connections>
-                        <outlet property="centerImageView" destination="Lba-7j-VG9" id="NrV-H9-fzD"/>
                         <outlet property="originalImageView" destination="aiZ-ho-XtM" id="nvj-gf-53i"/>
                     </connections>
                 </viewController>
@@ -44,7 +57,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="288.5" y="459.5"/>
+            <point key="canvasLocation" x="288" y="459"/>
         </scene>
     </scenes>
 </document>

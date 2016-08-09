@@ -10,7 +10,8 @@
 #import "TENCornerModel.h"
 
 //static NSString * const kImageName = @"04.jpg";
-static NSString * const kImageName = @"200x200";
+//static NSString * const kImageName = @"200x200";
+static NSString * const kImageName = @"900x700.jpg";
 
 @interface TENTiles : NSObject
 @property (nonatomic, strong)   NSMutableArray<TENTileModel *>  *tiles;

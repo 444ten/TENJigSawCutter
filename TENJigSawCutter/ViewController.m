@@ -12,14 +12,12 @@
 #import "TENTiles.h"
 
 @interface ViewController ()
-@property (strong, nonatomic) IBOutlet UIImageView *centerImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *originalImageView;
 
-@property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
+@property (nonatomic, strong)   TENCornerModel  *cornerModel;
+@property (nonatomic, strong)   TENTiles        *tiles;
 
-@property (nonatomic, strong) TENCornerModel *cornerModel;
-
-@property (nonatomic, strong)   TENTiles    *tiles;
+@property (nonatomic, assign)   BOOL    ghostPresent;
 
 @end
 
@@ -36,8 +34,8 @@
     
     UIImage *image = [UIImage imageNamed:kImageName];
     
-//    self.centerImageView.image = image;
     self.originalImageView.image = image;
+    self.ghostPresent = YES;
 
     [self addTilesOnView];
 }
@@ -47,15 +45,25 @@
 }
 
 #pragma mark -
+#pragma mark Accessors
+-   (void)setGhostPresent:(BOOL)ghostPresent {
+    if (_ghostPresent != ghostPresent) {
+        _ghostPresent = ghostPresent;
+        
+        self.originalImageView.alpha = ghostPresent ? 0.3 : 0.0;
+    }
+}
+
+#pragma mark -
 #pragma mark TENCornerModel
 
 - (void)setupCornerModel {
     TENCornerModel *cornerModel = [TENCornerModel new];
 
-    cornerModel.fullWidth = 200.f;
-    cornerModel.fullHeight = 200.f;
+    cornerModel.fullWidth = 900.f;
+    cornerModel.fullHeight = 700.f;
     cornerModel.countWidth = 3;
-    cornerModel.countHeight = 4;
+    cornerModel.countHeight = 3;
     
     [cornerModel setup];
     
@@ -78,6 +86,10 @@
     [self.view bringSubviewToFront:sender.view];
 }
 
+- (IBAction)onGhost:(UIButton *)sender {
+    self.ghostPresent = !self.ghostPresent;
+}
+
 #pragma mark -
 #pragma mark Private Methods
 
@@ -92,31 +104,10 @@
         [imageView addGestureRecognizer:[self panRecognizer]];
         [imageView addGestureRecognizer:[self tapRecognizer]];
         
+        imageView.center = CGPointFromValue(tileModel.center);
+        
         [rootView addSubview:tileModel.imageView];
     }
-}
-
-- (UIImageView *)tileViewWithRect:(CGRect)tileRect {
-    UIImageView *result = [[UIImageView alloc] initWithImage:[self tileWithRect:tileRect]];
-    
-//    result.layer.borderWidth = 1.0;
-    result.userInteractionEnabled = YES;
-    
-    [result addGestureRecognizer:[self panRecognizer]];
-    [result addGestureRecognizer:[self tapRecognizer]];
-        
-    return result;
-}
-
-- (UIImage *)tileWithRect:(CGRect)tileRect {
-    UIImage *originImage = [UIImage imageNamed:kImageName];
-    
-    CGImageRef imageRef = CGImageCreateWithImageInRect(originImage.CGImage, tileRect);
-    
-    UIImage *result = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    
-    return result;
 }
 
 - (UIPanGestureRecognizer *)panRecognizer {
@@ -140,11 +131,14 @@
 
 - (void)panAction:(UIPanGestureRecognizer *)recognizer {
     NSLog(@"Coordinate...");
-    [self.view bringSubviewToFront:recognizer.view];
+    
+    UIView *recognizerView = recognizer.view;
+    
+    [self.view bringSubviewToFront:recognizerView];
     
     CGPoint translation = [recognizer translationInView:self.view];
-    recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x,
-                                         recognizer.view.center.y + translation.y);
+    recognizerView.center = CGPointMake(recognizerView.center.x + translation.x,
+                                         recognizerView.center.y + translation.y);
     [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
 }
 

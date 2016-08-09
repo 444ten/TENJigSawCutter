@@ -21,12 +21,18 @@
                                  downRightPoint.x - upLeftPoint.x, downRightPoint.y - upLeftPoint.y);
     
     CGImageRef imageRef = CGImageCreateWithImageInRect(originImage.CGImage, tileRect);
-    
     UIImage *tileImage = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);
     
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:tileImage];
+    imageView.layer.borderWidth = 1.0;
     
-    self.imageView = [[UIImageView alloc] initWithImage:tileImage];
-}
+    self.imageView = imageView;
+    
+    
+    CGFloat x = arc4random_uniform(300);
+    CGFloat y = arc4random_uniform(300);
 
+    self.center = NSValueWithPoint(x, y);
+}
 @end

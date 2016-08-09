@@ -19,6 +19,7 @@
 		76C9BBE11D599D6D0067833D /* TENTileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBE01D599D6D0067833D /* TENTileModel.m */; };
 		76C9BBE51D599E1E0067833D /* TENTiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBE41D599E1E0067833D /* TENTiles.m */; };
 		76C9BBE91D59AD150067833D /* TENMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBE81D59AD150067833D /* TENMacros.m */; };
+		76C9BBEB1D59DDCD0067833D /* 900x700.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76C9BBEA1D59DDCD0067833D /* 900x700.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		76C9BBE41D599E1E0067833D /* TENTiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TENTiles.m; sourceTree = "<group>"; };
 		76C9BBE71D59AD150067833D /* TENMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TENMacros.h; sourceTree = "<group>"; };
 		76C9BBE81D59AD150067833D /* TENMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TENMacros.m; sourceTree = "<group>"; };
+		76C9BBEA1D59DDCD0067833D /* 900x700.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 900x700.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				76C9BBCE1D5498820067833D /* Info.plist */,
 				76C9BBD41D54A60B0067833D /* 04.jpg */,
 				76C9BBD61D584A030067833D /* 200x200.png */,
+				76C9BBEA1D59DDCD0067833D /* 900x700.jpg */,
 				76C9BBBD1D5498820067833D /* Supporting Files */,
 			);
 			path = TENJigSawCutter;
@@ -213,6 +216,7 @@
 			files = (
 				76C9BBCD1D5498820067833D /* LaunchScreen.storyboard in Resources */,
 				76C9BBD51D54A60B0067833D /* 04.jpg in Resources */,
+				76C9BBEB1D59DDCD0067833D /* 900x700.jpg in Resources */,
 				76C9BBD71D584A030067833D /* 200x200.png in Resources */,
 				76C9BBCA1D5498820067833D /* Assets.xcassets in Resources */,
 				76C9BBC81D5498820067833D /* Main.storyboard in Resources */,
