@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface TENTileModel : NSObject
-@property (nonatomic, assign)   CGFloat upLeft;
-@property (nonatomic, assign)   CGFloat upRight;
-@property (nonatomic, assign)   CGFloat downRight;
-@property (nonatomic, assign)   CGFloat downLeft;
+@property (nonatomic, strong)   NSValue *upLeft;
+@property (nonatomic, strong)   NSValue *upRight;
+@property (nonatomic, strong)   NSValue *downRight;
+@property (nonatomic, strong)   NSValue *downLeft;
+
+@property (nonatomic, strong)   UIImageView *imageView;
 
 @end

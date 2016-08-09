@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 #import "TENCornerModel.h"
+#import "TENTiles.h"
 
 //static NSString * const kImageName = @"04.jpg";
 static NSString * const kImageName = @"200x200";
@@ -21,6 +22,8 @@ static NSString * const kImageName = @"200x200";
 
 @property (nonatomic, strong) TENCornerModel *cornerModel;
 
+@property (nonatomic, strong)   TENTiles    *tiles;
+
 @end
 
 @implementation ViewController
@@ -32,6 +35,7 @@ static NSString * const kImageName = @"200x200";
     [super viewDidLoad];
     
     [self setupCornerModel];
+    [self setupTiles];
     
     UIImage *image = [UIImage imageNamed:kImageName];
     
@@ -59,6 +63,15 @@ static NSString * const kImageName = @"200x200";
     [cornerModel setup];
     
     self.cornerModel = cornerModel;
+}
+
+- (void)setupTiles {
+    TENTiles *tiles = [TENTiles new];
+    tiles.cornerModel = self.cornerModel;
+    
+    [tiles setup];
+    
+    self.tiles = tiles;
 }
 
 #pragma mark -
@@ -256,55 +269,5 @@ static NSString * const kImageName = @"200x200";
 - (void)tapAction:(UITapGestureRecognizer *)recognizer {
     [self.view bringSubviewToFront:recognizer.view];
 }
-
-/*
-- (void)cropImage {
-    
-    UIBezierPath *aPath = [UIBezierPath bezierPath];
-    aPath.lineWidth = 10.0;
-    
-    NSArray<NSString *> *pointArray = @[@"{  0.0,   0.0}",
-                                        @"{ 50.0,  50.0}",
-                                        @"{  0.0, 100.0}"
-                                        ];
-    
-    for (NSString *pointString in pointArray) {
-        if ([pointArray indexOfObject:pointString] == 0)
-            [aPath moveToPoint:CGPointFromString(pointString)];
-        else
-            [aPath addLineToPoint:CGPointFromString(pointString)];
-    }
-    [aPath closePath];
-    
-    CAShapeLayer *shapeView = [CAShapeLayer new];
-    shapeView.lineWidth = 2;
-    shapeView.strokeColor = [UIColor redColor].CGColor;
-    shapeView.path = aPath.CGPath;
-    
-    [self.view.layer addSublayer:shapeView];
-    
-    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-    shapeLayer.lineWidth = 2;
-    shapeLayer.strokeColor = [UIColor redColor].CGColor;
-    
-    shapeLayer.path = aPath.CGPath;
-    CALayer *layer = self.centerImageView.layer;
-    
-    self.centerImageView.layer.borderWidth = 2.0;
-    
-    
-    //    [layer setMask:shapeLayer];
-    
-    
-    UIGraphicsBeginImageContext(self.centerImageView.bounds.size);
-    [self.centerImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    self.originalImageView.image = image;
-    
-    self.originalImageView.layer.borderWidth = 2.0;
-}
-*/
 
 @end

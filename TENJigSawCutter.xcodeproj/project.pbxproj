@@ -18,6 +18,7 @@
 		76C9BBDD1D58AAA90067833D /* TENCornerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBDC1D58AAA90067833D /* TENCornerModel.m */; };
 		76C9BBE11D599D6D0067833D /* TENTileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBE01D599D6D0067833D /* TENTileModel.m */; };
 		76C9BBE51D599E1E0067833D /* TENTiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBE41D599E1E0067833D /* TENTiles.m */; };
+		76C9BBE91D59AD150067833D /* TENMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBE81D59AD150067833D /* TENMacros.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		76C9BBE01D599D6D0067833D /* TENTileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TENTileModel.m; sourceTree = "<group>"; };
 		76C9BBE31D599E1E0067833D /* TENTiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TENTiles.h; sourceTree = "<group>"; };
 		76C9BBE41D599E1E0067833D /* TENTiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TENTiles.m; sourceTree = "<group>"; };
+		76C9BBE71D59AD150067833D /* TENMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TENMacros.h; sourceTree = "<group>"; };
+		76C9BBE81D59AD150067833D /* TENMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TENMacros.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +101,7 @@
 		76C9BBD81D58AA5A0067833D /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				76C9BBE61D59AD050067833D /* Resource */,
 				76C9BBD91D58AA5A0067833D /* Model */,
 			);
 			path = Source;
@@ -138,6 +142,15 @@
 				76C9BBE41D599E1E0067833D /* TENTiles.m */,
 			);
 			path = TENTiles;
+			sourceTree = "<group>";
+		};
+		76C9BBE61D59AD050067833D /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				76C9BBE71D59AD150067833D /* TENMacros.h */,
+				76C9BBE81D59AD150067833D /* TENMacros.m */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76C9BBE91D59AD150067833D /* TENMacros.m in Sources */,
 				76C9BBDD1D58AAA90067833D /* TENCornerModel.m in Sources */,
 				76C9BBE51D599E1E0067833D /* TENTiles.m in Sources */,
 				76C9BBE11D599D6D0067833D /* TENTileModel.m in Sources */,
