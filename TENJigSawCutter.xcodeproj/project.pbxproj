@@ -21,6 +21,7 @@
 		76C9BBE91D59AD150067833D /* TENMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBE81D59AD150067833D /* TENMacros.m */; };
 		76C9BBEB1D59DDCD0067833D /* 900x700.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76C9BBEA1D59DDCD0067833D /* 900x700.jpg */; };
 		76C9BBEF1D5B227E0067833D /* PJWOffsetCornerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBEE1D5B227E0067833D /* PJWOffsetCornerModel.m */; };
+		76C9BBF41D5B46260067833D /* PJWPuzzleParameterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBF31D5B46260067833D /* PJWPuzzleParameterModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,8 @@
 		76C9BBEA1D59DDCD0067833D /* 900x700.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 900x700.jpg; sourceTree = "<group>"; };
 		76C9BBED1D5B227E0067833D /* PJWOffsetCornerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWOffsetCornerModel.h; sourceTree = "<group>"; };
 		76C9BBEE1D5B227E0067833D /* PJWOffsetCornerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWOffsetCornerModel.m; sourceTree = "<group>"; };
+		76C9BBF21D5B46260067833D /* PJWPuzzleParameterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWPuzzleParameterModel.h; sourceTree = "<group>"; };
+		76C9BBF31D5B46260067833D /* PJWPuzzleParameterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWPuzzleParameterModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +119,7 @@
 		76C9BBD91D58AA5A0067833D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				76C9BBF11D5B46170067833D /* PJWPuzzleParameterModel */,
 				76C9BBEC1D5B223B0067833D /* PJWOffsetCornerModel */,
 				76C9BBE21D599E130067833D /* TENTiles */,
 				76C9BBDE1D599D120067833D /* TENTileModel */,
@@ -167,6 +171,15 @@
 				76C9BBEE1D5B227E0067833D /* PJWOffsetCornerModel.m */,
 			);
 			path = PJWOffsetCornerModel;
+			sourceTree = "<group>";
+		};
+		76C9BBF11D5B46170067833D /* PJWPuzzleParameterModel */ = {
+			isa = PBXGroup;
+			children = (
+				76C9BBF21D5B46260067833D /* PJWPuzzleParameterModel.h */,
+				76C9BBF31D5B46260067833D /* PJWPuzzleParameterModel.m */,
+			);
+			path = PJWPuzzleParameterModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +260,7 @@
 				76C9BBDD1D58AAA90067833D /* TENCornerModel.m in Sources */,
 				76C9BBE51D599E1E0067833D /* TENTiles.m in Sources */,
 				76C9BBEF1D5B227E0067833D /* PJWOffsetCornerModel.m in Sources */,
+				76C9BBF41D5B46260067833D /* PJWPuzzleParameterModel.m in Sources */,
 				76C9BBE11D599D6D0067833D /* TENTileModel.m in Sources */,
 				76C9BBC51D5498820067833D /* ViewController.m in Sources */,
 				76C9BBC21D5498820067833D /* AppDelegate.m in Sources */,

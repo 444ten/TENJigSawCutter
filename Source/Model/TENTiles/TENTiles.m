@@ -53,9 +53,9 @@
     for (NSInteger row = 0; row < self.countHeight; row++) {
         
         for (NSInteger col = 0; col < self.countWidth; col++) {
-            TENTileModel *tileModel = [TENTileModel new];
+            TENTileModel *tileModel = [[TENTileModel alloc]initWithOriginImage:originImage row:row column:col];
             
-            [self setCornerPointFor:tileModel row:row col:col];
+            [self setCornerPointFor:tileModel];
             
             [tileModel setupImageViewWithOriginImage:originImage];
             
@@ -90,9 +90,9 @@
     self.sliceHeight = 2 * self.overlapHeight + self.baseHeight;
 }
 
-- (void)setCornerPointFor:(TENTileModel *)tileModel row:(NSInteger)row col:(NSInteger)col {
-    CGFloat x = col * (self.baseWidth + self.overlapWidth);
-    CGFloat y = row * (self.baseHeight + self.overlapHeight);
+- (void)setCornerPointFor:(TENTileModel *)tileModel {
+    CGFloat x = tileModel.col * (self.baseWidth + self.overlapWidth);
+    CGFloat y = tileModel.row * (self.baseHeight + self.overlapHeight);
     
     tileModel.upLeft    = NSValueWithPoint(x                    , y                     );
     tileModel.upRight   = NSValueWithPoint(x + self.sliceWidth  , y                     );

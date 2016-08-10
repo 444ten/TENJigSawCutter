@@ -18,6 +18,10 @@ typedef NS_ENUM(NSUInteger, PJWTileTypeMask) {
 };
 
 @interface TENTileModel : NSObject
+@property (nonatomic, strong)   UIImage     *originImage;
+@property (nonatomic, assign)   NSInteger   row;
+@property (nonatomic, assign)   NSInteger   col;
+
 @property (nonatomic, strong)   NSValue *upLeft;
 @property (nonatomic, strong)   NSValue *upRight;
 @property (nonatomic, strong)   NSValue *downRight;
@@ -28,6 +32,8 @@ typedef NS_ENUM(NSUInteger, PJWTileTypeMask) {
 @property (nonatomic, assign)   PJWTileTypeMask tileType;
 
 @property (nonatomic, strong)   UIImageView *imageView;
+
+- (instancetype)initWithOriginImage:(UIImage *)originImage row:(NSUInteger)row column:(NSInteger)col;
 
 - (void)setupImageViewWithOriginImage:(UIImage *)originImage;
 
