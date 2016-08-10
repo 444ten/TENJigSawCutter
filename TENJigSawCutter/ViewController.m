@@ -72,7 +72,14 @@
 
 - (void)setupTiles {
     TENTiles *tiles = [TENTiles new];
-    tiles.cornerModel = self.cornerModel;
+    
+    tiles.fullWidth = 900.f;
+    tiles.countWidth = 3;
+    tiles.overlapRatioWidth = 0.5;
+    
+    tiles.fullHeight = 700.f;
+    tiles.countHeight = 3;
+    tiles.overlapRatioHeight = 0.5;
     
     [tiles setup];
     

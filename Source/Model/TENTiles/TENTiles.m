@@ -8,6 +8,17 @@
 
 #import "TENTiles.h"
 
+@interface TENTiles ()
+@property (nonatomic, assign) CGFloat baseWidth;
+@property (nonatomic, assign) CGFloat overlapWidth;
+@property (nonatomic, assign) CGFloat sliceWidth;
+
+@property (nonatomic, assign) CGFloat baseHeight;
+@property (nonatomic, assign) CGFloat overlapHeight;
+@property (nonatomic, assign) CGFloat sliceHeight;
+
+@end
+
 @implementation TENTiles
 
 #pragma mark -
@@ -26,34 +37,33 @@
 #pragma mark Public Methods
 
 - (void)setup {
+    [self calculateParameters];
+    
     UIImage *originImage = [UIImage imageNamed:kImageName];
     
-    TENCornerModel *cornerModel = self.cornerModel;
-    NSArray *cornerPoints = cornerModel.cornerPoints;
+//    TENCornerModel *cornerModel = self.cornerModel;
+//    NSArray *cornerPoints = cornerModel.cornerPoints;
     
     NSMutableArray *tiles = self.tiles;
     
-    for (NSInteger row = 0; row < cornerModel.countHeight; row++) {
+    for (NSInteger row = 0; row < self.countHeight; row++) {
         
-        for (NSInteger col = 0; col < cornerModel.countWidth; col++) {
+        for (NSInteger col = 0; col < self.countWidth; col++) {
             TENTileModel *tileModel = [TENTileModel new];
             
-            tileModel.upLeft    = cornerPoints[row    ][col    ];
-            tileModel.upRight   = cornerPoints[row    ][col + 1];
-            tileModel.downRight = cornerPoints[row + 1][col + 1];
-            tileModel.downLeft  = cornerPoints[row + 1][col    ];
+            [self setCornerPointFor:tileModel row:row col:col];
             
             [tileModel setupImageViewWithOriginImage:originImage];
             
             if (0 == col) {
                 tileModel.tileType |= PJWTileTypeLeft;
-            } else if (cornerModel.countWidth - 1 == col) {
+            } else if (self.countWidth - 1 == col) {
                 tileModel.tileType |= PJWTileTypeRight;
             }
             
             if (0 == row) {
                 tileModel.tileType |= PJWTileTypeUp;
-            } else if (cornerModel.countHeight - 1 == row) {
+            } else if (self.countHeight - 1 == row) {
                 tileModel.tileType |= PJWTileTypeDown;
             }
             
@@ -65,6 +75,29 @@
 
 #pragma mark -
 #pragma mark Private Methods
+
+- (void)calculateParameters {
+    self.baseWidth = self.fullWidth / (self.countWidth + self.overlapRatioWidth * (self.countWidth + 1));
+    self.overlapWidth = self.overlapRatioWidth * self.baseWidth;
+    self.sliceWidth = 2 * self.overlapWidth + self.baseWidth;
+    
+    self.baseHeight = self.fullHeight / (self.countHeight + self.overlapRatioHeight * (self.countHeight + 1));
+    self.overlapHeight = self.overlapRatioHeight * self.baseHeight;
+    self.sliceHeight = 2 * self.overlapHeight + self.baseHeight;
+}
+
+- (void)setCornerPointFor:(TENTileModel *)tileModel row:(NSInteger)row col:(NSInteger)col {
+    CGFloat x = col * (self.baseWidth + self.overlapWidth);
+    CGFloat y = row * (self.baseHeight + self.overlapHeight);
+    
+    tileModel.upLeft    = NSValueWithPoint(x                    , y                     );
+    tileModel.upRight   = NSValueWithPoint(x + self.sliceWidth  , y                     );
+    tileModel.downRight = NSValueWithPoint(x + self.sliceWidth  , y + self.sliceHeight  );
+    tileModel.downLeft  = NSValueWithPoint(x                    , y + self.sliceHeight  );
+}
+
+#pragma mark -
+#pragma mark
 
 - (void)cropTileView:(UIImageView *)tileView {
     CGRect tileViewRect = tileView.bounds;
