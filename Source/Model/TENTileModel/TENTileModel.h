@@ -24,11 +24,11 @@ typedef NS_ENUM(NSUInteger, PJWTileTypeMask) {
 @property (nonatomic, strong)   NSValue *downLeft;
 
 @property (nonatomic, strong)   NSValue *center;
+
 @property (nonatomic, assign)   PJWTileTypeMask tileType;
 
 @property (nonatomic, strong)   UIImageView *imageView;
 
 - (void)setupImageViewWithOriginImage:(UIImage *)originImage;
-
 
 @end

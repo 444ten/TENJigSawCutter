@@ -8,6 +8,10 @@
 
 #import "TENTileModel.h"
 
+@interface TENTileModel ()
+
+@end
+
 @implementation TENTileModel
 
 #pragma mark -
@@ -30,8 +34,8 @@
     self.imageView = imageView;
     
     
-    CGFloat x = arc4random_uniform(300);
-    CGFloat y = arc4random_uniform(300);
+    CGFloat x = arc4random_uniform(900);
+    CGFloat y = arc4random_uniform(700);
 
     self.center = NSValueWithPoint(x, y);
 }

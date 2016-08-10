@@ -7,7 +7,6 @@
 //
 
 #import "TENTileModel.h"
-//#import "TENCornerModel.h"
 
 //static NSString * const kImageName = @"04.jpg";
 //static NSString * const kImageName = @"200x200";
@@ -22,8 +21,6 @@ static NSString * const kImageName = @"900x700.jpg";
 @property (nonatomic, assign)   NSInteger   countHeight;
 @property (nonatomic, assign)   CGFloat     overlapRatioWidth;
 @property (nonatomic, assign)   CGFloat     overlapRatioHeight;
-
-//@property (nonatomic, strong)   TENCornerModel  *cornerModel;
 
 - (void)setup;
 

@@ -8,6 +8,8 @@
 
 #import "TENTiles.h"
 
+#import "PJWOffsetCornerModel.h"
+
 @interface TENTiles ()
 @property (nonatomic, assign) CGFloat baseWidth;
 @property (nonatomic, assign) CGFloat overlapWidth;
@@ -39,11 +41,13 @@
 - (void)setup {
     [self calculateParameters];
     
+    PJWOffsetCornerModel *offsetCornerModel = [[PJWOffsetCornerModel alloc] initWithCountWidth:self.countWidth
+                                                                                   countHeight:self.countHeight
+                                                                                  overlapWidth:self.overlapWidth
+                                                                                 overlapHeight:self.overlapHeight];
+    
     UIImage *originImage = [UIImage imageNamed:kImageName];
-    
-//    TENCornerModel *cornerModel = self.cornerModel;
-//    NSArray *cornerPoints = cornerModel.cornerPoints;
-    
+        
     NSMutableArray *tiles = self.tiles;
     
     for (NSInteger row = 0; row < self.countHeight; row++) {
