@@ -8,6 +8,7 @@
 
 #import "TENTileModel.h"
 #import "PJWOffsetCornerModel.h"
+#import "PJWPuzzleParameterModel.h"
 
 @interface TENTileModel ()
 @property (nonatomic, strong)   NSMutableArray  *upPoints;
@@ -22,10 +23,9 @@
 #pragma mark -
 #pragma mark Initializations and Deallocations
 
-- (instancetype)initWithOriginImage:(UIImage *)originImage row:(NSUInteger)row column:(NSInteger)col {
+- (instancetype)initWithRow:(NSUInteger)row column:(NSInteger)col {
     self = [super init];
     if (self) {
-        self.originImage = originImage;
         self.row = row;
         self.col = col;
         
@@ -72,7 +72,9 @@
     CGRect tileRect = CGRectMake(upLeftPoint.x, upLeftPoint.y,
                                  downRightPoint.x - upLeftPoint.x, downRightPoint.y - upLeftPoint.y);
     
-    CGImageRef imageRef = CGImageCreateWithImageInRect(self.originImage.CGImage, tileRect);
+    UIImage *originImage = [PJWPuzzleParameterModel sharedInstance].originImage;
+    
+    CGImageRef imageRef = CGImageCreateWithImageInRect(originImage.CGImage, tileRect);
     UIImage *result = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);
 

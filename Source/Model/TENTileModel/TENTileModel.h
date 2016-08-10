@@ -18,7 +18,6 @@ typedef NS_ENUM(NSUInteger, PJWTileTypeMask) {
 };
 
 @interface TENTileModel : NSObject
-@property (nonatomic, strong)   UIImage     *originImage;
 @property (nonatomic, assign)   NSInteger   row;
 @property (nonatomic, assign)   NSInteger   col;
 
@@ -33,8 +32,8 @@ typedef NS_ENUM(NSUInteger, PJWTileTypeMask) {
 
 @property (nonatomic, strong)   UIImageView *imageView;
 
-- (instancetype)initWithOriginImage:(UIImage *)originImage row:(NSUInteger)row column:(NSInteger)col;
+- (instancetype)initWithRow:(NSUInteger)row column:(NSInteger)col;
 
-- (void)setupImageViewWithOriginImage:(UIImage *)originImage;
+- (void)setup;
 
 @end

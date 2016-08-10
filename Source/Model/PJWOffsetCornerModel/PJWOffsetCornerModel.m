@@ -8,12 +8,10 @@
 
 #import "PJWOffsetCornerModel.h"
 #import "TENMacros.h"
+#import "PJWPuzzleParameterModel.h"
 
 @interface PJWOffsetCornerModel ()
-@property (nonatomic, assign)   NSInteger   countWidth;
-@property (nonatomic, assign)   NSInteger   countHeight;
-@property (nonatomic, assign)   CGFloat     overlapWidth;
-@property (nonatomic, assign)   CGFloat     overlapHeight;
+@property (nonatomic, strong) PJWPuzzleParameterModel *parameterModel;
 
 @end
 
@@ -22,34 +20,25 @@
 #pragma mark -
 #pragma mark Initializations and Deallocations
 
-- (instancetype)initWithCountWidth:(NSInteger)countWidth
-                       countHeight:(NSInteger)countHeight
-                      overlapWidth:(CGFloat)overlapWidth
-                     overlapHeight:(CGFloat)overlapHeight
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
-        self.offsets = [NSMutableArray new];
-        
-        self.countWidth = countWidth;
-        self.countHeight = countHeight;
-        self.overlapWidth = overlapWidth;
-        self.overlapHeight = overlapHeight;
-        
+        self.parameterModel = [PJWPuzzleParameterModel sharedInstance];
         [self setup];
     }
     
     return self;
 }
-
 #pragma mark -
 #pragma mark Private Methods
 
 - (void)setup {
-    for (NSInteger row = 0; row <= self.countHeight; row++) {
+    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    
+    for (NSInteger row = 0; row <= parameterModel.countHeight; row++) {
         NSMutableArray *rowArray = [NSMutableArray new];
         
-        for (NSInteger col = 0; col <= self.countWidth; col++) {
+        for (NSInteger col = 0; col <= parameterModel.countWidth; col++) {
             [rowArray addObject:NSValueWithPoint([self xOffsetForColumn:col], [self yOffsetForRow:row])];
         }
         
@@ -58,28 +47,32 @@
 }
 
 - (CGFloat)xOffsetForColumn:(NSUInteger)column {
+    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+
     CGFloat result;
     
     if (0 == column) {
         result = 0.0;
-    } else if (self.countWidth == column) {
-        result = self.overlapWidth;
+    } else if (parameterModel.countWidth == column) {
+        result = parameterModel.overlapWidth;
     } else {
-        result = arc4random_uniform(self.overlapWidth);
+        result = arc4random_uniform(parameterModel.overlapWidth);
     }
     
     return result;
 }
 
 - (CGFloat)yOffsetForRow:(NSUInteger)row {
+    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    
     CGFloat result;
     
     if (0 == row) {
         result = 0.0;
-    } else if (self.countHeight == row) {
-        result = self.overlapHeight;
+    } else if (parameterModel.countHeight == row) {
+        result = parameterModel.overlapHeight;
     } else {
-        result = arc4random_uniform(self.overlapHeight);
+        result = arc4random_uniform(parameterModel.overlapHeight);
     }
     
     return result;

@@ -8,16 +8,10 @@
 
 #import "TENTiles.h"
 
+#import "PJWPuzzleParameterModel.h"
 #import "PJWOffsetCornerModel.h"
 
 @interface TENTiles ()
-@property (nonatomic, assign) CGFloat baseWidth;
-@property (nonatomic, assign) CGFloat overlapWidth;
-@property (nonatomic, assign) CGFloat sliceWidth;
-
-@property (nonatomic, assign) CGFloat baseHeight;
-@property (nonatomic, assign) CGFloat overlapHeight;
-@property (nonatomic, assign) CGFloat sliceHeight;
 
 @end
 
@@ -30,44 +24,38 @@
     self = [super init];
     if (self) {
         self.tiles = [NSMutableArray new];
+        [self setup];
     }
     
     return self;
 }
 
 #pragma mark -
-#pragma mark Public Methods
+#pragma mark Private Methods
 
 - (void)setup {
-    [self calculateParameters];
-    
-    PJWOffsetCornerModel *offsetCornerModel = [[PJWOffsetCornerModel alloc] initWithCountWidth:self.countWidth
-                                                                                   countHeight:self.countHeight
-                                                                                  overlapWidth:self.overlapWidth
-                                                                                 overlapHeight:self.overlapHeight];
-    
-    UIImage *originImage = [UIImage imageNamed:kImageName];
-        
+    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+
     NSMutableArray *tiles = self.tiles;
     
-    for (NSInteger row = 0; row < self.countHeight; row++) {
+    for (NSInteger row = 0; row < parameterModel.countHeight; row++) {
         
-        for (NSInteger col = 0; col < self.countWidth; col++) {
-            TENTileModel *tileModel = [[TENTileModel alloc]initWithOriginImage:originImage row:row column:col];
+        for (NSInteger col = 0; col < parameterModel.countWidth; col++) {
+            TENTileModel *tileModel = [[TENTileModel alloc] initWithRow:row column:col];
             
             [self setCornerPointFor:tileModel];
             
-            [tileModel setupImageViewWithOriginImage:originImage];
+            [tileModel setup];
             
             if (0 == col) {
                 tileModel.tileType |= PJWTileTypeLeft;
-            } else if (self.countWidth - 1 == col) {
+            } else if (parameterModel.countWidth - 1 == col) {
                 tileModel.tileType |= PJWTileTypeRight;
             }
             
             if (0 == row) {
                 tileModel.tileType |= PJWTileTypeUp;
-            } else if (self.countHeight - 1 == row) {
+            } else if (parameterModel.countHeight - 1 == row) {
                 tileModel.tileType |= PJWTileTypeDown;
             }
             
@@ -77,27 +65,16 @@
     }
 }
 
-#pragma mark -
-#pragma mark Private Methods
-
-- (void)calculateParameters {
-    self.baseWidth = self.fullWidth / (self.countWidth + self.overlapRatioWidth * (self.countWidth + 1));
-    self.overlapWidth = self.overlapRatioWidth * self.baseWidth;
-    self.sliceWidth = 2 * self.overlapWidth + self.baseWidth;
-    
-    self.baseHeight = self.fullHeight / (self.countHeight + self.overlapRatioHeight * (self.countHeight + 1));
-    self.overlapHeight = self.overlapRatioHeight * self.baseHeight;
-    self.sliceHeight = 2 * self.overlapHeight + self.baseHeight;
-}
-
 - (void)setCornerPointFor:(TENTileModel *)tileModel {
-    CGFloat x = tileModel.col * (self.baseWidth + self.overlapWidth);
-    CGFloat y = tileModel.row * (self.baseHeight + self.overlapHeight);
+    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+
+    CGFloat x = tileModel.col * (parameterModel.baseWidth + parameterModel.overlapWidth);
+    CGFloat y = tileModel.row * (parameterModel.baseHeight + parameterModel.overlapHeight);
     
-    tileModel.upLeft    = NSValueWithPoint(x                    , y                     );
-    tileModel.upRight   = NSValueWithPoint(x + self.sliceWidth  , y                     );
-    tileModel.downRight = NSValueWithPoint(x + self.sliceWidth  , y + self.sliceHeight  );
-    tileModel.downLeft  = NSValueWithPoint(x                    , y + self.sliceHeight  );
+    tileModel.upLeft    = NSValueWithPoint(x                            , y                             );
+    tileModel.upRight   = NSValueWithPoint(x + parameterModel.sliceWidth, y                             );
+    tileModel.downRight = NSValueWithPoint(x + parameterModel.sliceWidth, y + parameterModel.sliceHeight);
+    tileModel.downLeft  = NSValueWithPoint(x                            , y + parameterModel.sliceHeight);
 }
 
 #pragma mark -

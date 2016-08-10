@@ -6,8 +6,30 @@
 //  Copyright © 2016 444ten. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface PJWPuzzleParameterModel : NSObject
+@property (nonatomic, strong)   UIImage     *originImage;
+
+@property (nonatomic, assign)   CGFloat     fullWidth;
+@property (nonatomic, assign)   NSInteger   countWidth;
+@property (nonatomic, assign)   CGFloat     overlapRatioWidth;
+
+@property (nonatomic, assign)   CGFloat     fullHeight;
+@property (nonatomic, assign)   NSInteger   countHeight;
+@property (nonatomic, assign)   CGFloat     overlapRatioHeight;
+
+
+@property (nonatomic, assign)   CGFloat     overlapWidth;
+@property (nonatomic, assign)   CGFloat     baseWidth;
+@property (nonatomic, assign)   CGFloat     sliceWidth;
+
+@property (nonatomic, assign)   CGFloat     overlapHeight;
+@property (nonatomic, assign)   CGFloat     baseHeight;
+@property (nonatomic, assign)   CGFloat     sliceHeight;
+
++ (instancetype)sharedInstance;
+
+- (void)setup;
 
 @end

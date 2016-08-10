@@ -8,13 +8,13 @@
 
 #import "ViewController.h"
 
-#import "TENCornerModel.h"
+#import "PJWPuzzleParameterModel.h"
 #import "TENTiles.h"
 
 @interface ViewController ()
 @property (strong, nonatomic) IBOutlet UIImageView *originalImageView;
 
-@property (nonatomic, strong)   TENCornerModel  *cornerModel;
+@property (nonatomic, strong)   PJWPuzzleParameterModel  *parameterModel;
 @property (nonatomic, strong)   TENTiles        *tiles;
 
 @property (nonatomic, assign)   BOOL    ghostPresent;
@@ -29,12 +29,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupCornerModel];
-    [self setupTiles];
+    [self setupParameterModel];
     
-    UIImage *image = [UIImage imageNamed:kImageName];
+    self.tiles = [TENTiles new];
     
-    self.originalImageView.image = image;
+    self.originalImageView.image = self.parameterModel.originImage;
     self.ghostPresent = YES;
 
     [self addTilesOnView];
@@ -57,33 +56,19 @@
 #pragma mark -
 #pragma mark TENCornerModel
 
-- (void)setupCornerModel {
-    TENCornerModel *cornerModel = [TENCornerModel new];
-
-    cornerModel.fullWidth = 900.f;
-    cornerModel.fullHeight = 700.f;
-    cornerModel.countWidth = 3;
-    cornerModel.countHeight = 3;
+- (void)setupParameterModel {
+    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    parameterModel.fullWidth = 900.f;
+    parameterModel.countWidth = 2;
+    parameterModel.overlapRatioWidth = 0.5;
     
-    [cornerModel setup];
+    parameterModel.fullHeight = 700.f;
+    parameterModel.countHeight = 2;
+    parameterModel.overlapRatioHeight = 0.5;
     
-    self.cornerModel = cornerModel;
-}
-
-- (void)setupTiles {
-    TENTiles *tiles = [TENTiles new];
+    [parameterModel setup];
     
-    tiles.fullWidth = 900.f;
-    tiles.countWidth = 3;
-    tiles.overlapRatioWidth = 0.5;
-    
-    tiles.fullHeight = 700.f;
-    tiles.countHeight = 3;
-    tiles.overlapRatioHeight = 0.5;
-    
-    [tiles setup];
-    
-    self.tiles = tiles;
+    self.parameterModel = parameterModel;
 }
 
 #pragma mark -

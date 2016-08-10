@@ -11,8 +11,4 @@
 @interface PJWOffsetCornerModel : NSObject
 @property (nonatomic, strong)   NSMutableArray  *offsets;
 
-- (instancetype)initWithCountWidth:(NSInteger)countWidth
-                       countHeight:(NSInteger)countHeight
-                      overlapWidth:(CGFloat)overlapWidth
-                     overlapHeight:(CGFloat)overlapHeight;
 @end
