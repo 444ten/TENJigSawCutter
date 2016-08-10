@@ -11,7 +11,6 @@
 #import "PJWPuzzleParameterModel.h"
 
 @interface PJWOffsetCornerModel ()
-@property (nonatomic, strong) PJWPuzzleParameterModel *parameterModel;
 
 @end
 
@@ -23,7 +22,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.parameterModel = [PJWPuzzleParameterModel sharedInstance];
         [self setup];
     }
     
@@ -34,6 +32,7 @@
 
 - (void)setup {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    NSMutableArray *offsets = [NSMutableArray new];
     
     for (NSInteger row = 0; row <= parameterModel.countHeight; row++) {
         NSMutableArray *rowArray = [NSMutableArray new];
@@ -42,8 +41,10 @@
             [rowArray addObject:NSValueWithPoint([self xOffsetForColumn:col], [self yOffsetForRow:row])];
         }
         
-        [self.offsets addObject:rowArray];
+        [offsets addObject:rowArray];
     }
+    
+    self.offsets = offsets;
 }
 
 - (CGFloat)xOffsetForColumn:(NSUInteger)column {

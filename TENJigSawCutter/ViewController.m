@@ -59,12 +59,12 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 2;
-    parameterModel.overlapRatioWidth = 0.5;
+    parameterModel.countWidth = 3;
+    parameterModel.overlapRatioWidth = 0.7;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 2;
-    parameterModel.overlapRatioHeight = 0.5;
+    parameterModel.countHeight = 3;
+    parameterModel.overlapRatioHeight = 0.7;
     
     [parameterModel setup];
     

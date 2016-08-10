@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "PJWOffsetCornerModel.h"
+
 @interface PJWPuzzleParameterModel : NSObject
 @property (nonatomic, strong)   UIImage     *originImage;
 
@@ -27,6 +29,8 @@
 @property (nonatomic, assign)   CGFloat     overlapHeight;
 @property (nonatomic, assign)   CGFloat     baseHeight;
 @property (nonatomic, assign)   CGFloat     sliceHeight;
+
+@property (nonatomic, strong)   PJWOffsetCornerModel    *offsetCornerModel;
 
 + (instancetype)sharedInstance;
 
