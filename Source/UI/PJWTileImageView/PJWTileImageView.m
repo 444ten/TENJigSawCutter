@@ -18,4 +18,11 @@
 }
 */
 
+#pragma mark -
+#pragma mark Overriden Methods
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    return [self.bezierPath containsPoint:point];
+}
+
 @end

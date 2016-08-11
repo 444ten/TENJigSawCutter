@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface PJWTileImageView : UIImageView
+@property (nonatomic, strong)   UIBezierPath *bezierPath;
 
 @end

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "TENMacros.h"
+#import "PJWTileImageView.h"
 
 typedef NS_ENUM(NSUInteger, PJWTileTypeMask) {
     PJWTileTypeUp       = 1 << 0,
@@ -30,7 +31,7 @@ typedef NS_ENUM(NSUInteger, PJWTileTypeMask) {
 
 @property (nonatomic, assign)   PJWTileTypeMask tileType;
 
-@property (nonatomic, strong)   UIImageView *imageView;
+@property (nonatomic, strong)   PJWTileImageView *imageView;
 
 - (instancetype)initWithRow:(NSUInteger)row column:(NSInteger)col;
 

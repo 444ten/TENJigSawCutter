@@ -34,7 +34,7 @@
     self.tiles = [TENTiles new];
     
     self.originalImageView.image = self.parameterModel.originImage;
-    self.ghostPresent = YES;
+    self.ghostPresent = NO;
 
     [self addTilesOnView];
 }
@@ -46,11 +46,11 @@
 #pragma mark -
 #pragma mark Accessors
 -   (void)setGhostPresent:(BOOL)ghostPresent {
-    if (_ghostPresent != ghostPresent) {
+//    if (_ghostPresent != ghostPresent) {
         _ghostPresent = ghostPresent;
         
         self.originalImageView.alpha = ghostPresent ? 0.3 : 0.0;
-    }
+//    }
 }
 
 #pragma mark -
@@ -59,11 +59,11 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 2;
+    parameterModel.countWidth = 3;
     parameterModel.overlapRatioWidth = 0.7;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 2;
+    parameterModel.countHeight = 3;
     parameterModel.overlapRatioHeight = 0.7;
     
     [parameterModel setup];
@@ -75,7 +75,7 @@
 #pragma mark Interface Handling
 
 - (IBAction)tapOriginalImage:(UITapGestureRecognizer *)sender {
-    [self.view bringSubviewToFront:sender.view];
+//    [self.view bringSubviewToFront:sender.view];
 }
 
 - (IBAction)onGhost:(UIButton *)sender {

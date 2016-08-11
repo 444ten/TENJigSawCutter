@@ -42,12 +42,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/Model/PJWPuzzleParameterModel/PJWOffsetSideModel/PJWOffsetSideModel.m"
-            timestampString = "492590018.831721"
+            timestampString = "492600918.329887"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
             landmarkName = "-setupHeightSides"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Source/Model/PJWPuzzleParameterModel/PJWOffsetSideModel/PJWOffsetSideModel.m"
+            timestampString = "492607033.802012"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
+            landmarkName = "-pointsOfWidthSide"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

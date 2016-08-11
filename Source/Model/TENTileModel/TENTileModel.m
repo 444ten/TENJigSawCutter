@@ -42,8 +42,9 @@
 #pragma mark Public Methods
 
 - (void)setup {
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[self tileImage]];
+    PJWTileImageView *imageView = [[PJWTileImageView alloc] initWithImage:[self tileImage]];
     imageView.layer.borderWidth = 1.0;
+//    imageView.alpha = 0.4;
     
     self.imageView = imageView;
     
@@ -124,6 +125,8 @@
     [aPath closePath];
 
 //mask
+    self.imageView.bezierPath = aPath;
+    
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
     shapeLayer.path = aPath.CGPath;
     
@@ -146,7 +149,7 @@
 
 #pragma mark -
 #pragma mark
-
+/*
 - (void)cropTileView:(UIImageView *)tileView {
     CGRect tileViewRect = tileView.bounds;
     
@@ -236,12 +239,12 @@
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
     shapeLayer.path = aPath.CGPath;
     
-    //    [tileView.layer setMask:shapeLayer];
+        [tileView.layer setMask:shapeLayer];
     
     [self drawPath:aPath inView:tileView];
 }
 
-
+*/
 - (NSValue *)intersectionU1:(NSValue *)u1Value
                          u2:(NSValue *)u2Value
                          v1:(NSValue *)v1Value
