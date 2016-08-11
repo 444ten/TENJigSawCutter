@@ -78,9 +78,31 @@
     
     UIBezierPath *aPath = [UIBezierPath bezierPath];
     [aPath moveToPoint:CGPointFromValue(leftUpCorner)];
+//up side
     [aPath addLineToPoint:CGPointFromValue(rightUpCorner)];
+
+//right side
+    NSArray *points = parameterModel.offsetSideModel.heightSides[row][col + 1];
+    
+    for (NSInteger index = 0; index < points.count; index++) {
+        CGPoint point = CGPointFromValue(points[index]);
+        point.x += offsetWidth;
+        
+        [aPath addLineToPoint:point];
+    }
+    
     [aPath addLineToPoint:CGPointFromValue(rightDownCorner)];
+
+//down side
     [aPath addLineToPoint:CGPointFromValue(leftDownCorner)];
+    
+//left side
+    points = parameterModel.offsetSideModel.heightSides[row][col];
+    
+    for (NSInteger index = points.count; index > 0; index--) {
+        [aPath addLineToPoint:CGPointFromValue(points[index-1])];
+    }
+
     [aPath closePath];
     
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
@@ -89,14 +111,14 @@
     [self.imageView.layer setMask:shapeLayer];
 
     
-//    [self drawPath:aPath inView:self.imageView];
+    [self drawPath:aPath inView:self.imageView];
 }
 
 - (void)drawPath:(UIBezierPath *)path inView:(UIView *)view {
     CAShapeLayer *shapeLayer = [CAShapeLayer new];
     shapeLayer.lineWidth = 1;
-    shapeLayer.strokeColor = [UIColor blackColor].CGColor;
-    shapeLayer.fillColor = [UIColor colorWithWhite:0.0 alpha:0.5].CGColor;
+    shapeLayer.strokeColor = [UIColor greenColor].CGColor;
+    shapeLayer.fillColor = [UIColor colorWithWhite:0.0 alpha:0.0].CGColor;
     shapeLayer.path = path.CGPath;
     
     [view.layer addSublayer:shapeLayer];

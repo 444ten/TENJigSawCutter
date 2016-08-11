@@ -46,6 +46,7 @@ static NSString * const kImageName = @"900x700.jpg";
 - (void)setup {
     [self calculateSlice];
     self.offsetCornerModel = [PJWOffsetCornerModel new];
+    self.offsetSideModel = [PJWOffsetSideModel new];
 }
 
 #pragma mark -

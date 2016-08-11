@@ -6,8 +6,10 @@
 //  Copyright © 2016 444ten. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface PJWOffsetSideModel : NSObject
+@property (nonatomic, strong)   NSMutableArray  *heightSides;
+@property (nonatomic, strong)   NSMutableArray  *widthSides;
 
 @end
