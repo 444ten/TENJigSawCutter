@@ -1,5 +1,5 @@
 //
-//  JPWTileImageView.h
+//  PJWTileImageView.h
 //  TENJigSawCutter
 //
 //  Created by 444ten on 8/11/16.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JPWTileImageView : UIImageView
+@interface PJWTileImageView : UIImageView
 
 @end

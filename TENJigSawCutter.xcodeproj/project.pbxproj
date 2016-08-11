@@ -23,7 +23,7 @@
 		76C9BBEF1D5B227E0067833D /* PJWOffsetCornerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBEE1D5B227E0067833D /* PJWOffsetCornerModel.m */; };
 		76C9BBF41D5B46260067833D /* PJWPuzzleParameterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBF31D5B46260067833D /* PJWPuzzleParameterModel.m */; };
 		76C9BBF81D5C442F0067833D /* PJWOffsetSideModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBF71D5C442F0067833D /* PJWOffsetSideModel.m */; };
-		76C9BBFD1D5C74940067833D /* JPWTileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBFC1D5C74940067833D /* JPWTileImageView.m */; };
+		76C9BC011D5C754F0067833D /* PJWTileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BC001D5C754F0067833D /* PJWTileImageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,8 +54,8 @@
 		76C9BBF31D5B46260067833D /* PJWPuzzleParameterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWPuzzleParameterModel.m; sourceTree = "<group>"; };
 		76C9BBF61D5C442F0067833D /* PJWOffsetSideModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWOffsetSideModel.h; sourceTree = "<group>"; };
 		76C9BBF71D5C442F0067833D /* PJWOffsetSideModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWOffsetSideModel.m; sourceTree = "<group>"; };
-		76C9BBFB1D5C74940067833D /* JPWTileImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPWTileImageView.h; sourceTree = "<group>"; };
-		76C9BBFC1D5C74940067833D /* JPWTileImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPWTileImageView.m; sourceTree = "<group>"; };
+		76C9BBFF1D5C754F0067833D /* PJWTileImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWTileImageView.h; sourceTree = "<group>"; };
+		76C9BC001D5C754F0067833D /* PJWTileImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWTileImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,18 +203,18 @@
 		76C9BBF91D5C747F0067833D /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				76C9BBFA1D5C747F0067833D /* JPWTileImageView */,
+				76C9BBFE1D5C753C0067833D /* PJWTileImageView */,
 			);
 			path = UI;
 			sourceTree = "<group>";
 		};
-		76C9BBFA1D5C747F0067833D /* JPWTileImageView */ = {
+		76C9BBFE1D5C753C0067833D /* PJWTileImageView */ = {
 			isa = PBXGroup;
 			children = (
-				76C9BBFB1D5C74940067833D /* JPWTileImageView.h */,
-				76C9BBFC1D5C74940067833D /* JPWTileImageView.m */,
+				76C9BBFF1D5C754F0067833D /* PJWTileImageView.h */,
+				76C9BC001D5C754F0067833D /* PJWTileImageView.m */,
 			);
-			path = JPWTileImageView;
+			path = PJWTileImageView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,10 +298,10 @@
 				76C9BBEF1D5B227E0067833D /* PJWOffsetCornerModel.m in Sources */,
 				76C9BBF41D5B46260067833D /* PJWPuzzleParameterModel.m in Sources */,
 				76C9BBE11D599D6D0067833D /* TENTileModel.m in Sources */,
-				76C9BBFD1D5C74940067833D /* JPWTileImageView.m in Sources */,
 				76C9BBC51D5498820067833D /* ViewController.m in Sources */,
 				76C9BBC21D5498820067833D /* AppDelegate.m in Sources */,
 				76C9BBBF1D5498820067833D /* main.m in Sources */,
+				76C9BC011D5C754F0067833D /* PJWTileImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
