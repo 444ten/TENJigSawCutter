@@ -91,35 +91,86 @@ static const CGFloat kCurlRatio  = 0.3;
     x -= curl;
     [result addObject:NSValueWithPoint(x, y)];
 
+//revert random
+    if (arc4random_uniform(2) == 1) {
+        for (NSInteger index = 0; index < result.count; index++) {
+            CGPoint point = CGPointFromValue(result[index]);
+            
+            result[index] = NSValueWithPoint(overlapHeight - point.x, point.y);
+        }
+    }
+    
     return result;
 }
 
 
 - (void)setupWidthSides {
+    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    NSMutableArray *widthSides = [NSMutableArray new];
+    
+    for (NSInteger row = 0; row <= parameterModel.countHeight; row++) {
+        NSMutableArray *rowArray = [NSMutableArray new];
+        
+        for (NSInteger col = 0; col < parameterModel.countWidth; col++) {
+            if (0 == row || parameterModel.countWidth == row) {
+                [rowArray addObject:@[]];
+            } else {
+                [rowArray addObject:[self pointsOfWidthSide]];
+            }
+        }
+        
+        [widthSides addObject:rowArray];
+    }
+    
+    self.widthSides = widthSides;
     
 }
 
+- (NSArray *)pointsOfWidthSide {
+    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    
+    CGFloat baseWidth = parameterModel.baseWidth;
+    CGFloat overlapWidth = parameterModel.overlapWidth;
+    
+    CGFloat centerWidth = baseWidth / 2 + overlapWidth;
+    
+    CGFloat arcHeightMax    = overlapWidth * kArcHeightMaxRatio;
+    CGFloat arcWidthMin     = overlapWidth * kArcWidthMinRatio;
+    CGFloat arcWidthDelta   = overlapWidth * kArcWidthDeltaRatio;
+    CGFloat curl            = overlapWidth * kCurlRatio;
+    
+    NSMutableArray *result = [NSMutableArray new];
+    CGFloat x = 0.0;
+    CGFloat y = 0.0;
+    
+    //inArc end
+    x = centerWidth - (arcWidthMin + arc4random_uniform(arcWidthDelta));
+    y = arc4random_uniform(arcHeightMax);
+    [result addObject:NSValueWithPoint(x, y)];
+    
+    //hole start
+    y += curl;
+    [result addObject:NSValueWithPoint(x, y)];
+    
+    //hole end
+    x = centerWidth + (arcWidthMin + arc4random_uniform(arcWidthDelta));
+    y = arc4random_uniform(arcHeightMax) + curl;
+    [result addObject:NSValueWithPoint(x, y)];
+    
+    //outArc start
+    y -= curl;
+    [result addObject:NSValueWithPoint(x, y)];
+    
+    //revert random
+    if (arc4random_uniform(2) == 1) {
+        for (NSInteger index = 0; index < result.count; index++) {
+            CGPoint point = CGPointFromValue(result[index]);
+            
+            result[index] = NSValueWithPoint(point.x, overlapWidth - point.y);
+        }
+    }
+    
+    return result;
+}
+
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

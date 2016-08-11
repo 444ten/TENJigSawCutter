@@ -76,13 +76,22 @@
 //    [upPoints addObject:leftUpCorner];
 //    [upPoints addObject:leftUpCorner];
     
+    NSArray *points = nil;
+    
     UIBezierPath *aPath = [UIBezierPath bezierPath];
     [aPath moveToPoint:CGPointFromValue(leftUpCorner)];
 //up side
+    points = parameterModel.offsetSideModel.widthSides[row][col];
+    
+    for (NSInteger index = 0; index < points.count; index++) {
+        [aPath addLineToPoint:CGPointFromValue(points[index])];
+    }
+    
+    
     [aPath addLineToPoint:CGPointFromValue(rightUpCorner)];
 
 //right side
-    NSArray *points = parameterModel.offsetSideModel.heightSides[row][col + 1];
+    points = parameterModel.offsetSideModel.heightSides[row][col + 1];
     
     for (NSInteger index = 0; index < points.count; index++) {
         CGPoint point = CGPointFromValue(points[index]);
@@ -94,6 +103,15 @@
     [aPath addLineToPoint:CGPointFromValue(rightDownCorner)];
 
 //down side
+    points = parameterModel.offsetSideModel.widthSides[row + 1][col];
+    
+    for (NSInteger index = points.count; index > 0; index--) {
+        CGPoint point = CGPointFromValue(points[index-1]);
+        point.y += offsetHeight;
+
+        [aPath addLineToPoint:point];
+    }
+    
     [aPath addLineToPoint:CGPointFromValue(leftDownCorner)];
     
 //left side
@@ -104,7 +122,8 @@
     }
 
     [aPath closePath];
-    
+
+//mask
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
     shapeLayer.path = aPath.CGPath;
     
