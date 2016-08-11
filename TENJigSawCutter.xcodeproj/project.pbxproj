@@ -23,6 +23,7 @@
 		76C9BBEF1D5B227E0067833D /* PJWOffsetCornerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBEE1D5B227E0067833D /* PJWOffsetCornerModel.m */; };
 		76C9BBF41D5B46260067833D /* PJWPuzzleParameterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBF31D5B46260067833D /* PJWPuzzleParameterModel.m */; };
 		76C9BBF81D5C442F0067833D /* PJWOffsetSideModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBF71D5C442F0067833D /* PJWOffsetSideModel.m */; };
+		76C9BBFD1D5C74940067833D /* JPWTileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBFC1D5C74940067833D /* JPWTileImageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,8 @@
 		76C9BBF31D5B46260067833D /* PJWPuzzleParameterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWPuzzleParameterModel.m; sourceTree = "<group>"; };
 		76C9BBF61D5C442F0067833D /* PJWOffsetSideModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWOffsetSideModel.h; sourceTree = "<group>"; };
 		76C9BBF71D5C442F0067833D /* PJWOffsetSideModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWOffsetSideModel.m; sourceTree = "<group>"; };
+		76C9BBFB1D5C74940067833D /* JPWTileImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPWTileImageView.h; sourceTree = "<group>"; };
+		76C9BBFC1D5C74940067833D /* JPWTileImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPWTileImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +116,7 @@
 		76C9BBD81D58AA5A0067833D /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				76C9BBF91D5C747F0067833D /* UI */,
 				76C9BBE61D59AD050067833D /* Resource */,
 				76C9BBD91D58AA5A0067833D /* Model */,
 			);
@@ -196,6 +200,23 @@
 			path = PJWPuzzleParameterModel/PJWOffsetSideModel;
 			sourceTree = "<group>";
 		};
+		76C9BBF91D5C747F0067833D /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				76C9BBFA1D5C747F0067833D /* JPWTileImageView */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		76C9BBFA1D5C747F0067833D /* JPWTileImageView */ = {
+			isa = PBXGroup;
+			children = (
+				76C9BBFB1D5C74940067833D /* JPWTileImageView.h */,
+				76C9BBFC1D5C74940067833D /* JPWTileImageView.m */,
+			);
+			path = JPWTileImageView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -277,6 +298,7 @@
 				76C9BBEF1D5B227E0067833D /* PJWOffsetCornerModel.m in Sources */,
 				76C9BBF41D5B46260067833D /* PJWPuzzleParameterModel.m in Sources */,
 				76C9BBE11D599D6D0067833D /* TENTileModel.m in Sources */,
+				76C9BBFD1D5C74940067833D /* JPWTileImageView.m in Sources */,
 				76C9BBC51D5498820067833D /* ViewController.m in Sources */,
 				76C9BBC21D5498820067833D /* AppDelegate.m in Sources */,
 				76C9BBBF1D5498820067833D /* main.m in Sources */,
