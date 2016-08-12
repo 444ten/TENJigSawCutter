@@ -38,16 +38,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TENJigSawCutter/ViewController.m"
-            timestampString = "492680627.812051"
+            filePath = "Source/Model/TENTileModel/TENTileModel.m"
+            timestampString = "492694140.18958"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "-panAction:"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "-anchorPoint"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,13 +57,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Source/Model/TENTileModel/TENTileModel.m"
-            timestampString = "492680627.812051"
+            filePath = "TENJigSawCutter/ViewController.m"
+            timestampString = "492697977.655085"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "-anchorPoint"
+            startingLineNumber = "211"
+            endingLineNumber = "211"
+            landmarkName = "-isNeighborDragView:andView:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

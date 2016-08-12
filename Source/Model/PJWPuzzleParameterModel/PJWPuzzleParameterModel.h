@@ -26,10 +26,12 @@
 @property (nonatomic, assign)   CGFloat     overlapWidth;
 @property (nonatomic, assign)   CGFloat     baseWidth;
 @property (nonatomic, assign)   CGFloat     sliceWidth;
+@property (nonatomic, assign)   CGFloat     anchorWidth;
 
 @property (nonatomic, assign)   CGFloat     overlapHeight;
 @property (nonatomic, assign)   CGFloat     baseHeight;
 @property (nonatomic, assign)   CGFloat     sliceHeight;
+@property (nonatomic, assign)   CGFloat     anchorHeight;
 
 @property (nonatomic, strong)   PJWOffsetCornerModel    *offsetCornerModel;
 @property (nonatomic, strong)   PJWOffsetSideModel      *offsetSideModel;

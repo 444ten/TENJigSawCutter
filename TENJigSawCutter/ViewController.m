@@ -57,11 +57,11 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 20;
+    parameterModel.countWidth = 4;
     parameterModel.overlapRatioWidth = 0.7;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 15;
+    parameterModel.countHeight = 3;
     parameterModel.overlapRatioHeight = 0.7;
     
     [parameterModel setup];
@@ -86,30 +86,33 @@
 - (void)addTilesOnView {
     UIView *rootView = self.view;
     
-    for (TENTileModel *tileModel in self.tiles.tiles) {
-//        UIImageView *imageView = tileModel.imageView;
-        UIImageView *imageView = tileModel.simpleImageView;
-        
-        imageView.userInteractionEnabled = YES;
-
-        [imageView addGestureRecognizer:[self panRecognizer]];
-        [imageView addGestureRecognizer:[self tapRecognizer]];
-        
-        CGPoint center = CGPointFromValue(tileModel.anchor);
-        center.x += (1024. - self.parameterModel.fullWidth) / 2.0;
-        center.y += ( 768. - self.parameterModel.fullHeight) / 2.0;
-        
-        imageView.center = center;
-        
-        [rootView addSubview:imageView];
-    }    
+    for (NSArray *rowArray in self.tiles.tiles) {
+        for (TENTileModel *tileModel in rowArray) {
+            UIImageView *imageView = tileModel.imageView;
+            
+            imageView.userInteractionEnabled = YES;
+            
+            [imageView addGestureRecognizer:[self panRecognizer]];
+            [imageView addGestureRecognizer:[self tapRecognizer]];
+            //        [imageView addGestureRecognizer:[self longPressRecognizer]];
+            
+            
+            CGPoint center = CGPointFromValue(tileModel.anchor);
+            center.x += (1024. - self.parameterModel.fullWidth) / 2.0;
+            center.y += ( 768. - self.parameterModel.fullHeight) / 2.0;
+            
+            imageView.center = center;
+            
+            [rootView addSubview:imageView];
+        }
+    }
 }
 
 - (UIPanGestureRecognizer *)panRecognizer {
     UIPanGestureRecognizer *result = [[UIPanGestureRecognizer alloc] initWithTarget:self
                                                                              action:@selector(panAction:)];
-    [result setMinimumNumberOfTouches:1];
-    [result setMaximumNumberOfTouches:1];
+    result.minimumNumberOfTouches = 1;
+    result.maximumNumberOfTouches = 2;
     
     return result;
 }
@@ -127,7 +130,7 @@
 - (void)panAction:(UIPanGestureRecognizer *)recognizer {
 //    NSLog(@"Coordinate...");
     
-    UIView *recognizerView = recognizer.view;
+    PJWTileImageView *recognizerView = (PJWTileImageView *)recognizer.view;
     
     [self.view bringSubviewToFront:recognizerView];
     
@@ -139,7 +142,94 @@
     
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         NSLog(@"Stop");
+        [self searchNeighborForImageView:recognizerView];
     }
+}
+
+- (void)searchNeighborForImageView:(PJWTileImageView *)tileImageView {
+    for (NSArray *rowArray in self.tiles.tiles) {
+        for (TENTileModel *tileModel in rowArray) {
+            PJWTileImageView *imageView = tileModel.imageView;
+            
+            if (tileImageView != imageView) {
+                CGPoint center = imageView.center;
+                
+                BOOL isNeighbor = [self isNeighborDragView:tileImageView andView:imageView];
+                if (isNeighbor) {
+                    [self dragView:tileImageView moveToView:imageView];
+                    NSLog(@"[%ld, %ld] -> center(%f, %f)", (long)tileModel.row, (long)tileModel.col, center.x, center.y);
+                }
+            }
+        }
+    }
+}
+
+- (void)dragView:(PJWTileImageView *)dragView moveToView:(PJWTileImageView *)view {
+    CGPoint dragViewCenter = view.center;
+    
+//width drag
+    if (dragView.row == view.row) {
+        dragViewCenter.x += (dragView.col - view.col) * self.parameterModel.anchorWidth;
+    }
+    
+//height drag
+    if (dragView.col == view.col) {
+        dragViewCenter.y += (dragView.row - view.row) * self.parameterModel.anchorHeight;
+    }
+    
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         dragView.center = dragViewCenter;
+                     }];
+}
+
+- (BOOL)isNeighborDragView:(PJWTileImageView *)dragView andView:(PJWTileImageView *)view {
+    CGFloat magneticDelta = 40;
+    
+    CGPoint dragViewCenter = dragView.center;
+    CGPoint viewCenter = view.center;
+    
+    CGFloat deltaWidthAxis = fabsf(dragViewCenter.x - viewCenter.x);
+    CGFloat deltaWidthNeighbor = fabsf(deltaWidthAxis - self.parameterModel.anchorWidth);
+
+    CGFloat deltaHeightAxis = fabsf(dragViewCenter.y - viewCenter.y);
+    CGFloat deltaHeightNeighbor = fabsf(deltaHeightAxis - self.parameterModel.anchorHeight);
+
+//height neighbor
+    if (deltaWidthAxis < magneticDelta && deltaHeightNeighbor < magneticDelta) {
+        if (view.col == dragView.col) {
+            NSInteger nextRow = view.row - dragView.row;
+            NSInteger sign = (viewCenter.y > dragViewCenter.y) ? 1: -1;
+            if ((sign * nextRow) == 1) {
+                return YES;
+            }
+        }
+    }
+    
+//width neighbor
+    if (deltaHeightAxis < magneticDelta && deltaWidthNeighbor < magneticDelta) {
+        if (view.row == dragView.row) {
+            NSInteger nextCol = view.col - dragView.col;
+            NSInteger sign = (viewCenter.x > dragViewCenter.x) ? 1: -1;
+            if ((sign * nextCol) == 1) {
+                return YES;
+            }
+        }
+    }
+    
+    return NO;
+}
+
+- (UILongPressGestureRecognizer *)longPressRecognizer {
+    UILongPressGestureRecognizer *result = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                                                         action:@selector(longPressAction:)];
+    result.minimumPressDuration = 0.1;
+    
+    return result;
+}
+
+- (void)longPressAction:(UILongPressGestureRecognizer *)recognizer {
+    [self.view bringSubviewToFront:recognizer.view];
 }
 
 @end

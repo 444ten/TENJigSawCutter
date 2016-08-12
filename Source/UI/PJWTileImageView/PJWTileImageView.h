@@ -14,6 +14,4 @@
 
 @property (nonatomic, strong)   UIBezierPath *bezierPath;
 
-- (void)cropImageView;
-
 @end

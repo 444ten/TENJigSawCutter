@@ -61,10 +61,12 @@ static NSString * const kImageName = @"900x700.jpg";
     self.baseWidth = self.fullWidth / (self.countWidth + self.overlapRatioWidth * (self.countWidth + 1));
     self.overlapWidth = self.overlapRatioWidth * self.baseWidth;
     self.sliceWidth = 2 * self.overlapWidth + self.baseWidth;
+    self.anchorWidth = self.baseWidth + self.overlapWidth;
     
     self.baseHeight = self.fullHeight / (self.countHeight + self.overlapRatioHeight * (self.countHeight + 1));
     self.overlapHeight = self.overlapRatioHeight * self.baseHeight;
     self.sliceHeight = 2 * self.overlapHeight + self.baseHeight;
+    self.anchorHeight = self.baseHeight + self.overlapHeight;
 }
 
 

@@ -8,7 +8,10 @@
 
 #import "TENTileModel.h"
 #import "PJWOffsetCornerModel.h"
+
+#import "PJWCropImageView.h"
 #import "PJWPuzzleParameterModel.h"
+
 
 @interface TENTileModel ()
 
@@ -33,28 +36,26 @@
 #pragma mark Public Methods
 
 - (void)setup {
-    PJWTileImageView *imageView = [[PJWTileImageView alloc] initWithImage:[self tileImage]];
-    imageView.layer.borderWidth = 1.0;
-//    imageView.alpha = 0.4;
+    PJWCropImageView *cropImageView = [[PJWCropImageView alloc] initWithImage:[self tileImage]];
+    [cropImageView cropImageForRow:self.row col:self.col];
 
-    imageView.row = self.row;
-    imageView.col = self.col;
-    
-    [imageView cropImageView];
-    
-    
-    
-    self.imageView = imageView;
-    
-    self.anchor = [self anchorPoint];
-    
-    
-    UIGraphicsBeginImageContextWithOptions(imageView.frame.size, NO, 0.0);
-    [imageView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsBeginImageContextWithOptions(cropImageView.frame.size, NO, 0.0);
+    [cropImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *cropImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    self.simpleImageView = [[PJWTileImageView alloc] initWithImage:viewImage];
+    
+    PJWTileImageView *tileImageView = [[PJWTileImageView alloc] initWithImage:cropImage];
+//    tileImageView.layer.borderWidth = 1.0;
+//    imageView.alpha = 0.4;
+
+    tileImageView.row = self.row;
+    tileImageView.col = self.col;
+    tileImageView.bezierPath = cropImageView.bezierPath;
+
+    self.imageView = tileImageView;
+    
+    self.anchor = [self anchorPoint];
 }
 
 
@@ -81,8 +82,10 @@
 - (NSValue *)anchorPoint {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
 
-    CGFloat x = (self.col + 1) * parameterModel.overlapWidth  + (self.col + 0.5) * parameterModel.baseWidth ;
-    CGFloat y = (self.row + 1) * parameterModel.overlapHeight + (self.row + 0.5) * parameterModel.baseHeight;
+//    CGFloat x = (self.col + 1) * parameterModel.overlapWidth  + (self.col + 0.5) * parameterModel.baseWidth ;
+//    CGFloat y = (self.row + 1) * parameterModel.overlapHeight + (self.row + 0.5) * parameterModel.baseHeight;
+    CGFloat x = parameterModel.overlapWidth  + 0.5 * parameterModel.baseWidth + self.col * parameterModel.anchorWidth;
+    CGFloat y = parameterModel.overlapHeight  + 0.5 * parameterModel.baseHeight + self.row * parameterModel.anchorHeight;
     
     return NSValueWithPoint(x, y);
 }

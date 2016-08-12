@@ -40,15 +40,18 @@
     
     for (NSInteger row = 0; row < parameterModel.countHeight; row++) {
         
+        NSMutableArray *rowArray = [NSMutableArray new];
+        
         for (NSInteger col = 0; col < parameterModel.countWidth; col++) {
             TENTileModel *tileModel = [[TENTileModel alloc] initWithRow:row column:col];
             
             
             [tileModel setup];
             
-            
-            [tiles addObject:tileModel];
+            [rowArray addObject:tileModel];
         }
+        
+        [tiles addObject:rowArray];
     }
 }
 
