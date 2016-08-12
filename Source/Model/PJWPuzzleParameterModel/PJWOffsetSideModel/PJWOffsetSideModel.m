@@ -77,7 +77,8 @@ static const CGFloat kArcWidthDeltaRatio    = 0.5;
     CGFloat y = 0.0;
 
 //simple side
-    x = arc4random_uniform(sideHeight);
+    CGFloat half = sideHeight / 2;
+    x = half + arc4random_uniform(half);
     y = sideCenterWidth - arcWidthMin +  (2 * arc4random_uniform(arcWidthMin));
     [result addObject:NSValueWithPoint(x, y)];
 
@@ -123,7 +124,7 @@ static const CGFloat kArcWidthDeltaRatio    = 0.5;
         NSMutableArray *rowArray = [NSMutableArray new];
         
         for (NSInteger col = 0; col < parameterModel.countWidth; col++) {
-            if (0 == row || parameterModel.countWidth == row) {
+            if (0 == row || parameterModel.countHeight == row) {
                 [rowArray addObject:@[]];
             } else {
                 [rowArray addObject:[self pointsOfWidthSide]];
@@ -161,10 +162,10 @@ static const CGFloat kArcWidthDeltaRatio    = 0.5;
     
 //simple side
     x = sideCenterWidth - arcWidthMin +  (2 * arc4random_uniform(arcWidthMin));
-    y = arc4random_uniform(sideHeight);
-    [result addObject:NSValueWithPoint(x, y)];
-
+    CGFloat half = sideHeight / 2;
+    y = half + arc4random_uniform(half);
     
+    [result addObject:NSValueWithPoint(x, y)];
 /*
 //inArc end
     x = sideCenterWidth - (arcWidthMin + arc4random_uniform(arcWidthDelta));

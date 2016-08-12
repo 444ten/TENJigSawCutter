@@ -43,39 +43,13 @@
         for (NSInteger col = 0; col < parameterModel.countWidth; col++) {
             TENTileModel *tileModel = [[TENTileModel alloc] initWithRow:row column:col];
             
-            [self setCornerPointFor:tileModel];
             
             [tileModel setup];
-            
-            if (0 == col) {
-                tileModel.tileType |= PJWTileTypeLeft;
-            } else if (parameterModel.countWidth - 1 == col) {
-                tileModel.tileType |= PJWTileTypeRight;
-            }
-            
-            if (0 == row) {
-                tileModel.tileType |= PJWTileTypeUp;
-            } else if (parameterModel.countHeight - 1 == row) {
-                tileModel.tileType |= PJWTileTypeDown;
-            }
             
             
             [tiles addObject:tileModel];
         }
     }
 }
-
-- (void)setCornerPointFor:(TENTileModel *)tileModel {
-    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
-
-    CGFloat x = tileModel.col * (parameterModel.baseWidth + parameterModel.overlapWidth);
-    CGFloat y = tileModel.row * (parameterModel.baseHeight + parameterModel.overlapHeight);
-    
-    tileModel.upLeft    = NSValueWithPoint(x                            , y                             );
-    tileModel.upRight   = NSValueWithPoint(x + parameterModel.sliceWidth, y                             );
-    tileModel.downRight = NSValueWithPoint(x + parameterModel.sliceWidth, y + parameterModel.sliceHeight);
-    tileModel.downLeft  = NSValueWithPoint(x                            , y + parameterModel.sliceHeight);
-}
-
 
 @end

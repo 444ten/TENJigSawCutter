@@ -59,11 +59,11 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 3;
+    parameterModel.countWidth = 15;
     parameterModel.overlapRatioWidth = 0.7;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 3;
+    parameterModel.countHeight = 20;
     parameterModel.overlapRatioHeight = 0.7;
     
     [parameterModel setup];
@@ -96,7 +96,11 @@
         [imageView addGestureRecognizer:[self panRecognizer]];
         [imageView addGestureRecognizer:[self tapRecognizer]];
         
-        imageView.center = CGPointFromValue(tileModel.center);
+        CGPoint center = CGPointFromValue(tileModel.anchor);
+        center.x += (1024. - 900.) / 2.0;
+        center.y += ( 768. - 700.) / 2.0;
+        
+        imageView.center = center;
         
         [rootView addSubview:tileModel.imageView];
     }

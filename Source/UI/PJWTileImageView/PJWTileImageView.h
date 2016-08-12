@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface PJWTileImageView : UIImageView
+@property (nonatomic, assign)   NSInteger   row;
+@property (nonatomic, assign)   NSInteger   col;
+
 @property (nonatomic, strong)   UIBezierPath *bezierPath;
+
+- (void)cropImageView;
 
 @end
