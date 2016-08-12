@@ -24,6 +24,7 @@
 		76C9BBF41D5B46260067833D /* PJWPuzzleParameterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBF31D5B46260067833D /* PJWPuzzleParameterModel.m */; };
 		76C9BBF81D5C442F0067833D /* PJWOffsetSideModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBF71D5C442F0067833D /* PJWOffsetSideModel.m */; };
 		76C9BC011D5C754F0067833D /* PJWTileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BC001D5C754F0067833D /* PJWTileImageView.m */; };
+		76C9BC051D5DC91C0067833D /* PJWCropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BC041D5DC91C0067833D /* PJWCropImageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,8 @@
 		76C9BBF71D5C442F0067833D /* PJWOffsetSideModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWOffsetSideModel.m; sourceTree = "<group>"; };
 		76C9BBFF1D5C754F0067833D /* PJWTileImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWTileImageView.h; sourceTree = "<group>"; };
 		76C9BC001D5C754F0067833D /* PJWTileImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWTileImageView.m; sourceTree = "<group>"; };
+		76C9BC031D5DC91C0067833D /* PJWCropImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWCropImageView.h; sourceTree = "<group>"; };
+		76C9BC041D5DC91C0067833D /* PJWCropImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWCropImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +206,7 @@
 		76C9BBF91D5C747F0067833D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				76C9BC021D5DC9110067833D /* PJWCropImageView */,
 				76C9BBFE1D5C753C0067833D /* PJWTileImageView */,
 			);
 			path = UI;
@@ -215,6 +219,15 @@
 				76C9BC001D5C754F0067833D /* PJWTileImageView.m */,
 			);
 			path = PJWTileImageView;
+			sourceTree = "<group>";
+		};
+		76C9BC021D5DC9110067833D /* PJWCropImageView */ = {
+			isa = PBXGroup;
+			children = (
+				76C9BC031D5DC91C0067833D /* PJWCropImageView.h */,
+				76C9BC041D5DC91C0067833D /* PJWCropImageView.m */,
+			);
+			path = PJWCropImageView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,6 +308,7 @@
 				76C9BBDD1D58AAA90067833D /* TENCornerModel.m in Sources */,
 				76C9BBE51D599E1E0067833D /* TENTiles.m in Sources */,
 				76C9BBF81D5C442F0067833D /* PJWOffsetSideModel.m in Sources */,
+				76C9BC051D5DC91C0067833D /* PJWCropImageView.m in Sources */,
 				76C9BBEF1D5B227E0067833D /* PJWOffsetCornerModel.m in Sources */,
 				76C9BBF41D5B46260067833D /* PJWPuzzleParameterModel.m in Sources */,
 				76C9BBE11D599D6D0067833D /* TENTileModel.m in Sources */,

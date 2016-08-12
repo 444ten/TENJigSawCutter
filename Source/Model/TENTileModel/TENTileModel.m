@@ -42,9 +42,19 @@
     
     [imageView cropImageView];
     
+    
+    
     self.imageView = imageView;
     
     self.anchor = [self anchorPoint];
+    
+    
+    UIGraphicsBeginImageContextWithOptions(imageView.frame.size, NO, 0.0);
+    [imageView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    self.simpleImageView = [[PJWTileImageView alloc] initWithImage:viewImage];
 }
 
 
@@ -64,7 +74,7 @@
     CGImageRef imageRef = CGImageCreateWithImageInRect(parameterModel.originImage.CGImage, tileRect);
     UIImage *result = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);
-
+   
     return result;
 }
 

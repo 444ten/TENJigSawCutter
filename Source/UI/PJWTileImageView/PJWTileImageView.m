@@ -23,9 +23,9 @@
 #pragma mark -
 #pragma mark Overriden Methods
 
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    return [self.bezierPath containsPoint:point];
-}
+//- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+//    return [self.bezierPath containsPoint:point];
+//}
 
 #pragma mark -
 #pragma mark Public Methods
@@ -49,10 +49,6 @@
     NSValue *rightUpCorner   = NSValueWithPoint(  rightUpOffset.x + offsetWidth,   rightUpOffset.y               );
     NSValue *rightDownCorner = NSValueWithPoint(rightDownOffset.x + offsetWidth, rightDownOffset.y + offsetHeight);
     NSValue *leftDownCorner  = NSValueWithPoint( leftDownOffset.x              ,  leftDownOffset.y + offsetHeight);
-    
-    //    NSMutableArray *upPoints = self.upPoints;
-    //    [upPoints addObject:leftUpCorner];
-    //    [upPoints addObject:leftUpCorner];
     
     NSArray *points = nil;
     
@@ -103,12 +99,12 @@
     
     //mask
     self.bezierPath = aPath;
-    
+
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
     shapeLayer.path = aPath.CGPath;
     
-    [self.layer setMask:shapeLayer];
     
+    [self.layer setMask:shapeLayer];    
     
     [self drawPath:aPath inView:self];
 }

@@ -34,6 +34,8 @@
 @property (nonatomic, strong)   PJWOffsetCornerModel    *offsetCornerModel;
 @property (nonatomic, strong)   PJWOffsetSideModel      *offsetSideModel;
 
+@property (nonatomic, strong)   UIImage *lastImage;
+
 + (instancetype)sharedInstance;
 
 - (void)setup;

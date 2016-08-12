@@ -19,6 +19,8 @@
 
 @property (nonatomic, strong)   PJWTileImageView *imageView;
 
+@property (nonatomic, strong)   PJWTileImageView *simpleImageView;
+
 - (instancetype)initWithRow:(NSUInteger)row column:(NSInteger)col;
 
 - (void)setup;

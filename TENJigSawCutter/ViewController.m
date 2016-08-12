@@ -45,12 +45,10 @@
 
 #pragma mark -
 #pragma mark Accessors
--   (void)setGhostPresent:(BOOL)ghostPresent {
-//    if (_ghostPresent != ghostPresent) {
-        _ghostPresent = ghostPresent;
-        
-        self.originalImageView.alpha = ghostPresent ? 0.3 : 0.0;
-//    }
+- (void)setGhostPresent:(BOOL)ghostPresent {
+    _ghostPresent = ghostPresent;
+    
+    self.originalImageView.alpha = ghostPresent ? 0.3 : 0.0;
 }
 
 #pragma mark -
@@ -59,11 +57,11 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 15;
+    parameterModel.countWidth = 20;
     parameterModel.overlapRatioWidth = 0.7;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 20;
+    parameterModel.countHeight = 15;
     parameterModel.overlapRatioHeight = 0.7;
     
     [parameterModel setup];
@@ -89,7 +87,8 @@
     UIView *rootView = self.view;
     
     for (TENTileModel *tileModel in self.tiles.tiles) {
-        UIImageView *imageView = tileModel.imageView;
+//        UIImageView *imageView = tileModel.imageView;
+        UIImageView *imageView = tileModel.simpleImageView;
         
         imageView.userInteractionEnabled = YES;
 
@@ -97,13 +96,13 @@
         [imageView addGestureRecognizer:[self tapRecognizer]];
         
         CGPoint center = CGPointFromValue(tileModel.anchor);
-        center.x += (1024. - 900.) / 2.0;
-        center.y += ( 768. - 700.) / 2.0;
+        center.x += (1024. - self.parameterModel.fullWidth) / 2.0;
+        center.y += ( 768. - self.parameterModel.fullHeight) / 2.0;
         
         imageView.center = center;
         
-        [rootView addSubview:tileModel.imageView];
-    }
+        [rootView addSubview:imageView];
+    }    
 }
 
 - (UIPanGestureRecognizer *)panRecognizer {
@@ -126,7 +125,7 @@
 }
 
 - (void)panAction:(UIPanGestureRecognizer *)recognizer {
-    NSLog(@"Coordinate...");
+//    NSLog(@"Coordinate...");
     
     UIView *recognizerView = recognizer.view;
     
@@ -136,6 +135,11 @@
     recognizerView.center = CGPointMake(recognizerView.center.x + translation.x,
                                          recognizerView.center.y + translation.y);
     [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
+    
+    
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        NSLog(@"Stop");
+    }
 }
 
 @end
