@@ -22,19 +22,24 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)moveSegmentWithOffset:(CGPoint)offset {
+- (void)moveSegmentWithOffset:(CGPoint)offset animated:(BOOL)animated {
     for (PJWTileImageView *view in self.tileModel.linkedTileHashTable) {
-        view.center = CGPointMake(view.center.x + offset.x,
-                                  view.center.y + offset.y);
-        
         [self.superview bringSubviewToFront:view];
+        
+        [UIView animateWithDuration:animated ? 1.0 : 0.0
+                         animations:^{
+                             view.center = CGPointMake(view.center.x + offset.x,
+                                                       view.center.y + offset.y);
+                             
+                         }];
+        
     }
 }
 
-- (void)moveSegmentToPoint:(CGPoint)point {
+- (void)moveSegmentToPoint:(CGPoint)point animated:(BOOL)animated {
     CGPoint offset = CGPointMake(point.x - self.center.x, point.y - self.center.y);
     
-    [self moveSegmentWithOffset:offset];
+    [self moveSegmentWithOffset:offset animated:animated];
 }
 
 - (void)stickToView:(PJWTileImageView *)view {
@@ -54,7 +59,7 @@
         targetCenter.y += (tileModel.row - viewTileModel.row) * parameterModel.anchorHeight;
     }
     
-    [self moveSegmentToPoint:targetCenter];
+    [self moveSegmentToPoint:targetCenter animated:YES];
     [self updateLinkedTileWithView:view];
 }
 
@@ -99,6 +104,21 @@
     }
     
     return NO;
+}
+
+- (NSArray *)freeNeighborsFromSet:(NSSet *)tileSet {
+    NSMutableSet *searchSet = [NSMutableSet setWithSet:tileSet];
+    [searchSet minusSet:self.tileModel.linkedTileHashTable.setRepresentation];
+    
+    NSMutableArray *result = [NSMutableArray new];
+    
+    for (PJWTileImageView *view in searchSet) {
+        if ([self isNeighborToView:view]) {
+            [result addObject:view];
+        }
+    }
+
+    return result;
 }
 
 #pragma mark -

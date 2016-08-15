@@ -52,8 +52,20 @@
     self.originalImageView.alpha = ghostPresent ? 0.3 : 0.0;
 }
 
+
 #pragma mark -
-#pragma mark TENCornerModel
+#pragma mark Interface Handling
+
+- (IBAction)tapOriginalImage:(UITapGestureRecognizer *)sender {
+//    [self.view bringSubviewToFront:sender.view];
+}
+
+- (IBAction)onGhost:(UIButton *)sender {
+    self.ghostPresent = !self.ghostPresent;
+}
+
+#pragma mark -
+#pragma mark Private Methods
 
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
@@ -69,20 +81,6 @@
     
     self.parameterModel = parameterModel;
 }
-
-#pragma mark -
-#pragma mark Interface Handling
-
-- (IBAction)tapOriginalImage:(UITapGestureRecognizer *)sender {
-//    [self.view bringSubviewToFront:sender.view];
-}
-
-- (IBAction)onGhost:(UIButton *)sender {
-    self.ghostPresent = !self.ghostPresent;
-}
-
-#pragma mark -
-#pragma mark Private Methods
 
 - (void)addTilesOnView {
     UIView *rootView = self.view;
@@ -129,7 +127,7 @@
     PJWTileImageView *recognizerView = (PJWTileImageView *)recognizer.view;
     UIView *rootView = self.view;
     
-    [recognizerView moveSegmentWithOffset:[recognizer translationInView:rootView]];
+    [recognizerView moveSegmentWithOffset:[recognizer translationInView:rootView] animated:NO];
     
     [recognizer setTranslation:CGPointZero inView:rootView];
     
@@ -140,15 +138,14 @@
 }
 
 - (void)searchNeighborForView:(PJWTileImageView *)tileView {
-    NSMutableSet *searchSet = [NSMutableSet setWithSet:self.tileSet];
-    [searchSet minusSet:tileView.tileModel.linkedTileHashTable.setRepresentation];
+    NSArray *freeNeighbors = [tileView freeNeighborsFromSet:self.tileSet];
     
-    for (PJWTileImageView *view in searchSet) {
-        if ([tileView isNeighborToView:view]) {
-            [tileView stickToView:view];
-            
-            break;
-        }
+    if (freeNeighbors.count > 0) {
+        [tileView stickToView:freeNeighbors[0]];
+    }
+
+    for (NSInteger index = 1; index < freeNeighbors.count; index++) {
+        [freeNeighbors[index] stickToView:tileView];
     }
 }
 
