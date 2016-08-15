@@ -145,65 +145,23 @@
     BOOL allDoneNow = NO;
     
     for (NSArray *rowArray in self.tiles) {
-        for (PJWTileImageView *imageView in rowArray) {
+        for (PJWTileImageView *view in rowArray) {
             
-            if (tileImageView != imageView) {
-                CGPoint center = imageView.center;
+            if (tileImageView != view) {
                 
-                BOOL isNeighbor = [self isNeighborDragView:tileImageView andView:imageView];
-                if (isNeighbor) {
-                    [tileImageView stickToView:imageView];
-                    NSLog(@"[%ld, %ld] -> center(%f, %f)",  (long)tileImageView.tileModel.row,
-                                                            (long)tileImageView.tileModel.col,
-                                                            center.x,
-                                                            center.y);
-                         
+                if ([tileImageView isNeighborToView:view]) {
+                    [tileImageView stickToView:view];
+                    
                     allDoneNow = YES;
                     break;
                 }
             }
         }
+        
         if (allDoneNow) {
             break;
         }
     }
-}
-
-- (BOOL)isNeighborDragView:(PJWTileImageView *)dragView andView:(PJWTileImageView *)view {
-    CGFloat magneticDelta = 40;
-    
-    CGPoint dragViewCenter = dragView.center;
-    CGPoint viewCenter = view.center;
-    
-    CGFloat deltaWidthAxis = fabs(dragViewCenter.x - viewCenter.x);
-    CGFloat deltaWidthNeighbor = fabs(deltaWidthAxis - self.parameterModel.anchorWidth);
-
-    CGFloat deltaHeightAxis = fabs(dragViewCenter.y - viewCenter.y);
-    CGFloat deltaHeightNeighbor = fabs(deltaHeightAxis - self.parameterModel.anchorHeight);
-
-//height neighbor
-    if (deltaWidthAxis < magneticDelta && deltaHeightNeighbor < magneticDelta) {
-        if (view.tileModel.col == dragView.tileModel.col) {
-            NSInteger nextRow = view.tileModel.row - dragView.tileModel.row;
-            NSInteger sign = (viewCenter.y > dragViewCenter.y) ? 1: -1;
-            if ((sign * nextRow) == 1) {
-                return YES;
-            }
-        }
-    }
-    
-//width neighbor
-    if (deltaHeightAxis < magneticDelta && deltaWidthNeighbor < magneticDelta) {
-        if (view.tileModel.row == dragView.tileModel.row) {
-            NSInteger nextCol = view.tileModel.col - dragView.tileModel.col;
-            NSInteger sign = (viewCenter.x > dragViewCenter.x) ? 1: -1;
-            if ((sign * nextCol) == 1) {
-                return YES;
-            }
-        }
-    }
-    
-    return NO;
 }
 
 - (UILongPressGestureRecognizer *)longPressRecognizer {
