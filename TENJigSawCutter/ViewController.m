@@ -16,7 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *originalImageView;
 
 @property (nonatomic, strong)   PJWPuzzleParameterModel *parameterModel;
-@property (nonatomic, strong)   NSArray                 *tiles;
+@property (nonatomic, strong)   NSSet                   *tileSet;
 
 @property (nonatomic, assign)   BOOL    ghostPresent;
 
@@ -32,7 +32,7 @@
     
     [self setupParameterModel];
     
-    self.tiles = [PJWTilesModel new].tiles;
+    self.tileSet = [PJWTilesModel new].tileSet;
     
     self.originalImageView.image = self.parameterModel.originImage;
     self.ghostPresent = NO;
@@ -87,24 +87,22 @@
 - (void)addTilesOnView {
     UIView *rootView = self.view;
     
-    for (NSArray *rowArray in self.tiles) {
-        for (PJWTileImageView *tileView in rowArray) {
-            
-            tileView.userInteractionEnabled = YES;
-            
-            [tileView addGestureRecognizer:[self panRecognizer]];
-            [tileView addGestureRecognizer:[self tapRecognizer]];
-            //        [imageView addGestureRecognizer:[self longPressRecognizer]];
-            
-            
-            CGPoint center = CGPointFromValue(tileView.tileModel.anchor);
-            center.x += (1024. - self.parameterModel.fullWidth) / 2.0;
-            center.y += ( 768. - self.parameterModel.fullHeight) / 2.0;
-            
-            tileView.center = center;
-            
-            [rootView addSubview:tileView];
-        }
+    for (PJWTileImageView *tileView in self.tileSet) {
+        
+        tileView.userInteractionEnabled = YES;
+        
+        [tileView addGestureRecognizer:[self panRecognizer]];
+        [tileView addGestureRecognizer:[self tapRecognizer]];
+        //        [imageView addGestureRecognizer:[self longPressRecognizer]];
+        
+        
+        CGPoint center = CGPointFromValue(tileView.tileModel.anchor);
+        center.x += (1024. - self.parameterModel.fullWidth) / 2.0;
+        center.y += ( 768. - self.parameterModel.fullHeight) / 2.0;
+        
+        tileView.center = center;
+        
+        [rootView addSubview:tileView];
     }
 }
 
@@ -142,26 +140,17 @@
 }
 
 - (void)searchNeighborForImageView:(PJWTileImageView *)tileImageView {
-    BOOL allDoneNow = NO;
-    
-    for (NSArray *rowArray in self.tiles) {
-        for (PJWTileImageView *view in rowArray) {
+    for (PJWTileImageView *view in self.tileSet) {
+        if (tileImageView != view) {
             
-            if (tileImageView != view) {
+            if ([tileImageView isNeighborToView:view]) {
+                [tileImageView stickToView:view];
                 
-                if ([tileImageView isNeighborToView:view]) {
-                    [tileImageView stickToView:view];
-                    
-                    allDoneNow = YES;
-                    break;
-                }
+                break;
             }
         }
-        
-        if (allDoneNow) {
-            break;
-        }
     }
+    
 }
 
 - (UILongPressGestureRecognizer *)longPressRecognizer {

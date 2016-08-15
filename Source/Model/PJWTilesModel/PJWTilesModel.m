@@ -14,7 +14,14 @@
 #import "PJWCropImageView.h"
 #import "PJWTileImageView.h"
 
+@interface PJWTilesModel ()
+@property (nonatomic, strong)   NSMutableArray *tiles;
+
+@end
+
 @implementation PJWTilesModel
+
+@dynamic tileSet;
 
 #pragma mark -
 #pragma mark Initializations and Deallocations
@@ -26,6 +33,20 @@
     }
     
     return self;
+}
+
+#pragma mark -
+#pragma mark Accessors
+
+- (NSSet *)tileSet {
+    NSMutableSet *result = [NSMutableSet new];
+    for (NSArray *rowArray in self.tiles) {
+        for (id obj in rowArray) {
+            [result addObject:obj];
+        }
+    }
+
+    return result.copy;
 }
 
 #pragma mark -
