@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface PJWTilesModel : NSObject
+@property (nonatomic, strong)   NSMutableArray *tiles;
 
 @end

@@ -9,13 +9,14 @@
 #import "ViewController.h"
 
 #import "PJWPuzzleParameterModel.h"
-#import "TENTiles.h"
+#import "PJWTilesModel.h"
+#import "PJWTileImageView.h"
 
 @interface ViewController ()
 @property (strong, nonatomic) IBOutlet UIImageView *originalImageView;
 
-@property (nonatomic, strong)   PJWPuzzleParameterModel  *parameterModel;
-@property (nonatomic, strong)   TENTiles        *tiles;
+@property (nonatomic, strong)   PJWPuzzleParameterModel *parameterModel;
+@property (nonatomic, strong)   NSArray                 *tiles;
 
 @property (nonatomic, assign)   BOOL    ghostPresent;
 
@@ -31,7 +32,7 @@
     
     [self setupParameterModel];
     
-    self.tiles = [TENTiles new];
+    self.tiles = [PJWTilesModel new].tiles;
     
     self.originalImageView.image = self.parameterModel.originImage;
     self.ghostPresent = NO;
@@ -86,24 +87,23 @@
 - (void)addTilesOnView {
     UIView *rootView = self.view;
     
-    for (NSArray *rowArray in self.tiles.tiles) {
-        for (TENTileModel *tileModel in rowArray) {
-            UIImageView *imageView = tileModel.imageView;
+    for (NSArray *rowArray in self.tiles) {
+        for (PJWTileImageView *tileView in rowArray) {
             
-            imageView.userInteractionEnabled = YES;
+            tileView.userInteractionEnabled = YES;
             
-            [imageView addGestureRecognizer:[self panRecognizer]];
-            [imageView addGestureRecognizer:[self tapRecognizer]];
+            [tileView addGestureRecognizer:[self panRecognizer]];
+            [tileView addGestureRecognizer:[self tapRecognizer]];
             //        [imageView addGestureRecognizer:[self longPressRecognizer]];
             
             
-            CGPoint center = CGPointFromValue(tileModel.anchor);
+            CGPoint center = CGPointFromValue(tileView.tileModel.anchor);
             center.x += (1024. - self.parameterModel.fullWidth) / 2.0;
             center.y += ( 768. - self.parameterModel.fullHeight) / 2.0;
             
-            imageView.center = center;
+            tileView.center = center;
             
-            [rootView addSubview:imageView];
+            [rootView addSubview:tileView];
         }
     }
 }
@@ -132,17 +132,15 @@
     
     PJWTileImageView *recognizerView = (PJWTileImageView *)recognizer.view;
     
-    TENTileModel *viewTileModel     = self.tiles.tiles[recognizerView.row][recognizerView.col];
-
     [self.view bringSubviewToFront:recognizerView];
     
     CGPoint translation = [recognizer translationInView:self.view];
 //    recognizerView.center = CGPointMake(recognizerView.center.x + translation.x,
 //                                         recognizerView.center.y + translation.y);
     
-    for (TENTileModel *tileModel in viewTileModel.linkedTileHashTable) {
-        tileModel.imageView.center = CGPointMake(tileModel.imageView.center.x + translation.x,
-                                  tileModel.imageView.center.y + translation.y);
+    for (PJWTileImageView *view in recognizerView.tileModel.linkedTileHashTable) {
+        view.center = CGPointMake(view.center.x + translation.x,
+                                  view.center.y + translation.y);
         
     }
     
@@ -159,9 +157,8 @@
 - (void)searchNeighborForImageView:(PJWTileImageView *)tileImageView {
     BOOL allDoneNow = NO;
     
-    for (NSArray *rowArray in self.tiles.tiles) {
-        for (TENTileModel *tileModel in rowArray) {
-            PJWTileImageView *imageView = tileModel.imageView;
+    for (NSArray *rowArray in self.tiles) {
+        for (PJWTileImageView *imageView in rowArray) {
             
             if (tileImageView != imageView) {
                 CGPoint center = imageView.center;
@@ -169,7 +166,10 @@
                 BOOL isNeighbor = [self isNeighborDragView:tileImageView andView:imageView];
                 if (isNeighbor) {
                     [self dragView:tileImageView moveToView:imageView];
-                    NSLog(@"[%ld, %ld] -> center(%f, %f)", (long)tileModel.row, (long)tileModel.col, center.x, center.y);
+                    NSLog(@"[%ld, %ld] -> center(%f, %f)",  (long)tileImageView.tileModel.row,
+                                                            (long)tileImageView.tileModel.col,
+                                                            center.x,
+                                                            center.y);
      
                     [self upadateLinkedForDragView:tileImageView andView:imageView];
                     
@@ -185,18 +185,15 @@
 }
 
 - (void)upadateLinkedForDragView:(PJWTileImageView *)dragView andView:(PJWTileImageView *)view {
-    TENTileModel *dragViewTileModel = self.tiles.tiles[dragView.row][dragView.col];
-    TENTileModel *viewTileModel     = self.tiles.tiles[view.row][view.col];
-    
     NSHashTable *aggregateTable = [NSHashTable weakObjectsHashTable];
-    [aggregateTable unionHashTable:dragViewTileModel.linkedTileHashTable];
-    [aggregateTable unionHashTable:viewTileModel.linkedTileHashTable];
+    [aggregateTable unionHashTable:dragView.tileModel.linkedTileHashTable];
+    [aggregateTable unionHashTable:view.tileModel.linkedTileHashTable];
     
-    NSMutableSet *linkedTileSet = dragViewTileModel.linkedTileHashTable.setRepresentation.mutableCopy;
-    [linkedTileSet unionSet:viewTileModel.linkedTileHashTable.setRepresentation];
+    NSMutableSet *linkedTileSet = dragView.tileModel.linkedTileHashTable.setRepresentation.mutableCopy;
+    [linkedTileSet unionSet:view.tileModel.linkedTileHashTable.setRepresentation];
     
-    for (TENTileModel *tileModel in linkedTileSet) {
-        tileModel.linkedTileHashTable = aggregateTable;
+    for (PJWTileImageView *imageView in linkedTileSet) {
+        imageView.tileModel.linkedTileHashTable = aggregateTable;
     }
 }
 
@@ -204,13 +201,13 @@
     CGPoint dragViewCenter = view.center;
     
 //width drag
-    if (dragView.row == view.row) {
-        dragViewCenter.x += (dragView.col - view.col) * self.parameterModel.anchorWidth;
+    if (dragView.tileModel.row == view.tileModel.row) {
+        dragViewCenter.x += (dragView.tileModel.col - view.tileModel.col) * self.parameterModel.anchorWidth;
     }
     
 //height drag
-    if (dragView.col == view.col) {
-        dragViewCenter.y += (dragView.row - view.row) * self.parameterModel.anchorHeight;
+    if (dragView.tileModel.col == view.tileModel.col) {
+        dragViewCenter.y += (dragView.tileModel.row - view.tileModel.row) * self.parameterModel.anchorHeight;
     }
     
     [UIView animateWithDuration:0.2
@@ -233,8 +230,8 @@
 
 //height neighbor
     if (deltaWidthAxis < magneticDelta && deltaHeightNeighbor < magneticDelta) {
-        if (view.col == dragView.col) {
-            NSInteger nextRow = view.row - dragView.row;
+        if (view.tileModel.col == dragView.tileModel.col) {
+            NSInteger nextRow = view.tileModel.row - dragView.tileModel.row;
             NSInteger sign = (viewCenter.y > dragViewCenter.y) ? 1: -1;
             if ((sign * nextRow) == 1) {
                 return YES;
@@ -244,8 +241,8 @@
     
 //width neighbor
     if (deltaHeightAxis < magneticDelta && deltaWidthNeighbor < magneticDelta) {
-        if (view.row == dragView.row) {
-            NSInteger nextCol = view.col - dragView.col;
+        if (view.tileModel.row == dragView.tileModel.row) {
+            NSInteger nextCol = view.tileModel.col - dragView.tileModel.col;
             NSInteger sign = (viewCenter.x > dragViewCenter.x) ? 1: -1;
             if ((sign * nextCol) == 1) {
                 return YES;

@@ -6,8 +6,18 @@
 //  Copyright © 2016 444ten. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+#import "TENMacros.h"
 
 @interface PJWTileModel : NSObject
+@property (nonatomic, assign)   NSInteger   row;
+@property (nonatomic, assign)   NSInteger   col;
+
+@property (nonatomic, strong)   UIBezierPath    *bezierPath;
+@property (nonatomic, strong)   NSValue         *anchor;
+@property (nonatomic, strong)   NSHashTable     *linkedTileHashTable;
+
+- (instancetype)initWithRow:(NSUInteger)row column:(NSInteger)col;
 
 @end

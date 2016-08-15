@@ -14,7 +14,7 @@
 #pragma mark Overriden Methods
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    return [self.bezierPath containsPoint:point];
+    return [self.tileModel.bezierPath containsPoint:point];
 }
 
 @end

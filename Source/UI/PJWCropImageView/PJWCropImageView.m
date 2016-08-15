@@ -10,15 +10,18 @@
 
 #import "TENMacros.h"
 #import "PJWPuzzleParameterModel.h"
+#import "PJWTileModel.h"
 
 @implementation PJWCropImageView
 
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)cropImageForRow:(NSInteger)row col:(NSInteger)col {
+- (void)cropImageForTileModel:(PJWTileModel *)tileModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
-    
+    NSInteger row = tileModel.row;
+    NSInteger col = tileModel.col;
+
     NSArray *offsets = parameterModel.offsetCornerModel.offsets;
     
     CGPoint leftUpOffset    = CGPointFromValue(offsets[row    ][col    ]);
@@ -82,7 +85,7 @@
     [aPath closePath];
     
     //mask
-    self.bezierPath = aPath;
+    tileModel.bezierPath = aPath;
     
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
     shapeLayer.path = aPath.CGPath;

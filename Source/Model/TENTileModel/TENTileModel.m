@@ -38,7 +38,7 @@
 
 - (void)setup {
     PJWCropImageView *cropImageView = [[PJWCropImageView alloc] initWithImage:[self tileImage]];
-    [cropImageView cropImageForRow:self.row col:self.col];
+//    [cropImageView cropImageForRow:self.row col:self.col];
 
     UIGraphicsBeginImageContextWithOptions(cropImageView.frame.size, NO, 0.0);
     [cropImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -50,10 +50,7 @@
 //    tileImageView.layer.borderWidth = 1.0;
 //    imageView.alpha = 0.4;
 
-    tileImageView.row = self.row;
-    tileImageView.col = self.col;
-    tileImageView.bezierPath = cropImageView.bezierPath;
-
+    
     self.imageView = tileImageView;
     
     self.anchor = [self anchorPoint];

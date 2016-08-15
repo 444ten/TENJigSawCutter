@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PJWCropImageView : UIImageView
-@property (nonatomic, strong)   UIBezierPath *bezierPath;
+#import "PJWTileModel.h"
 
-- (void)cropImageForRow:(NSInteger)row col:(NSInteger)col;
+@interface PJWCropImageView : UIImageView
+
+- (void)cropImageForTileModel:(PJWTileModel *)tileModel;
 
 @end

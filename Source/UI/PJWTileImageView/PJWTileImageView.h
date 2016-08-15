@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PJWTileImageView : UIImageView
-@property (nonatomic, assign)   NSInteger   row;
-@property (nonatomic, assign)   NSInteger   col;
+#import "PJWTileModel.h"
 
-@property (nonatomic, strong)   UIBezierPath *bezierPath;
+@interface PJWTileImageView : UIImageView
+@property (nonatomic, strong)   PJWTileModel    *tileModel;
 
 @end
