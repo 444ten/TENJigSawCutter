@@ -16,4 +16,6 @@
 - (void)moveSegmentWithOffset:(CGPoint)offset;
 - (void)moveSegmentToPoint:(CGPoint)point;
 
+- (void)stickToView:(PJWTileImageView *)view;
+
 @end

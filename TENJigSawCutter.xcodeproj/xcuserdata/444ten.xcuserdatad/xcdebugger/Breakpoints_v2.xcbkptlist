@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TENJigSawCutter/ViewController.m"
-            timestampString = "492942696.09728"
+            timestampString = "492944198.679455"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "233"
-            endingLineNumber = "233"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
             landmarkName = "-isNeighborDragView:andView:"
             landmarkType = "5">
          </BreakpointContent>

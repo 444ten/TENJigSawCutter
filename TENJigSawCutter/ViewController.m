@@ -152,14 +152,12 @@
                 
                 BOOL isNeighbor = [self isNeighborDragView:tileImageView andView:imageView];
                 if (isNeighbor) {
-                    [self dragView:tileImageView moveToView:imageView];
+                    [tileImageView stickToView:imageView];
                     NSLog(@"[%ld, %ld] -> center(%f, %f)",  (long)tileImageView.tileModel.row,
                                                             (long)tileImageView.tileModel.col,
                                                             center.x,
                                                             center.y);
-     
-                    [self updateLinkedForDragView:tileImageView andView:imageView];
-                    
+                         
                     allDoneNow = YES;
                     break;
                 }
@@ -169,35 +167,6 @@
             break;
         }
     }
-}
-
-- (void)updateLinkedForDragView:(PJWTileImageView *)dragView andView:(PJWTileImageView *)view {
-    NSHashTable *aggregateTable = [NSHashTable weakObjectsHashTable];
-    [aggregateTable unionHashTable:dragView.tileModel.linkedTileHashTable];
-    [aggregateTable unionHashTable:view.tileModel.linkedTileHashTable];
-    
-    NSMutableSet *linkedTileSet = dragView.tileModel.linkedTileHashTable.setRepresentation.mutableCopy;
-    [linkedTileSet unionSet:view.tileModel.linkedTileHashTable.setRepresentation];
-    
-    for (PJWTileImageView *imageView in linkedTileSet) {
-        imageView.tileModel.linkedTileHashTable = aggregateTable;
-    }
-}
-
-- (void)dragView:(PJWTileImageView *)dragView moveToView:(PJWTileImageView *)view {
-    CGPoint dragViewCenter = view.center;
-    
-//width drag
-    if (dragView.tileModel.row == view.tileModel.row) {
-        dragViewCenter.x += (dragView.tileModel.col - view.tileModel.col) * self.parameterModel.anchorWidth;
-    }
-    
-//height drag
-    if (dragView.tileModel.col == view.tileModel.col) {
-        dragViewCenter.y += (dragView.tileModel.row - view.tileModel.row) * self.parameterModel.anchorHeight;
-    }
-        
-    [dragView moveSegmentToPoint:dragViewCenter];
 }
 
 - (BOOL)isNeighborDragView:(PJWTileImageView *)dragView andView:(PJWTileImageView *)view {
