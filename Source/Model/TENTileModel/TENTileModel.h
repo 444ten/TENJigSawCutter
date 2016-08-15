@@ -16,10 +16,9 @@
 @property (nonatomic, assign)   NSInteger   col;
 
 @property (nonatomic, strong)   NSValue *anchor;
+@property (nonatomic, strong)   NSHashTable  *linkedTileHashTable;
 
 @property (nonatomic, strong)   PJWTileImageView *imageView;
-
-@property (nonatomic, strong)   PJWTileImageView *simpleImageView;
 
 - (instancetype)initWithRow:(NSUInteger)row column:(NSInteger)col;
 

@@ -9,6 +9,6 @@
 #import "TENTileModel.h"
 
 @interface TENTiles : NSObject
-@property (nonatomic, strong)   NSMutableArray<TENTileModel *>  *tiles;
+@property (nonatomic, strong)   NSMutableArray *tiles;
 
 @end

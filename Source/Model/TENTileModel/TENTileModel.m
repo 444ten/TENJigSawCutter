@@ -12,7 +12,6 @@
 #import "PJWCropImageView.h"
 #import "PJWPuzzleParameterModel.h"
 
-
 @interface TENTileModel ()
 
 @end
@@ -27,6 +26,8 @@
     if (self) {
         self.row = row;
         self.col = col;
+        
+        self.linkedTileHashTable = [self setupLinkedTile];
     }
     
     return self;
@@ -62,10 +63,17 @@
 #pragma mark -
 #pragma mark Private Methods
 
+- (NSHashTable *)setupLinkedTile {
+    NSHashTable *result = [NSHashTable weakObjectsHashTable];
+    [result addObject:self];
+    
+    return result;
+}
+
 - (UIImage *)tileImage {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     
-    CGFloat x = self.col * (parameterModel.baseWidth + parameterModel.overlapWidth);
+    CGFloat x = self.col * (parameterModel.baseWidth  + parameterModel.overlapWidth);
     CGFloat y = self.row * (parameterModel.baseHeight + parameterModel.overlapHeight);
     CGFloat dX = parameterModel.sliceWidth;
     CGFloat dY = parameterModel.sliceHeight;
@@ -81,11 +89,8 @@
 
 - (NSValue *)anchorPoint {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
-
-//    CGFloat x = (self.col + 1) * parameterModel.overlapWidth  + (self.col + 0.5) * parameterModel.baseWidth ;
-//    CGFloat y = (self.row + 1) * parameterModel.overlapHeight + (self.row + 0.5) * parameterModel.baseHeight;
-    CGFloat x = parameterModel.overlapWidth  + 0.5 * parameterModel.baseWidth + self.col * parameterModel.anchorWidth;
-    CGFloat y = parameterModel.overlapHeight  + 0.5 * parameterModel.baseHeight + self.row * parameterModel.anchorHeight;
+    CGFloat x = parameterModel.overlapWidth  + 0.5 * parameterModel.baseWidth  + self.col * parameterModel.anchorWidth ;
+    CGFloat y = parameterModel.overlapHeight + 0.5 * parameterModel.baseHeight + self.row * parameterModel.anchorHeight;
     
     return NSValueWithPoint(x, y);
 }
