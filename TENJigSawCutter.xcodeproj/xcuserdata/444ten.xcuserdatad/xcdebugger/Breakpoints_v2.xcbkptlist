@@ -58,28 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TENJigSawCutter/ViewController.m"
-            timestampString = "492939493.439538"
+            timestampString = "492942696.09728"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
             landmarkName = "-isNeighborDragView:andView:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TENJigSawCutter/ViewController.m"
-            timestampString = "492939530.342089"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "-panAction:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -96,22 +80,6 @@
             startingLineNumber = "127"
             endingLineNumber = "127"
             landmarkName = "-tapAction:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TENJigSawCutter/ViewController.m"
-            timestampString = "492939586.183491"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "-panAction:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

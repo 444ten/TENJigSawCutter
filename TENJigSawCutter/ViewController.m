@@ -58,11 +58,11 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 20;
+    parameterModel.countWidth = 4;
     parameterModel.overlapRatioWidth = 0.7;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 15;
+    parameterModel.countHeight = 3;
     parameterModel.overlapRatioHeight = 0.7;
     
     [parameterModel setup];
@@ -128,25 +128,12 @@
 }
 
 - (void)panAction:(UIPanGestureRecognizer *)recognizer {
-//    NSLog(@"Coordinate...");
-    
     PJWTileImageView *recognizerView = (PJWTileImageView *)recognizer.view;
+    UIView *rootView = self.view;
     
-    [self.view bringSubviewToFront:recognizerView];
+    [recognizerView moveSegmentWithOffset:[recognizer translationInView:rootView]];
     
-    CGPoint translation = [recognizer translationInView:self.view];
-//    recognizerView.center = CGPointMake(recognizerView.center.x + translation.x,
-//                                         recognizerView.center.y + translation.y);
-    
-    for (PJWTileImageView *view in recognizerView.tileModel.linkedTileHashTable) {
-        view.center = CGPointMake(view.center.x + translation.x,
-                                  view.center.y + translation.y);
-        
-    }
-    
-    
-    [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
-    
+    [recognizer setTranslation:CGPointZero inView:rootView];
     
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         NSLog(@"Stop");
@@ -171,7 +158,7 @@
                                                             center.x,
                                                             center.y);
      
-                    [self upadateLinkedForDragView:tileImageView andView:imageView];
+                    [self updateLinkedForDragView:tileImageView andView:imageView];
                     
                     allDoneNow = YES;
                     break;
@@ -184,7 +171,7 @@
     }
 }
 
-- (void)upadateLinkedForDragView:(PJWTileImageView *)dragView andView:(PJWTileImageView *)view {
+- (void)updateLinkedForDragView:(PJWTileImageView *)dragView andView:(PJWTileImageView *)view {
     NSHashTable *aggregateTable = [NSHashTable weakObjectsHashTable];
     [aggregateTable unionHashTable:dragView.tileModel.linkedTileHashTable];
     [aggregateTable unionHashTable:view.tileModel.linkedTileHashTable];
@@ -209,11 +196,8 @@
     if (dragView.tileModel.col == view.tileModel.col) {
         dragViewCenter.y += (dragView.tileModel.row - view.tileModel.row) * self.parameterModel.anchorHeight;
     }
-    
-    [UIView animateWithDuration:0.2
-                     animations:^{
-                         dragView.center = dragViewCenter;
-                     }];
+        
+    [dragView moveSegmentToPoint:dragViewCenter];
 }
 
 - (BOOL)isNeighborDragView:(PJWTileImageView *)dragView andView:(PJWTileImageView *)view {
