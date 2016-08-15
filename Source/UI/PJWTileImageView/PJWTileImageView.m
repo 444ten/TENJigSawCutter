@@ -26,7 +26,7 @@
     for (PJWTileImageView *view in self.tileModel.linkedTileHashTable) {
         [self.superview bringSubviewToFront:view];
         
-        [UIView animateWithDuration:animated ? 1.0 : 0.0
+        [UIView animateWithDuration:animated ? 0.20 : 0.0
                          animations:^{
                              view.center = CGPointMake(view.center.x + offset.x,
                                                        view.center.y + offset.y);
@@ -50,14 +50,14 @@
     CGPoint targetCenter = view.center;
     
     //width drag
-    if (tileModel.row == viewTileModel.row) {
+//    if (tileModel.row == viewTileModel.row) {
         targetCenter.x += (tileModel.col - viewTileModel.col) * parameterModel.anchorWidth;
-    }
+//    }
     
     //height drag
-    if (tileModel.col == viewTileModel.col) {
+//    if (tileModel.col == viewTileModel.col) {
         targetCenter.y += (tileModel.row - viewTileModel.row) * parameterModel.anchorHeight;
-    }
+//    }
     
     [self moveSegmentToPoint:targetCenter animated:YES];
     [self updateLinkedTileWithView:view];

@@ -35,11 +35,20 @@
                                     <action selector="onGhost:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ow6-AP-0CE"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jUv-UI-2OT">
+                                <rect key="frame" x="2" y="703" width="50" height="30"/>
+                                <state key="normal" title="Restart"/>
+                                <connections>
+                                    <action selector="onRestart:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8F2-Dn-oyy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="aiZ-ho-XtM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FaH-XV-gH7"/>
+                            <constraint firstItem="0m8-QX-rIZ" firstAttribute="top" secondItem="jUv-UI-2OT" secondAttribute="bottom" constant="4" id="Li8-bk-GsA"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0m8-QX-rIZ" secondAttribute="bottom" id="Ugu-lN-GHi"/>
+                            <constraint firstItem="jUv-UI-2OT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="2" id="d6O-sX-dzY"/>
                             <constraint firstItem="aiZ-ho-XtM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="gJm-eh-T9R"/>
                             <constraint firstItem="0m8-QX-rIZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="2" id="xdP-Uf-aI7"/>
                         </constraints>

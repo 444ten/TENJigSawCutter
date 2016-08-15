@@ -29,15 +29,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self setupParameterModel];
-    
-    self.tileSet = [PJWTilesModel new].tileSet;
+    self.parameterModel = [PJWPuzzleParameterModel sharedInstance];
     
     self.originalImageView.image = self.parameterModel.originImage;
-    self.ghostPresent = NO;
-
-    [self addTilesOnView];
+    
+    [self onRestart:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -48,7 +44,6 @@
 #pragma mark Accessors
 - (void)setGhostPresent:(BOOL)ghostPresent {
     _ghostPresent = ghostPresent;
-    
     self.originalImageView.alpha = ghostPresent ? 0.3 : 0.0;
 }
 
@@ -64,22 +59,34 @@
     self.ghostPresent = !self.ghostPresent;
 }
 
+- (IBAction)onRestart:(UIButton *)sender {
+    for (UIImageView *view in self.tileSet) {
+        [view removeFromSuperview];
+    }
+    
+    [self setupParameterModel];
+    
+    self.tileSet = [PJWTilesModel new].tileSet;
+    
+    self.ghostPresent = NO;
+    
+    [self addTilesOnView];
+}
+
 #pragma mark -
 #pragma mark Private Methods
 
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 4;
+    parameterModel.countWidth = 20;
     parameterModel.overlapRatioWidth = 0.7;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 3;
+    parameterModel.countHeight = 15;
     parameterModel.overlapRatioHeight = 0.7;
     
     [parameterModel setup];
-    
-    self.parameterModel = parameterModel;
 }
 
 - (void)addTilesOnView {
@@ -138,7 +145,13 @@
 }
 
 - (void)searchNeighborForView:(PJWTileImageView *)tileView {
-    NSArray *freeNeighbors = [tileView freeNeighborsFromSet:self.tileSet];
+    NSSet *linkedSet = tileView.tileModel.linkedTileHashTable.setRepresentation;
+    
+    NSMutableArray *freeNeighbors = [NSMutableArray new];
+    
+    for (PJWTileImageView *view in linkedSet) {
+        [freeNeighbors addObjectsFromArray:[view freeNeighborsFromSet:self.tileSet]];
+    }
     
     if (freeNeighbors.count > 0) {
         [tileView stickToView:freeNeighbors[0]];
