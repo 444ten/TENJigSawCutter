@@ -188,15 +188,15 @@
     TENTileModel *dragViewTileModel = self.tiles.tiles[dragView.row][dragView.col];
     TENTileModel *viewTileModel     = self.tiles.tiles[view.row][view.col];
     
-    NSHashTable *aggregateTabble = [NSHashTable weakObjectsHashTable];
-    [aggregateTabble unionHashTable:dragViewTileModel.linkedTileHashTable];
-    [aggregateTabble unionHashTable:viewTileModel.linkedTileHashTable];
+    NSHashTable *aggregateTable = [NSHashTable weakObjectsHashTable];
+    [aggregateTable unionHashTable:dragViewTileModel.linkedTileHashTable];
+    [aggregateTable unionHashTable:viewTileModel.linkedTileHashTable];
     
     NSMutableSet *linkedTileSet = dragViewTileModel.linkedTileHashTable.setRepresentation.mutableCopy;
     [linkedTileSet unionSet:viewTileModel.linkedTileHashTable.setRepresentation];
     
     for (TENTileModel *tileModel in linkedTileSet) {
-        tileModel.linkedTileHashTable = aggregateTabble;
+        tileModel.linkedTileHashTable = aggregateTable;
     }
 }
 

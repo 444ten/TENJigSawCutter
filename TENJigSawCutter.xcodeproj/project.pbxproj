@@ -25,6 +25,7 @@
 		76C9BBF81D5C442F0067833D /* PJWOffsetSideModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBF71D5C442F0067833D /* PJWOffsetSideModel.m */; };
 		76C9BC011D5C754F0067833D /* PJWTileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BC001D5C754F0067833D /* PJWTileImageView.m */; };
 		76C9BC051D5DC91C0067833D /* PJWCropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BC041D5DC91C0067833D /* PJWCropImageView.m */; };
+		76C9BC091D619B7F0067833D /* PJWTilesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BC081D619B7F0067833D /* PJWTilesModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,8 @@
 		76C9BC001D5C754F0067833D /* PJWTileImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWTileImageView.m; sourceTree = "<group>"; };
 		76C9BC031D5DC91C0067833D /* PJWCropImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWCropImageView.h; sourceTree = "<group>"; };
 		76C9BC041D5DC91C0067833D /* PJWCropImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWCropImageView.m; sourceTree = "<group>"; };
+		76C9BC071D619B7F0067833D /* PJWTilesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWTilesModel.h; sourceTree = "<group>"; };
+		76C9BC081D619B7F0067833D /* PJWTilesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWTilesModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +132,7 @@
 		76C9BBD91D58AA5A0067833D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				76C9BC061D619B700067833D /* PJWTilesModel */,
 				76C9BBF11D5B46170067833D /* PJWPuzzleParameterModel */,
 				76C9BBEC1D5B223B0067833D /* PJWOffsetCornerModel */,
 				76C9BBF51D5C44050067833D /* PJWOffsetSideModel */,
@@ -230,6 +234,15 @@
 			path = PJWCropImageView;
 			sourceTree = "<group>";
 		};
+		76C9BC061D619B700067833D /* PJWTilesModel */ = {
+			isa = PBXGroup;
+			children = (
+				76C9BC071D619B7F0067833D /* PJWTilesModel.h */,
+				76C9BC081D619B7F0067833D /* PJWTilesModel.m */,
+			);
+			path = PJWTilesModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -313,6 +326,7 @@
 				76C9BBF41D5B46260067833D /* PJWPuzzleParameterModel.m in Sources */,
 				76C9BBE11D599D6D0067833D /* TENTileModel.m in Sources */,
 				76C9BBC51D5498820067833D /* ViewController.m in Sources */,
+				76C9BC091D619B7F0067833D /* PJWTilesModel.m in Sources */,
 				76C9BBC21D5498820067833D /* AppDelegate.m in Sources */,
 				76C9BBBF1D5498820067833D /* main.m in Sources */,
 				76C9BC011D5C754F0067833D /* PJWTileImageView.m in Sources */,
