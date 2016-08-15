@@ -135,22 +135,21 @@
     
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         NSLog(@"Stop");
-        [self searchNeighborForImageView:recognizerView];
+        [self searchNeighborForView:recognizerView];
     }
 }
 
-- (void)searchNeighborForImageView:(PJWTileImageView *)tileImageView {
-    for (PJWTileImageView *view in self.tileSet) {
-        if (tileImageView != view) {
+- (void)searchNeighborForView:(PJWTileImageView *)tileView {
+    NSMutableSet *searchSet = [NSMutableSet setWithSet:self.tileSet];
+    [searchSet minusSet:tileView.tileModel.linkedTileHashTable.setRepresentation];
+    
+    for (PJWTileImageView *view in searchSet) {
+        if ([tileView isNeighborToView:view]) {
+            [tileView stickToView:view];
             
-            if ([tileImageView isNeighborToView:view]) {
-                [tileImageView stickToView:view];
-                
-                break;
-            }
+            break;
         }
     }
-    
 }
 
 - (UILongPressGestureRecognizer *)longPressRecognizer {
