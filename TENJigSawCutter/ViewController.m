@@ -20,6 +20,8 @@
 
 @property (nonatomic, assign)   BOOL    ghostPresent;
 
+@property (nonatomic, strong)   UIView  *testView;
+
 @end
 
 @implementation ViewController
@@ -70,7 +72,45 @@
     
     self.ghostPresent = NO;
     
+    [self setupTestView];
+    
     [self addTilesOnView];
+}
+
+- (void)setupTestView {
+    UIView *testView = [[UIView alloc] initWithFrame:CGRectMake(20, 20, 980, 740)];
+    testView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.5];
+    [testView addGestureRecognizer:[self panRecognizerTest]];
+    [testView addGestureRecognizer:[self tapRecognizer]];
+    
+    self.testView = testView;
+
+    [self.view addSubview:testView];
+}
+
+- (UIPanGestureRecognizer *)panRecognizerTest {
+    UIPanGestureRecognizer *result = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                             action:@selector(panActionTest:)];
+    result.minimumNumberOfTouches = 1;
+    result.maximumNumberOfTouches = 2;
+    
+    return result;
+}
+
+- (void)panActionTest:(UIPanGestureRecognizer *)recognizer {
+    UIView *view = recognizer.view;
+    UIView *rootView = self.view;
+
+    CGPoint translation = [recognizer translationInView:rootView];
+    
+    view.center = CGPointMake(view.center.x + translation.x,
+                              view.center.y + translation.y);
+
+    [recognizer setTranslation:CGPointZero inView:rootView];
+    
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        NSLog(@"Stop");
+    }
 }
 
 #pragma mark -
@@ -108,6 +148,8 @@
         tileView.center = center;
         
         [rootView addSubview:tileView];
+//        [self.testView addSubview:tileView];
+        
     }
 }
 
@@ -118,16 +160,6 @@
     result.maximumNumberOfTouches = 2;
     
     return result;
-}
-
-- (UITapGestureRecognizer *)tapRecognizer {
-    UITapGestureRecognizer *result = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                             action:@selector(tapAction:)];
-    return result;
-}
-
-- (void)tapAction:(UITapGestureRecognizer *)recognizer {
-    [self.view bringSubviewToFront:recognizer.view];
 }
 
 - (void)panAction:(UIPanGestureRecognizer *)recognizer {
@@ -143,6 +175,17 @@
         [self searchNeighborForView:recognizerView];
     }
 }
+
+- (UITapGestureRecognizer *)tapRecognizer {
+    UITapGestureRecognizer *result = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                             action:@selector(tapAction:)];
+    return result;
+}
+
+- (void)tapAction:(UITapGestureRecognizer *)recognizer {
+    [self.view bringSubviewToFront:recognizer.view];
+}
+
 
 - (void)searchNeighborForView:(PJWTileImageView *)tileView {
     NSSet *linkedSet = tileView.tileModel.linkedTileHashTable.setRepresentation;
