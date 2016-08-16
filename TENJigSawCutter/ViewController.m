@@ -72,7 +72,7 @@
     
     self.ghostPresent = NO;
     
-    [self setupTestView];
+//    [self setupTestView];
     
     [self addTilesOnView];
 }
@@ -189,19 +189,19 @@
 
 - (void)searchNeighborForView:(PJWTileImageView *)tileView {
     NSSet *linkedSet = tileView.tileModel.linkedTileHashTable.setRepresentation;
+    NSSet *tileSet = self.tileSet;
     
-    NSMutableArray *freeNeighbors = [NSMutableArray new];
+    NSMutableSet *freeNeighborSet = [NSMutableSet new];
     
-    for (PJWTileImageView *view in linkedSet) {
-        [freeNeighbors addObjectsFromArray:[view freeNeighborsFromSet:self.tileSet]];
-    }
-    
-    if (freeNeighbors.count > 0) {
-        [tileView stickToView:freeNeighbors[0]];
+    NSEnumerator *enumerator = [linkedSet objectEnumerator];
+    PJWTileImageView *view;
+    while (view = [enumerator nextObject]) {
+        [freeNeighborSet unionSet:[view freeNeighborsFromSet:tileSet]];
     }
 
-    for (NSInteger index = 1; index < freeNeighbors.count; index++) {
-        [freeNeighbors[index] stickToView:tileView];
+    enumerator = [freeNeighborSet objectEnumerator];
+    while (view = [enumerator nextObject]) {
+        [tileView stickToView:view];
     }
 }
 

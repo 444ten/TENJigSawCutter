@@ -18,6 +18,6 @@
 
 - (BOOL)isNeighborToView:(PJWTileImageView *)view;
 - (void)stickToView:(PJWTileImageView *)view;
-- (NSArray *)freeNeighborsFromSet:(NSSet *)tileSet;
+- (NSSet *)freeNeighborsFromSet:(NSSet *)tileSet;
 
 @end

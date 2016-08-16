@@ -23,7 +23,9 @@
 #pragma mark Public Methods
 
 - (void)moveSegmentWithOffset:(CGPoint)offset animated:(BOOL)animated {
-    for (PJWTileImageView *view in self.tileModel.linkedTileHashTable) {
+    NSEnumerator *enumerator = [self.tileModel.linkedTileHashTable objectEnumerator];
+    PJWTileImageView *view;
+    while (view = [enumerator nextObject]) {
         [self.superview bringSubviewToFront:view];
         
         [UIView animateWithDuration:animated ? 0.20 : 0.0
@@ -32,7 +34,6 @@
                                                        view.center.y + offset.y);
                              
                          }];
-        
     }
 }
 
@@ -48,16 +49,8 @@
     PJWTileModel *viewTileModel = view.tileModel;
     
     CGPoint targetCenter = view.center;
-    
-    //width drag
-//    if (tileModel.row == viewTileModel.row) {
-        targetCenter.x += (tileModel.col - viewTileModel.col) * parameterModel.anchorWidth;
-//    }
-    
-    //height drag
-//    if (tileModel.col == viewTileModel.col) {
-        targetCenter.y += (tileModel.row - viewTileModel.row) * parameterModel.anchorHeight;
-//    }
+    targetCenter.x += (tileModel.col - viewTileModel.col) * parameterModel.anchorWidth;
+    targetCenter.y += (tileModel.row - viewTileModel.row) * parameterModel.anchorHeight;
     
     [self moveSegmentToPoint:targetCenter animated:YES];
     [self updateLinkedTileWithView:view];
@@ -106,13 +99,15 @@
     return NO;
 }
 
-- (NSArray *)freeNeighborsFromSet:(NSSet *)tileSet {
+- (NSSet *)freeNeighborsFromSet:(NSSet *)tileSet {
     NSMutableSet *searchSet = [NSMutableSet setWithSet:tileSet];
     [searchSet minusSet:self.tileModel.linkedTileHashTable.setRepresentation];
     
-    NSMutableArray *result = [NSMutableArray new];
+    NSMutableSet *result = [NSMutableSet new];
     
-    for (PJWTileImageView *view in searchSet) {
+    NSEnumerator *enumerator = [searchSet objectEnumerator];
+    PJWTileImageView *view;
+    while (view = [enumerator nextObject]) {
         if ([self isNeighborToView:view]) {
             [result addObject:view];
         }
@@ -134,11 +129,12 @@
     
     NSMutableSet *linkedTileSet = tileModel.linkedTileHashTable.setRepresentation.mutableCopy;
     [linkedTileSet unionSet:viewTileModel.linkedTileHashTable.setRepresentation];
-    
-    for (PJWTileImageView *imageView in linkedTileSet) {
+
+    NSEnumerator *enumerator = [linkedTileSet objectEnumerator];
+    PJWTileImageView *imageView;
+    while (imageView = [enumerator nextObject]) {
         imageView.tileModel.linkedTileHashTable = aggregateTable;
     }
-
 }
 
 @end
