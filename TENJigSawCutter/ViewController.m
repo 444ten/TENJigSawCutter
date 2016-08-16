@@ -16,6 +16,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *originalImageView;
 
 @property (nonatomic, strong)   PJWPuzzleParameterModel *parameterModel;
+
+@property (nonatomic, strong)   PJWTilesModel           *tilesModel;
 @property (nonatomic, strong)   NSSet                   *tileSet;
 
 @property (nonatomic, assign)   BOOL    ghostPresent;
@@ -68,7 +70,8 @@
     
     [self setupParameterModel];
     
-    self.tileSet = [PJWTilesModel new].tileSet;
+    self.tilesModel = [PJWTilesModel new];
+    self.tileSet = self.tilesModel.tileSet;
     
     self.ghostPresent = NO;
     
@@ -167,7 +170,6 @@
     UIView *rootView = self.view;
     
     [recognizerView moveSegmentWithOffset:[recognizer translationInView:rootView] animated:NO];
-    
     [recognizer setTranslation:CGPointZero inView:rootView];
     
     if (recognizer.state == UIGestureRecognizerStateEnded) {
@@ -188,7 +190,9 @@
 
 
 - (void)searchNeighborForView:(PJWTileImageView *)tileView {
-    NSSet *linkedSet = tileView.tileModel.linkedTileHashTable.setRepresentation;
+    NSMutableSet *linkedSet = [NSMutableSet setWithSet:tileView.tileModel.linkedTileHashTable.setRepresentation];
+    [linkedSet minusSet:self.tilesModel.noncalculatedTileSet];
+    
     NSSet *tileSet = self.tileSet;
     
     NSMutableSet *freeNeighborSet = [NSMutableSet new];
@@ -203,6 +207,8 @@
     while (view = [enumerator nextObject]) {
         [tileView stickToView:view];
     }
+    
+    [self.tilesModel updateNoncalculatedTiles];
 }
 
 - (UILongPressGestureRecognizer *)longPressRecognizer {
