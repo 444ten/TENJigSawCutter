@@ -56,66 +56,6 @@
     [self updateLinkedTileWithView:view];
 }
 
-- (BOOL)isNeighborToView:(PJWTileImageView *)view {
-    CGFloat magneticDelta = 40;
-    
-    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
-    PJWTileModel *tileModel = self.tileModel;
-    PJWTileModel *viewTileModel = view.tileModel;
-
-    CGPoint center = self.center;
-    CGPoint viewCenter = view.center;
-    
-    CGFloat deltaWidthAxis = fabs(center.x - viewCenter.x);
-    CGFloat deltaWidthNeighbor = fabs(deltaWidthAxis - parameterModel.anchorWidth);
-    
-    CGFloat deltaHeightAxis = fabs(center.y - viewCenter.y);
-    CGFloat deltaHeightNeighbor = fabs(deltaHeightAxis - parameterModel.anchorHeight);
-    
-    //height neighbor
-    if (deltaWidthAxis < magneticDelta && deltaHeightNeighbor < magneticDelta) {
-        if (viewTileModel.col == tileModel.col) {
-            NSInteger nextRow = viewTileModel.row - tileModel.row;
-            NSInteger sign = (viewCenter.y > center.y) ? 1: -1;
-            
-            if ((sign * nextRow) == 1) {
-                return YES;
-            }
-        }
-    }
-    
-    //width neighbor
-    if (deltaHeightAxis < magneticDelta && deltaWidthNeighbor < magneticDelta) {
-        if (viewTileModel.row == tileModel.row) {
-            NSInteger nextCol = viewTileModel.col - tileModel.col;
-            NSInteger sign = (viewCenter.x > center.x) ? 1: -1;
-            
-            if ((sign * nextCol) == 1) {
-                return YES;
-            }
-        }
-    }
-    
-    return NO;
-}
-
-- (NSSet *)freeNeighborsFromSet:(NSSet *)tileSet {
-    NSMutableSet *searchSet = [NSMutableSet setWithSet:tileSet];
-    [searchSet minusSet:self.tileModel.linkedTileHashTable.setRepresentation];
-    
-    NSMutableSet *result = [NSMutableSet new];
-    
-    NSEnumerator *enumerator = [searchSet objectEnumerator];
-    PJWTileImageView *view;
-    while (view = [enumerator nextObject]) {
-        if ([self isNeighborToView:view]) {
-            [result addObject:view];
-        }
-    }
-
-    return result;
-}
-
 #pragma mark -
 #pragma mark Private Methods
 

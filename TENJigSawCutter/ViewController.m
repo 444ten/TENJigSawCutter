@@ -59,8 +59,43 @@
 //    [self.view bringSubviewToFront:sender.view];
 }
 
-- (IBAction)onGhost:(UIButton *)sender {
-    self.ghostPresent = !self.ghostPresent;
+- (IBAction)onShuffle:(UIButton *)sender {
+    PJWPuzzleParameterModel *parameterModel = self.parameterModel;
+    
+    CGFloat offsetXmin = (1024. - parameterModel.fullWidth + parameterModel.baseWidth) / 2 + parameterModel.overlapWidth;
+    CGFloat offsetYmin = (768. - parameterModel.fullHeight + parameterModel.baseHeight) / 2 + parameterModel.overlapHeight;
+    
+    CGFloat offsetXmax = offsetXmin + (parameterModel.countWidth - 1) * parameterModel.anchorWidth;
+    CGFloat offsetYmax = offsetYmin + (parameterModel.countHeight - 1) * parameterModel.anchorHeight;
+    
+    for (PJWTileImageView *tileView in self.tileSet) {
+        
+        if (tileView.tileModel.linkedTileHashTable.count == 1) {
+            CGPoint center;
+            if (arc4random_uniform(2)) {
+                center.x = offsetXmin + arc4random_uniform(offsetXmax - offsetXmin);
+                center.y = arc4random_uniform(2) ? offsetYmin : offsetYmax;
+            } else {
+                center.x = arc4random_uniform(2) ? offsetXmin : offsetXmax;
+                center.y = offsetYmin + arc4random_uniform(offsetYmax - offsetYmin);
+            }
+            
+            tileView.center = center;
+        }
+    }
+}
+
+- (IBAction)onOrder:(UIButton *)sender {
+    for (PJWTileImageView *tileView in self.tileSet) {
+        
+        if (tileView.tileModel.linkedTileHashTable.count == 1) {
+            CGPoint center = CGPointFromValue(tileView.tileModel.anchor);
+            center.x += (1024. - self.parameterModel.fullWidth) / 2.0;
+            center.y += ( 768. - self.parameterModel.fullHeight) / 2.0;
+            
+            tileView.center = center;
+        }
+    }
 }
 
 - (IBAction)onRestart:(UIButton *)sender {
@@ -79,6 +114,11 @@
     
     [self addTilesOnView];
 }
+
+- (IBAction)onGhost:(UIButton *)sender {
+    self.ghostPresent = !self.ghostPresent;
+}
+
 
 - (void)setupTestView {
     UIView *testView = [[UIView alloc] initWithFrame:CGRectMake(20, 20, 980, 740)];
@@ -121,11 +161,11 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 10;
+    parameterModel.countWidth = 20;
     parameterModel.overlapRatioWidth = 0.7;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 8;
+    parameterModel.countHeight = 15;
     parameterModel.overlapRatioHeight = 0.7;
     
     [parameterModel setup];

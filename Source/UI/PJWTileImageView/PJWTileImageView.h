@@ -16,10 +16,6 @@
 - (void)moveSegmentWithOffset:(CGPoint)offset animated:(BOOL)animated;
 - (void)moveSegmentToPoint:(CGPoint)point animated:(BOOL)animated;
 
-- (BOOL)isNeighborToView:(PJWTileImageView *)view;
 - (void)stickToView:(PJWTileImageView *)view;
-- (NSSet *)freeNeighborsFromSet:(NSSet *)tileSet;
-
-- (void)updateLinkedTileWithView:(PJWTileImageView *)view;
 
 @end
