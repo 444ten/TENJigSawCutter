@@ -7,14 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PJWTileImageView.h"
 
 @interface PJWTilesModel : NSObject
 @property (nonatomic, readonly) NSSet   *tileSet;
 
-@property (nonatomic, strong)   NSMutableArray  *noncalculatedTiles;
+@property (nonatomic, strong)   NSMutableArray  *calculatedTiles;
 
-@property (nonatomic, strong)   NSMutableSet *noncalculatedTileSet;
-
-- (void)updateNoncalculatedTiles;
+- (void)updateCalculatedTilesWithView:(PJWTileImageView *)view;
 
 @end

@@ -29,7 +29,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.noncalculatedTileSet = [NSMutableSet new];
         [self setup];
     }
     
@@ -53,59 +52,61 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)updateNoncalculatedTiles {
-    NSMutableSet *calculatedTileSet = [NSMutableSet setWithSet:self.tileSet];
-    [calculatedTileSet minusSet:self.noncalculatedTileSet];
+- (void)updateCalculatedTilesWithView:(PJWTileImageView *)view {
+    NSSet *linkedTileSet = view.tileModel.linkedTileHashTable.setRepresentation;
+    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    NSArray *calculatedTiles = self.calculatedTiles;
     
-    NSMutableSet *newNoncalculatedTileSet = [NSMutableSet new];
+    NSEnumerator *enumerator = [linkedTileSet objectEnumerator];
+    PJWTileImageView *imageView;
+    while (imageView = [enumerator nextObject]) {
+        PJWTileModel *tileModel = imageView.tileModel;
+        calculatedTiles[tileModel.row][tileModel.col] = @(NO);
+    }
+
     
-    for (PJWTileImageView *view in calculatedTileSet) {
-        if ([self noncalculatedTile:view]) {
-            [newNoncalculatedTileSet addObject:view];
+    for (NSInteger row = 0; row < parameterModel.countHeight; row++) {
+        for (NSInteger col = 0; col < parameterModel.countWidth; col++) {
+            calculatedTiles[row][col] = [self calculatedTileWithRow:row col:col];
         }
     }
     
-    [self.noncalculatedTileSet unionSet:newNoncalculatedTileSet];
 }
 
 
-- (BOOL)noncalculatedTile:(PJWTileImageView *)view {
+- (NSValue *)calculatedTileWithRow:(NSInteger)row col:(NSInteger)col {
+    NSArray *calculatedTiles = self.calculatedTiles;
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     
-    NSSet *set = view.tileModel.linkedTileHashTable.setRepresentation;
-    
-    NSInteger row = view.tileModel.row;
-    NSInteger col = view.tileModel.col;
-    
-    BOOL left = NO;
+    BOOL left = YES;
     if (col == 0) {
-        left = YES;
+        left = NO;
     } else {
-        left = [set containsObject:self.tiles[row][col - 1]];
+        left = [calculatedTiles[row][col - 1] boolValue];
     }
     
-    BOOL right = NO;
+    BOOL right = YES;
     if (col == parameterModel.countWidth - 1) {
-        right = YES;
+        right = NO;
     } else {
-        right = [set containsObject:self.tiles[row][col + 1]];
+        right = [calculatedTiles[row][col + 1] boolValue];
     }
     
-    BOOL up = NO;
+    BOOL up = YES;
     if (row == 0) {
-        up = YES;
+        up = NO;
     } else {
-        up = [set containsObject:self.tiles[row - 1][col]];
+        up = [calculatedTiles[row - 1][col] boolValue];
     }
 
-    BOOL down = NO;
+    BOOL down = YES;
     if (row == parameterModel.countHeight - 1) {
         down = YES;
     } else {
-        down = [set containsObject:self.tiles[row + 1][col]];
+        down = [calculatedTiles[row + 1][col] boolValue];
     }
     
-    return left && right && up && down;
+    return @(left || right || up || down);
 }
 
 #pragma mark -
@@ -115,7 +116,7 @@
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     
     NSMutableArray *tiles = [NSMutableArray new];
-    NSMutableArray *noncalculatedTiles = [NSMutableArray new];
+    NSMutableArray *calculatedTiles = [NSMutableArray new];
     
     for (NSInteger row = 0; row < parameterModel.countHeight; row++) {
         
@@ -132,15 +133,15 @@
             tileImageView.tileModel = tileModel;
             
             [rowArray addObject:tileImageView];
-            [rowNoncalculatedArray addObject:@(NO)];
+            [rowNoncalculatedArray addObject:@(YES)];
         }
         
         [tiles addObject:rowArray];
-        [noncalculatedTiles addObject:rowNoncalculatedArray];
+        [calculatedTiles addObject:rowNoncalculatedArray];
     }
     
     self.tiles = tiles;
-    self.noncalculatedTiles = noncalculatedTiles;
+    self.calculatedTiles = calculatedTiles;
     
     
     

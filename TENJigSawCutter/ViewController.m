@@ -191,7 +191,6 @@
 
 - (void)searchNeighborForView:(PJWTileImageView *)tileView {
     NSMutableSet *linkedSet = [NSMutableSet setWithSet:tileView.tileModel.linkedTileHashTable.setRepresentation];
-    [linkedSet minusSet:self.tilesModel.noncalculatedTileSet];
     
     NSSet *tileSet = self.tileSet;
     
@@ -200,7 +199,9 @@
     NSEnumerator *enumerator = [linkedSet objectEnumerator];
     PJWTileImageView *view;
     while (view = [enumerator nextObject]) {
-        [freeNeighborSet unionSet:[view freeNeighborsFromSet:tileSet]];
+        if ([self.tilesModel.calculatedTiles[view.tileModel.row][view.tileModel.col] boolValue]) {
+            [freeNeighborSet unionSet:[view freeNeighborsFromSet:tileSet]];            
+        }
     }
 
     enumerator = [freeNeighborSet objectEnumerator];
@@ -208,7 +209,7 @@
         [tileView stickToView:view];
     }
     
-    [self.tilesModel updateNoncalculatedTiles];
+    [self.tilesModel updateCalculatedTilesWithView:tileView];
 }
 
 - (UILongPressGestureRecognizer *)longPressRecognizer {
