@@ -13,6 +13,8 @@
 @interface PJWTileImageView : UIImageView
 @property (nonatomic, strong)   PJWTileModel    *tileModel;
 
+- (void)moveToTargetView:(PJWTileImageView *)targetView;
+
 - (void)moveSegmentWithOffset:(CGPoint)offset animated:(BOOL)animated;
 - (void)moveSegmentToPoint:(CGPoint)point animated:(BOOL)animated;
 

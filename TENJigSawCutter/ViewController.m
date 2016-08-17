@@ -230,8 +230,6 @@
 - (void)searchNeighborForView:(PJWTileImageView *)tileView {
     NSMutableSet *linkedSet = [NSMutableSet setWithSet:tileView.tileModel.linkedTileHashTable.setRepresentation];
     
-    
-    
     NSMutableSet *freeNeighborSet = [NSMutableSet new];
     
     NSEnumerator *enumerator = [linkedSet objectEnumerator];
@@ -242,9 +240,30 @@
         }
     }
 
-    enumerator = [freeNeighborSet objectEnumerator];
+//    enumerator = [freeNeighborSet objectEnumerator];
+//    while (view = [enumerator nextObject]) {
+//        [tileView stickToView:view];
+//    }
+
+    [linkedSet unionSet:freeNeighborSet];
+
+    NSMutableSet *newLinkedSet = [NSMutableSet new];
+    [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+        [newLinkedSet unionSet:obj.tileModel.linkedTileHashTable.setRepresentation];
+    }];
+
+    
+    
+    NSHashTable *linkedTileHashTable = [NSHashTable weakObjectsHashTable];
+    
+    [newLinkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL * _Nonnull stop) {
+        [linkedTileHashTable addObject:obj];
+    }];
+    
+    enumerator = [newLinkedSet objectEnumerator];
     while (view = [enumerator nextObject]) {
-        [tileView stickToView:view];
+        [view moveToTargetView:tileView];
+        view.tileModel.linkedTileHashTable = linkedTileHashTable;
     }
     
     [self.tilesModel updateCalculatedTilesWithView:tileView];

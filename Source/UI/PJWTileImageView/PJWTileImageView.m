@@ -56,6 +56,23 @@
     [self updateLinkedTileWithView:view];
 }
 
+- (void)moveToTargetView:(PJWTileImageView *)targetView {
+    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+
+    PJWTileModel *tileModel = self.tileModel;
+    PJWTileModel *targetTileModel = targetView.tileModel;
+    
+    CGPoint center = targetView.center;
+    center.x += (tileModel.col - targetTileModel.col) * parameterModel.anchorWidth;
+    center.y += (tileModel.row - targetTileModel.row) * parameterModel.anchorHeight;
+    
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         self.center = center;
+                     }];
+    
+}
+
 #pragma mark -
 #pragma mark Private Methods
 
