@@ -15,5 +15,6 @@
 @property (nonatomic, strong)   NSMutableArray  *calculatedTiles;
 
 - (void)updateCalculatedTilesWithView:(PJWTileImageView *)view;
+- (NSSet *)freeNeighborsForTileView:(PJWTileImageView *)tileView;
 
 @end

@@ -109,6 +109,87 @@
     return @(left || right || up || down);
 }
 
+
+- (NSSet *)freeNeighborsForTileView:(PJWTileImageView *)tileView {
+    PJWTileModel *tileModel = tileView.tileModel;
+    
+    NSInteger row = tileModel.row;
+    NSInteger col = tileModel.col;
+    
+    NSMutableSet *result = [NSMutableSet new];
+    
+    if ([self isFreeNeighborForTileView:tileView withRow:row-1 col:col]) {
+        [result addObject:self.tiles[row-1][col]];
+    }
+    if ([self isFreeNeighborForTileView:tileView withRow:row+1 col:col]) {
+        [result addObject:self.tiles[row+1][col]];
+    }
+    if ([self isFreeNeighborForTileView:tileView withRow:row col:col-1]) {
+        [result addObject:self.tiles[row][col-1]];
+    }
+    if ([self isFreeNeighborForTileView:tileView withRow:row col:col+1]) {
+        [result addObject:self.tiles[row][col+1]];
+    }
+    
+    return result;
+}
+
+- (BOOL)isFreeNeighborForTileView:(PJWTileImageView *)tileView withRow:(NSInteger)row col:(NSInteger)col {
+    CGFloat magneticDelta = 40;
+    
+    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    PJWTileModel *tileModel = tileView.tileModel;
+    
+//side/corner tile
+    if (row < 0 || row >= parameterModel.countHeight || col < 0 || col >= parameterModel.countWidth) {
+        return NO;
+    }
+
+    PJWTileImageView *neighborTileView = self.tiles[row][col];
+    
+//already in segment
+    if ([tileModel.linkedTileHashTable containsObject:neighborTileView]) {
+        return NO;
+    }
+    
+    CGPoint tileCenter = tileView.center;
+    CGPoint neighborCenter = neighborTileView.center;
+
+    CGFloat deltaWidthAxis = fabs(tileCenter.x - neighborCenter.x);
+    CGFloat deltaWidthNeighbor = fabs(deltaWidthAxis - parameterModel.anchorWidth);
+    
+    CGFloat deltaHeightAxis = fabs(tileCenter.y - neighborCenter.y);
+    CGFloat deltaHeightNeighbor = fabs(deltaHeightAxis - parameterModel.anchorHeight);
+    
+//width neighbor
+    if (row == tileModel.row) {
+        if (deltaHeightAxis < magneticDelta && deltaWidthNeighbor < magneticDelta) {
+            NSInteger nextCol = col - tileModel.col;
+            NSInteger sign = (neighborCenter.x > tileCenter.x) ? 1: -1;
+            
+            if ((sign * nextCol) == 1) {
+                return YES;
+            }
+        }
+    }
+    
+//height neighbor
+    if (col == tileModel.col) {
+        if (deltaWidthAxis < magneticDelta && deltaHeightNeighbor < magneticDelta) {
+            NSInteger nextRow = row - tileModel.row;
+            NSInteger sign = (neighborCenter.y > tileCenter.y) ? 1: -1;
+            
+            if ((sign * nextRow) == 1) {
+                return YES;
+            }
+        }
+        
+    }
+    
+    return NO;
+}
+
+
 #pragma mark -
 #pragma mark Private Methods
 

@@ -20,4 +20,6 @@
 - (void)stickToView:(PJWTileImageView *)view;
 - (NSSet *)freeNeighborsFromSet:(NSSet *)tileSet;
 
+- (void)updateLinkedTileWithView:(PJWTileImageView *)view;
+
 @end

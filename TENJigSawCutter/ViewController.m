@@ -112,7 +112,6 @@
     [recognizer setTranslation:CGPointZero inView:rootView];
     
     if (recognizer.state == UIGestureRecognizerStateEnded) {
-        NSLog(@"Stop");
     }
 }
 
@@ -122,11 +121,11 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 20;
+    parameterModel.countWidth = 10;
     parameterModel.overlapRatioWidth = 0.7;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 15;
+    parameterModel.countHeight = 8;
     parameterModel.overlapRatioHeight = 0.7;
     
     [parameterModel setup];
@@ -173,7 +172,6 @@
     [recognizer setTranslation:CGPointZero inView:rootView];
     
     if (recognizer.state == UIGestureRecognizerStateEnded) {
-        NSLog(@"Stop");
         [self searchNeighborForView:recognizerView];
     }
 }
@@ -192,7 +190,7 @@
 - (void)searchNeighborForView:(PJWTileImageView *)tileView {
     NSMutableSet *linkedSet = [NSMutableSet setWithSet:tileView.tileModel.linkedTileHashTable.setRepresentation];
     
-    NSSet *tileSet = self.tileSet;
+    
     
     NSMutableSet *freeNeighborSet = [NSMutableSet new];
     
@@ -200,7 +198,7 @@
     PJWTileImageView *view;
     while (view = [enumerator nextObject]) {
         if ([self.tilesModel.calculatedTiles[view.tileModel.row][view.tileModel.col] boolValue]) {
-            [freeNeighborSet unionSet:[view freeNeighborsFromSet:tileSet]];            
+            [freeNeighborSet unionSet:[self.tilesModel freeNeighborsForTileView:view]];
         }
     }
 
