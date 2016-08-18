@@ -54,57 +54,30 @@
 
 - (void)updateCalculatedTilesWithView:(PJWTileImageView *)view {
     NSSet *linkedTileSet = view.tileModel.linkedTileHashTable.setRepresentation;
-    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     NSArray *calculatedTiles = self.calculatedTiles;
-    
-    NSEnumerator *enumerator = [linkedTileSet objectEnumerator];
-    PJWTileImageView *imageView;
-    while (imageView = [enumerator nextObject]) {
-        PJWTileModel *tileModel = imageView.tileModel;
+
+    [linkedTileSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+        PJWTileModel *tileModel = obj.tileModel;
         calculatedTiles[tileModel.row][tileModel.col] = @(NO);
-    }
+    }];
 
+    [linkedTileSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+        PJWTileModel *tileModel = obj.tileModel;
+        NSInteger row = tileModel.row;
+        NSInteger col = tileModel.col;
     
-    for (NSInteger row = 0; row < parameterModel.countHeight; row++) {
-        for (NSInteger col = 0; col < parameterModel.countWidth; col++) {
-            calculatedTiles[row][col] = [self calculatedTileWithRow:row col:col];
-        }
-    }
-    
+        calculatedTiles[row][col] = [self calculatedTileWithRow:row col:col];
+    }];
 }
-
 
 - (NSValue *)calculatedTileWithRow:(NSInteger)row col:(NSInteger)col {
     NSArray *calculatedTiles = self.calculatedTiles;
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     
-    BOOL left = YES;
-    if (col == 0) {
-        left = NO;
-    } else {
-        left = [calculatedTiles[row][col - 1] boolValue];
-    }
-    
-    BOOL right = YES;
-    if (col == parameterModel.countWidth - 1) {
-        right = NO;
-    } else {
-        right = [calculatedTiles[row][col + 1] boolValue];
-    }
-    
-    BOOL up = YES;
-    if (row == 0) {
-        up = NO;
-    } else {
-        up = [calculatedTiles[row - 1][col] boolValue];
-    }
-
-    BOOL down = YES;
-    if (row == parameterModel.countHeight - 1) {
-        down = YES;
-    } else {
-        down = [calculatedTiles[row + 1][col] boolValue];
-    }
+    BOOL left  = (col == 0                             ) ? NO : [calculatedTiles[row][col - 1] boolValue];
+    BOOL right = (col == parameterModel.countWidth - 1 ) ? NO : [calculatedTiles[row][col + 1] boolValue];
+    BOOL up    = (row == 0                             ) ? NO : [calculatedTiles[row - 1][col] boolValue];
+    BOOL down  = (row == parameterModel.countHeight - 1) ? NO : [calculatedTiles[row + 1][col] boolValue];
     
     return @(left || right || up || down);
 }

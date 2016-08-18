@@ -161,11 +161,11 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 20;
+    parameterModel.countWidth = 5;
     parameterModel.overlapRatioWidth = 0.7;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 15;
+    parameterModel.countHeight = 4;
     parameterModel.overlapRatioHeight = 0.7;
     
     [parameterModel setup];
@@ -239,12 +239,15 @@
             [freeNeighborSet unionSet:[self.tilesModel freeNeighborsForTileView:view]];
         }
     }
-
-//    enumerator = [freeNeighborSet objectEnumerator];
-//    while (view = [enumerator nextObject]) {
-//        [tileView stickToView:view];
-//    }
-
+    
+    if (freeNeighborSet.count == 0) {
+        return;
+    }
+    
+    PJWTileImageView *targetView = freeNeighborSet.allObjects[0];
+    
+    [tileView moveToTargetView:targetView];
+    
     [linkedSet unionSet:freeNeighborSet];
 
     NSMutableSet *newLinkedSet = [NSMutableSet new];
