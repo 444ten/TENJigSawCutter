@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7682ED051D67377300D4590F /* PJWSegmentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7682ED041D67377300D4590F /* PJWSegmentModel.m */; };
 		76C9BBBF1D5498820067833D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBBE1D5498820067833D /* main.m */; };
 		76C9BBC21D5498820067833D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBC11D5498820067833D /* AppDelegate.m */; };
 		76C9BBC51D5498820067833D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBC41D5498820067833D /* ViewController.m */; };
@@ -27,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7682ED031D67377300D4590F /* PJWSegmentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWSegmentModel.h; sourceTree = "<group>"; };
+		7682ED041D67377300D4590F /* PJWSegmentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWSegmentModel.m; sourceTree = "<group>"; };
 		76C9BBBA1D5498820067833D /* TENJigSawCutter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TENJigSawCutter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76C9BBBE1D5498820067833D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		76C9BBC01D5498820067833D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -69,6 +72,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7682ED021D67376500D4590F /* PJWSegmentModel */ = {
+			isa = PBXGroup;
+			children = (
+				7682ED031D67377300D4590F /* PJWSegmentModel.h */,
+				7682ED041D67377300D4590F /* PJWSegmentModel.m */,
+			);
+			path = PJWSegmentModel;
+			sourceTree = "<group>";
+		};
 		76C9BBB11D5498820067833D = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +138,7 @@
 		76C9BBD91D58AA5A0067833D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7682ED021D67376500D4590F /* PJWSegmentModel */,
 				76C9BC0A1D619BC50067833D /* PJWTileModel */,
 				76C9BC061D619B700067833D /* PJWTilesModel */,
 				76C9BBF11D5B46170067833D /* PJWPuzzleParameterModel */,
@@ -300,6 +313,7 @@
 				76C9BBC51D5498820067833D /* ViewController.m in Sources */,
 				76C9BC091D619B7F0067833D /* PJWTilesModel.m in Sources */,
 				76C9BBC21D5498820067833D /* AppDelegate.m in Sources */,
+				7682ED051D67377300D4590F /* PJWSegmentModel.m in Sources */,
 				76C9BBBF1D5498820067833D /* main.m in Sources */,
 				76C9BC011D5C754F0067833D /* PJWTileImageView.m in Sources */,
 			);
