@@ -22,8 +22,6 @@
 
 @property (nonatomic, assign)   BOOL    ghostPresent;
 
-@property (nonatomic, strong)   UIView  *testView;
-
 @end
 
 @implementation ViewController
@@ -110,49 +108,11 @@
     
     self.ghostPresent = NO;
     
-//    [self setupTestView];
-    
     [self addTilesOnView];
 }
 
 - (IBAction)onGhost:(UIButton *)sender {
     self.ghostPresent = !self.ghostPresent;
-}
-
-
-- (void)setupTestView {
-    UIView *testView = [[UIView alloc] initWithFrame:CGRectMake(20, 20, 980, 740)];
-    testView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.5];
-    [testView addGestureRecognizer:[self panRecognizerTest]];
-    [testView addGestureRecognizer:[self tapRecognizer]];
-    
-    self.testView = testView;
-
-    [self.view addSubview:testView];
-}
-
-- (UIPanGestureRecognizer *)panRecognizerTest {
-    UIPanGestureRecognizer *result = [[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                                             action:@selector(panActionTest:)];
-    result.minimumNumberOfTouches = 1;
-    result.maximumNumberOfTouches = 2;
-    
-    return result;
-}
-
-- (void)panActionTest:(UIPanGestureRecognizer *)recognizer {
-    UIView *view = recognizer.view;
-    UIView *rootView = self.view;
-
-    CGPoint translation = [recognizer translationInView:rootView];
-    
-    view.center = CGPointMake(view.center.x + translation.x,
-                              view.center.y + translation.y);
-
-    [recognizer setTranslation:CGPointZero inView:rootView];
-    
-    if (recognizer.state == UIGestureRecognizerStateEnded) {
-    }
 }
 
 #pragma mark -
@@ -161,11 +121,11 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 5;
+    parameterModel.countWidth = 20;
     parameterModel.overlapRatioWidth = 0.7;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 4;
+    parameterModel.countHeight = 15;
     parameterModel.overlapRatioHeight = 0.7;
     
     [parameterModel setup];
@@ -190,8 +150,6 @@
         tileView.center = center;
         
         [rootView addSubview:tileView];
-//        [self.testView addSubview:tileView];
-        
     }
 }
 
@@ -199,7 +157,7 @@
     UIPanGestureRecognizer *result = [[UIPanGestureRecognizer alloc] initWithTarget:self
                                                                              action:@selector(panAction:)];
     result.minimumNumberOfTouches = 1;
-    result.maximumNumberOfTouches = 2;
+    result.maximumNumberOfTouches = 1;
     
     return result;
 }
@@ -207,8 +165,17 @@
 - (void)panAction:(UIPanGestureRecognizer *)recognizer {
     PJWTileImageView *recognizerView = (PJWTileImageView *)recognizer.view;
     UIView *rootView = self.view;
+    NSSet *linkedSet = recognizerView.tileModel.linkedTileHashTable.setRepresentation;
     
-    [recognizerView moveSegmentWithOffset:[recognizer translationInView:rootView] animated:NO];
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        [self bringSegmentToFront:recognizerView];
+    }
+
+    CGPoint offset = [recognizer translationInView:rootView];
+    [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+        obj.center = CGPointMake(obj.center.x + offset.x,
+                                 obj.center.y + offset.y);
+    }];
     [recognizer setTranslation:CGPointZero inView:rootView];
     
     if (recognizer.state == UIGestureRecognizerStateEnded) {
@@ -223,51 +190,80 @@
 }
 
 - (void)tapAction:(UITapGestureRecognizer *)recognizer {
-    [self.view bringSubviewToFront:recognizer.view];
+    [self bringSegmentToFront:(PJWTileImageView *)recognizer.view];
 }
 
+- (void)bringSegmentToFront:(PJWTileImageView *)tileView {
+    NSSet *linkedSet = tileView.tileModel.linkedTileHashTable.setRepresentation;
+    UIView *rootView = self.view;
+    NSInteger count = linkedSet.count;
+    
+    if (count < 70) {
+        [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+            [rootView bringSubviewToFront:obj];
+        }];
+    } else {
+        NSArray *subViews = rootView.subviews;
+        NSInteger index = subViews.count - 1;
+        
+        BOOL isCheckToEnd = NO;
+        UIView *view;
+        
+        while (count > 0) {
+            view = subViews[index];
+            
+            if ([linkedSet containsObject:view]) {
+                count--;
+            } else {
+                [rootView sendSubviewToBack:view];
+                isCheckToEnd = YES;
+            }
+            
+            index--;
+        }
+        
+        if (isCheckToEnd) {
+            while (index >= 0) {
+                view = subViews[index];
+                [rootView sendSubviewToBack:view];
+                index--;
+            }
+        }
+    }
+}
 
 - (void)searchNeighborForView:(PJWTileImageView *)tileView {
     NSMutableSet *linkedSet = [NSMutableSet setWithSet:tileView.tileModel.linkedTileHashTable.setRepresentation];
-    
     NSMutableSet *freeNeighborSet = [NSMutableSet new];
     
-    NSEnumerator *enumerator = [linkedSet objectEnumerator];
-    PJWTileImageView *view;
-    while (view = [enumerator nextObject]) {
-        if ([self.tilesModel.calculatedTiles[view.tileModel.row][view.tileModel.col] boolValue]) {
-            [freeNeighborSet unionSet:[self.tilesModel freeNeighborsForTileView:view]];
+    [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+        PJWTileModel *tileModel = obj.tileModel;
+        
+        if ([self.tilesModel.calculatedTiles[tileModel.row][tileModel.col] boolValue]) {
+            [freeNeighborSet unionSet:[self.tilesModel freeNeighborsForTileView:obj]];
         }
-    }
+    }];
     
     if (freeNeighborSet.count == 0) {
         return;
     }
     
     PJWTileImageView *targetView = freeNeighborSet.allObjects[0];
-    
     [tileView moveToTargetView:targetView];
     
     [linkedSet unionSet:freeNeighborSet];
 
-    NSMutableSet *newLinkedSet = [NSMutableSet new];
+    NSHashTable *linkedTileHashTable = [NSHashTable weakObjectsHashTable];
+
     [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
-        [newLinkedSet unionSet:obj.tileModel.linkedTileHashTable.setRepresentation];
+        [linkedTileHashTable unionHashTable:obj.tileModel.linkedTileHashTable];
     }];
 
-    
-    
-    NSHashTable *linkedTileHashTable = [NSHashTable weakObjectsHashTable];
-    
-    [newLinkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL * _Nonnull stop) {
-        [linkedTileHashTable addObject:obj];
+
+    [linkedTileHashTable.setRepresentation enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+        [obj moveToTargetView:tileView];
+        obj.tileModel.linkedTileHashTable = linkedTileHashTable;
     }];
-    
-    enumerator = [newLinkedSet objectEnumerator];
-    while (view = [enumerator nextObject]) {
-        [view moveToTargetView:tileView];
-        view.tileModel.linkedTileHashTable = linkedTileHashTable;
-    }
     
     [self.tilesModel updateCalculatedTilesWithView:tileView];
 }

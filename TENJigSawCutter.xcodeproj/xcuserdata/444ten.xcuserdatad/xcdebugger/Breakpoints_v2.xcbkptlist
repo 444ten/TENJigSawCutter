@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/Model/PJWTilesModel/PJWTilesModel.m"
-            timestampString = "493199390.605294"
+            timestampString = "493201085.76775"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
             landmarkName = "-setup"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/Model/PJWTilesModel/PJWTilesModel.m"
-            timestampString = "493199390.605294"
+            timestampString = "493199780.067264"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
             landmarkName = "-calculatedTileWithRow:col:"
             landmarkType = "5">
          </BreakpointContent>
@@ -150,17 +150,129 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TENJigSawCutter/ViewController.m"
-            timestampString = "493128457.864565"
+            timestampString = "493215701.401759"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "242"
             endingLineNumber = "242"
             landmarkName = "-searchNeighborForView:"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TENJigSawCutter/ViewController.m"
+            timestampString = "493214608.851478"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
+            landmarkName = "-tapAction:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TENJigSawCutter/ViewController.m"
+            timestampString = "493212321.944792"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "-addTilesOnView"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[ViewController addTilesOnView]"
+                  moduleName = "TENJigSawCutter"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/444ten/!projects/!jigsaw/TENJigSawCutter/TENJigSawCutter/ViewController.m"
+                  timestampString = "493212785.701087"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[ViewController addTilesOnView]"
+                  moduleName = "TENJigSawCutter"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/444ten/!projects/!jigsaw/TENJigSawCutter/TENJigSawCutter/ViewController.m"
+                  timestampString = "493212785.701313"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "126">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TENJigSawCutter/ViewController.m"
+            timestampString = "493212357.274909"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "-addTilesOnView"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[ViewController addTilesOnView]"
+                  moduleName = "TENJigSawCutter"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/444ten/!projects/!jigsaw/TENJigSawCutter/TENJigSawCutter/ViewController.m"
+                  timestampString = "493212785.715084"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "153"
+                  endingLineNumber = "153"
+                  offsetFromSymbolStart = "920">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[ViewController addTilesOnView]"
+                  moduleName = "TENJigSawCutter"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/444ten/!projects/!jigsaw/TENJigSawCutter/TENJigSawCutter/ViewController.m"
+                  timestampString = "493212785.715268"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "153"
+                  endingLineNumber = "153"
+                  offsetFromSymbolStart = "1006">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -93,15 +93,21 @@
     
     if ([self isFreeNeighborForTileView:tileView withRow:row-1 col:col]) {
         [result addObject:self.tiles[row-1][col]];
+        [tileView.tileModel.linkedTileHashTable unionHashTable:[self.tiles[row-1][col] tileModel].linkedTileHashTable];
     }
     if ([self isFreeNeighborForTileView:tileView withRow:row+1 col:col]) {
         [result addObject:self.tiles[row+1][col]];
+        [tileView.tileModel.linkedTileHashTable unionHashTable:[self.tiles[row+1][col] tileModel].linkedTileHashTable];
+
     }
     if ([self isFreeNeighborForTileView:tileView withRow:row col:col-1]) {
         [result addObject:self.tiles[row][col-1]];
+        [tileView.tileModel.linkedTileHashTable unionHashTable:[self.tiles[row][col-1] tileModel].linkedTileHashTable];
+
     }
     if ([self isFreeNeighborForTileView:tileView withRow:row col:col+1]) {
         [result addObject:self.tiles[row][col+1]];
+        [tileView.tileModel.linkedTileHashTable unionHashTable:[self.tiles[row][col+1] tileModel].linkedTileHashTable];
     }
     
     return result;
