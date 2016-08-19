@@ -14,6 +14,16 @@
 @interface PJWPuzzleParameterModel : NSObject
 @property (nonatomic, strong)   UIImage     *originImage;
 
+@property (nonatomic, assign)   CGRect      gameFieldRect;
+@property (nonatomic, assign)   CGFloat     limitLeft;
+@property (nonatomic, assign)   CGFloat     limitRight;
+@property (nonatomic, assign)   CGFloat     limitUp;
+@property (nonatomic, assign)   CGFloat     limitDown;
+@property (nonatomic, assign)   CGFloat     mostLeftCenter;
+@property (nonatomic, assign)   CGFloat     mostRightCenter;
+@property (nonatomic, assign)   CGFloat     mostUpCenter;
+@property (nonatomic, assign)   CGFloat     mostDownCenter;
+
 @property (nonatomic, assign)   CGFloat     fullWidth;
 @property (nonatomic, assign)   NSInteger   countWidth;
 @property (nonatomic, assign)   CGFloat     overlapRatioWidth;

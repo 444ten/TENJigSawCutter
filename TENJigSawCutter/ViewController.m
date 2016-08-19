@@ -121,11 +121,11 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 20;
+    parameterModel.countWidth = 2;
     parameterModel.overlapRatioWidth = 0.7;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 15;
+    parameterModel.countHeight = 2;
     parameterModel.overlapRatioHeight = 0.7;
     
     [parameterModel setup];
@@ -163,21 +163,50 @@
 }
 
 - (void)panAction:(UIPanGestureRecognizer *)recognizer {
+    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    
     PJWTileImageView *recognizerView = (PJWTileImageView *)recognizer.view;
     UIView *rootView = self.view;
-    NSSet *linkedSet = recognizerView.tileModel.linkedTileHashTable.setRepresentation;
+//    NSSet *linkedSet = recognizerView.tileModel.linkedTileHashTable.setRepresentation;
     
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         [self bringSegmentToFront:recognizerView];
     }
 
+//    NSLog(@"center (%f, %f", recognizerView.center.x, recognizerView.center.y);
+    
     CGPoint offset = [recognizer translationInView:rootView];
-    [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
-        obj.center = CGPointMake(obj.center.x + offset.x,
-                                 obj.center.y + offset.y);
-    }];
+    NSLog(@"offset (%f, %f", offset.x, offset.y);
+
+    CGPoint center = recognizerView.center;
+    
+    center.x += offset.x;
+    center.y += offset.y;
+
+    if (center.x < parameterModel.mostLeftCenter) {
+        center.x = parameterModel.mostLeftCenter;
+    }
+    
+    if (center.x > parameterModel.mostRightCenter) {
+        center.x = parameterModel.mostRightCenter;
+    }
+
+    if (center.y < parameterModel.mostUpCenter) {
+        center.y = parameterModel.mostUpCenter;
+    }
+
+    if (center.y > parameterModel.mostDownCenter) {
+        center.y = parameterModel.mostDownCenter;
+    }
+
+    recognizerView.center = center;
     [recognizer setTranslation:CGPointZero inView:rootView];
     
+//    [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+//        obj.center = CGPointMake(obj.center.x + offset.x,
+//                                 obj.center.y + offset.y);
+//    }];
+
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         [self searchNeighborForView:recognizerView];
     }
@@ -202,6 +231,7 @@
         [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
             [rootView bringSubviewToFront:obj];
         }];
+        
     } else {
         NSArray *subViews = rootView.subviews;
         NSInteger index = subViews.count - 1;

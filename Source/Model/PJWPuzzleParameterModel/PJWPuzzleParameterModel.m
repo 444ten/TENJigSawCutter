@@ -45,13 +45,13 @@ static NSString * const kImageName = @"900x700.jpg";
 
 - (void)setup {
     [self calculateSlice];
+    [self setupGameField];
     self.offsetCornerModel = [PJWOffsetCornerModel new];
     self.offsetSideModel = [PJWOffsetSideModel new];
 }
 
 #pragma mark -
 #pragma mark Private Methods
-
 
 - (void)setupOriginImage {
     self.originImage = [UIImage imageNamed:kImageName];
@@ -69,5 +69,25 @@ static NSString * const kImageName = @"900x700.jpg";
     self.anchorHeight = self.baseHeight + self.overlapHeight;
 }
 
+- (void)setupGameField {
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    
+    self.limitLeft  = 20.f;
+    self.limitRight =  5.f;
+    self.limitUp    = 20.f;
+    self.limitDown  =  5.f;
+    
+    CGRect gameFieldRect = CGRectMake(self.limitLeft,
+                                      self.limitRight,
+                                      screenSize.width  - self.limitLeft - self.limitRight,
+                                      screenSize.height - self.limitUp   - self.limitDown );
+    self.gameFieldRect = gameFieldRect;
+    
+    self.mostLeftCenter  = gameFieldRect.origin.x + self.sliceWidth  / 2;
+    self.mostRightCenter = gameFieldRect.origin.x + gameFieldRect.size.width  - self.sliceWidth / 2;
+    self.mostUpCenter    = gameFieldRect.origin.y + self.sliceHeight / 2;
+    self.mostDownCenter  = gameFieldRect.origin.y + gameFieldRect.size.height - self.sliceHeight / 2;
+
+}
 
 @end
