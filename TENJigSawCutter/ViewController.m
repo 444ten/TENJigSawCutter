@@ -11,6 +11,7 @@
 #import "PJWPuzzleParameterModel.h"
 #import "PJWTilesModel.h"
 #import "PJWTileImageView.h"
+#import "PJWSegmentModel.h"
 
 @interface ViewController ()
 @property (strong, nonatomic) IBOutlet UIImageView *originalImageView;
@@ -65,7 +66,7 @@
     CGFloat mostDown  = parameterModel.mostDownCenter;
     
     for (PJWTileImageView *tileView in self.tileSet) {
-        UIEdgeInsets bezierInsets = tileView.bezierInsets;
+        UIEdgeInsets bezierInsets = tileView.tileModel.bezierInsets;
         CGFloat left  = bezierInsets.left;
         CGFloat right = bezierInsets.right;
         CGFloat up    = bezierInsets.top;
@@ -130,12 +131,12 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 20;
-    parameterModel.overlapRatioWidth = 0.7;
+    parameterModel.countWidth = 4;
+    parameterModel.overlapRatioWidth = 0.5;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 15;
-    parameterModel.overlapRatioHeight = 0.7;
+    parameterModel.countHeight = 3;
+    parameterModel.overlapRatioHeight = 0.5;
     
     [parameterModel setup];
 }
@@ -176,45 +177,60 @@
     
     PJWTileImageView *recognizerView = (PJWTileImageView *)recognizer.view;
     UIView *rootView = self.view;
-//    NSSet *linkedSet = recognizerView.tileModel.linkedTileHashTable.setRepresentation;
+    NSSet *linkedSet = recognizerView.tileModel.linkedTileHashTable.setRepresentation;
     
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         [self bringSegmentToFront:recognizerView];
     }
-
-//    NSLog(@"center (%f, %f", recognizerView.center.x, recognizerView.center.y);
     
     CGPoint offset = [recognizer translationInView:rootView];
-    NSLog(@"offset (%f, %f", offset.x, offset.y);
-
     CGPoint center = recognizerView.center;
+
+    PJWSegmentModel *segmentModel = [[PJWSegmentModel alloc] initWithTileView:recognizerView];
+    UIEdgeInsets segmentInsets = segmentModel.segmentInsets;
     
-    center.x += offset.x;
-    center.y += offset.y;
-
-    if (center.x < parameterModel.mostLeftCenter - recognizerView.bezierInsets.left) {
-        center.x = parameterModel.mostLeftCenter - recognizerView.bezierInsets.left;
+    
+    NSLog(@"center %.1f offset %.1f inset %.1f", center.x, offset.x, segmentInsets.left);
+    
+    
+//    if (center.x + offset.x - segmentInsets.left < 0) {
+//        offset.x = segmentInsets.left - center.x;
+//    }
+    
+    CGFloat delta = center.x + offset.x - segmentInsets.left;
+    
+    if (delta < 0) {
+        offset.x -= delta;
     }
     
-    if (center.x > parameterModel.mostRightCenter) {
-        center.x = parameterModel.mostRightCenter;
-    }
+//    center.x += offset.x;
+//    center.y += offset.y;
 
-    if (center.y < parameterModel.mostUpCenter) {
-        center.y = parameterModel.mostUpCenter;
-    }
+//    if (center.x < parameterModel.mostLeftCenter - recognizerView.tileModel.bezierInsets.left) {
+//        center.x = parameterModel.mostLeftCenter - recognizerView.tileModel.bezierInsets.left;
+//    }
+//    
+//    if (center.x > parameterModel.mostRightCenter) {
+//        center.x = parameterModel.mostRightCenter;
+//    }
+//
+//    if (center.y < parameterModel.mostUpCenter) {
+//        center.y = parameterModel.mostUpCenter;
+//    }
+//
+//    if (center.y > parameterModel.mostDownCenter) {
+//        center.y = parameterModel.mostDownCenter;
+//    }
 
-    if (center.y > parameterModel.mostDownCenter) {
-        center.y = parameterModel.mostDownCenter;
-    }
+//    recognizerView.center = center;
+    
+    [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+        obj.center = CGPointMake(obj.center.x + offset.x,
+                                 obj.center.y + offset.y);
+    }];
 
-    recognizerView.center = center;
+    
     [recognizer setTranslation:CGPointZero inView:rootView];
-    
-//    [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
-//        obj.center = CGPointMake(obj.center.x + offset.x,
-//                                 obj.center.y + offset.y);
-//    }];
 
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         [self searchNeighborForView:recognizerView];

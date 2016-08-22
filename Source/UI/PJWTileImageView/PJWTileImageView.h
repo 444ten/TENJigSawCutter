@@ -12,7 +12,6 @@
 
 @interface PJWTileImageView : UIImageView
 @property (nonatomic, strong)   PJWTileModel    *tileModel;
-@property (nonatomic, assign)   UIEdgeInsets    bezierInsets;
 
 - (void)moveToTargetView:(PJWTileImageView *)targetView;
 

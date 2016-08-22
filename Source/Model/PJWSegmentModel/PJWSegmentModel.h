@@ -11,10 +11,7 @@
 #import "PJWTileImageView.h"
 
 @interface PJWSegmentModel : NSObject
-@property (nonatomic, strong)   PJWTileImageView *leftTile;
-@property (nonatomic, strong)   PJWTileImageView *rightTile;
-@property (nonatomic, strong)   PJWTileImageView *upTile;
-@property (nonatomic, strong)   PJWTileImageView *downTile;
+@property (nonatomic, assign)   UIEdgeInsets    segmentInsets;
 
 - (instancetype)initWithTileView:(PJWTileImageView *)tileView;
 

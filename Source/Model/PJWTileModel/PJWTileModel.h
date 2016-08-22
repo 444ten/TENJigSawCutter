@@ -15,6 +15,8 @@
 @property (nonatomic, assign)   NSInteger   col;
 
 @property (nonatomic, strong)   UIBezierPath    *bezierPath;
+@property (nonatomic, assign)   UIEdgeInsets    bezierInsets;
+
 @property (nonatomic, strong)   NSValue         *anchor;
 @property (nonatomic, strong)   NSHashTable     *linkedTileHashTable;
 
