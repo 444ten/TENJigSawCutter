@@ -8,6 +8,32 @@
 
 #import "PJWSegmentModel.h"
 
+@interface PJWSegmentModel ()
+@property (nonatomic, strong)   PJWTileImageView    *tileView;
+
+@end
+
 @implementation PJWSegmentModel
+
+#pragma mark -
+#pragma mark Initializations and Deallocations
+
+- (instancetype)initWithTileView:(PJWTileImageView *)tileView {
+    self = [super init];
+    if (self) {
+        self.tileView = tileView;
+//        [self setupWithTileView:(PJWTileImageView )];
+    }
+    
+    return self;
+}
+
+#pragma mark -
+#pragma mark Private Methods
+
+- (void)setupWithTileView {
+    
+}
+
 
 @end

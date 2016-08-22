@@ -177,38 +177,6 @@
             endingLineNumber = "136"
             landmarkName = "-addTilesOnView"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[ViewController addTilesOnView]"
-                  moduleName = "TENJigSawCutter"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/444ten/!projects/!jigsaw/TENJigSawCutter/TENJigSawCutter/ViewController.m"
-                  timestampString = "493297616.053213"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "137"
-                  endingLineNumber = "137"
-                  offsetFromSymbolStart = "104">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[ViewController addTilesOnView]"
-                  moduleName = "TENJigSawCutter"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/444ten/!projects/!jigsaw/TENJigSawCutter/TENJigSawCutter/ViewController.m"
-                  timestampString = "493297616.053337"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "137"
-                  endingLineNumber = "137"
-                  offsetFromSymbolStart = "120">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -225,38 +193,6 @@
             endingLineNumber = "153"
             landmarkName = "-addTilesOnView"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[ViewController addTilesOnView]"
-                  moduleName = "TENJigSawCutter"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/444ten/!projects/!jigsaw/TENJigSawCutter/TENJigSawCutter/ViewController.m"
-                  timestampString = "493297616.055348"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "153"
-                  endingLineNumber = "153"
-                  offsetFromSymbolStart = "800">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[ViewController addTilesOnView]"
-                  moduleName = "TENJigSawCutter"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/444ten/!projects/!jigsaw/TENJigSawCutter/TENJigSawCutter/ViewController.m"
-                  timestampString = "493297616.055661"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "153"
-                  endingLineNumber = "153"
-                  offsetFromSymbolStart = "884">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
