@@ -8,6 +8,8 @@
 
 #define NSValueWithPoint(x, y)  [NSValue valueWithCGPoint:CGPointMake(x, y)]
 #define CGPointFromValue(value) [value CGPointValue]
+#define TENHeadOrTile           arc4random_uniform(2)
+
 
 #import <Foundation/Foundation.h>
 

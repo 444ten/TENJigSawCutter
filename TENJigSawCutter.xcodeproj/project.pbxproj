@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7682ED051D67377300D4590F /* PJWSegmentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7682ED041D67377300D4590F /* PJWSegmentModel.m */; };
+		7682ED1F1D6AE93B00D4590F /* TENGCDObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7682ED1E1D6AE93B00D4590F /* TENGCDObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		76C9BBBF1D5498820067833D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBBE1D5498820067833D /* main.m */; };
 		76C9BBC21D5498820067833D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBC11D5498820067833D /* AppDelegate.m */; };
 		76C9BBC51D5498820067833D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBC41D5498820067833D /* ViewController.m */; };
@@ -30,6 +31,8 @@
 /* Begin PBXFileReference section */
 		7682ED031D67377300D4590F /* PJWSegmentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWSegmentModel.h; sourceTree = "<group>"; };
 		7682ED041D67377300D4590F /* PJWSegmentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWSegmentModel.m; sourceTree = "<group>"; };
+		7682ED1D1D6AE93B00D4590F /* TENGCDObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TENGCDObject.h; sourceTree = "<group>"; };
+		7682ED1E1D6AE93B00D4590F /* TENGCDObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TENGCDObject.m; sourceTree = "<group>"; };
 		76C9BBBA1D5498820067833D /* TENJigSawCutter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TENJigSawCutter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76C9BBBE1D5498820067833D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		76C9BBC01D5498820067833D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -79,6 +82,15 @@
 				7682ED041D67377300D4590F /* PJWSegmentModel.m */,
 			);
 			path = PJWSegmentModel;
+			sourceTree = "<group>";
+		};
+		7682ED1C1D6AE92D00D4590F /* TENGCDObject */ = {
+			isa = PBXGroup;
+			children = (
+				7682ED1D1D6AE93B00D4590F /* TENGCDObject.h */,
+				7682ED1E1D6AE93B00D4590F /* TENGCDObject.m */,
+			);
+			path = TENGCDObject;
 			sourceTree = "<group>";
 		};
 		76C9BBB11D5498820067833D = {
@@ -138,6 +150,7 @@
 		76C9BBD91D58AA5A0067833D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7682ED1C1D6AE92D00D4590F /* TENGCDObject */,
 				7682ED021D67376500D4590F /* PJWSegmentModel */,
 				76C9BC0A1D619BC50067833D /* PJWTileModel */,
 				76C9BC061D619B700067833D /* PJWTilesModel */,
@@ -307,6 +320,7 @@
 				76C9BBE91D59AD150067833D /* TENMacros.m in Sources */,
 				76C9BBF81D5C442F0067833D /* PJWOffsetSideModel.m in Sources */,
 				76C9BC051D5DC91C0067833D /* PJWCropImageView.m in Sources */,
+				7682ED1F1D6AE93B00D4590F /* TENGCDObject.m in Sources */,
 				76C9BBEF1D5B227E0067833D /* PJWOffsetCornerModel.m in Sources */,
 				76C9BBF41D5B46260067833D /* PJWPuzzleParameterModel.m in Sources */,
 				76C9BC0D1D619BD40067833D /* PJWTileModel.m in Sources */,

@@ -9,7 +9,6 @@
 #import "PJWSegmentModel.h"
 
 @interface PJWSegmentModel ()
-@property (nonatomic, strong)   PJWTileImageView    *tileView;
 
 @end
 
@@ -21,8 +20,7 @@
 - (instancetype)initWithTileView:(PJWTileImageView *)tileView {
     self = [super init];
     if (self) {
-        self.tileView = tileView;
-//        [self setupWithTileView:(PJWTileImageView )];
+        [self setupWithTileView:tileView];
     }
     
     return self;
@@ -31,9 +29,8 @@
 #pragma mark -
 #pragma mark Private Methods
 
-- (void)setupWithTileView {
+- (void)setupWithTileView:(PJWTileImageView *)tileView {
     
 }
-
 
 @end

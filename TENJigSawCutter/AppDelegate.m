@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#import "TENGCDObject.h"
+
 @interface AppDelegate ()
 
 @end
@@ -16,8 +18,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     
+//    TENGCDObject *obj = [TENGCDObject new];
+//    
+//    [obj executeTest];
     
     return YES;
 }

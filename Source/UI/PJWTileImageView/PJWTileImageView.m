@@ -13,6 +13,23 @@
 @implementation PJWTileImageView
 
 #pragma mark -
+#pragma mark Accessors
+
+- (void)setTileModel:(PJWTileModel *)tileModel {
+    if (_tileModel != tileModel) {
+        _tileModel = tileModel;
+        
+        CGRect bezierRect = tileModel.bezierPath.bounds;
+        CGSize size = self.frame.size;
+        
+        self.bezierInsets = UIEdgeInsetsMake(bezierRect.origin.y,
+                                             bezierRect.origin.x,
+                                             size.height - bezierRect.origin.y - bezierRect.size.height,
+                                             size.width  - bezierRect.origin.x - bezierRect.size.width);        
+    }
+}
+
+#pragma mark -
 #pragma mark Overriden Methods
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {

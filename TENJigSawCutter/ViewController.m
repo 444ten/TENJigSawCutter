@@ -59,26 +59,32 @@
 
 - (IBAction)onShuffle:(UIButton *)sender {
     PJWPuzzleParameterModel *parameterModel = self.parameterModel;
-    
-    CGFloat offsetXmin = (1024. - parameterModel.fullWidth + parameterModel.baseWidth) / 2 + parameterModel.overlapWidth;
-    CGFloat offsetYmin = (768. - parameterModel.fullHeight + parameterModel.baseHeight) / 2 + parameterModel.overlapHeight;
-    
-    CGFloat offsetXmax = offsetXmin + (parameterModel.countWidth - 1) * parameterModel.anchorWidth;
-    CGFloat offsetYmax = offsetYmin + (parameterModel.countHeight - 1) * parameterModel.anchorHeight;
+    CGFloat mostLeft  = parameterModel.mostLeftCenter;
+    CGFloat mostRight = parameterModel.mostRightCenter;
+    CGFloat mostUp    = parameterModel.mostUpCenter;
+    CGFloat mostDown  = parameterModel.mostDownCenter;
     
     for (PJWTileImageView *tileView in self.tileSet) {
+        UIEdgeInsets bezierInsets = tileView.bezierInsets;
+        CGFloat left  = bezierInsets.left;
+        CGFloat right = bezierInsets.right;
+        CGFloat up    = bezierInsets.top;
+        CGFloat down  = bezierInsets.bottom;
         
         if (tileView.tileModel.linkedTileHashTable.count == 1) {
             CGPoint center;
-            if (arc4random_uniform(2)) {
-                center.x = offsetXmin + arc4random_uniform(offsetXmax - offsetXmin);
-                center.y = arc4random_uniform(2) ? offsetYmin : offsetYmax;
+            if (TENHeadOrTile) {
+                center.x = mostLeft - left + arc4random_uniform(mostRight + right - mostLeft - left);
+                center.y = TENHeadOrTile ? mostUp   - up   : mostDown  + down ;
             } else {
-                center.x = arc4random_uniform(2) ? offsetXmin : offsetXmax;
-                center.y = offsetYmin + arc4random_uniform(offsetYmax - offsetYmin);
+                center.x = TENHeadOrTile ? mostLeft - left : mostRight + right;
+                center.y = mostUp - up     + arc4random_uniform(mostDown  + down  - mostUp   - up  );
             }
             
-            tileView.center = center;
+            [UIView animateWithDuration:1.0
+                             animations:^{
+                                 tileView.center = center;
+                             }];
         }
     }
 }
@@ -91,7 +97,10 @@
             center.x += (1024. - self.parameterModel.fullWidth) / 2.0;
             center.y += ( 768. - self.parameterModel.fullHeight) / 2.0;
             
-            tileView.center = center;
+            [UIView animateWithDuration:1.0
+                             animations:^{
+                                 tileView.center = center;
+                             }];
         }
     }
 }
@@ -121,11 +130,11 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 2;
+    parameterModel.countWidth = 20;
     parameterModel.overlapRatioWidth = 0.7;
     
     parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 2;
+    parameterModel.countHeight = 15;
     parameterModel.overlapRatioHeight = 0.7;
     
     [parameterModel setup];
@@ -183,8 +192,8 @@
     center.x += offset.x;
     center.y += offset.y;
 
-    if (center.x < parameterModel.mostLeftCenter) {
-        center.x = parameterModel.mostLeftCenter;
+    if (center.x < parameterModel.mostLeftCenter - recognizerView.bezierInsets.left) {
+        center.x = parameterModel.mostLeftCenter - recognizerView.bezierInsets.left;
     }
     
     if (center.x > parameterModel.mostRightCenter) {
