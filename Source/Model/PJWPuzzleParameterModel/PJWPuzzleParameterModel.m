@@ -71,6 +71,7 @@ static NSString * const kImageName = @"900x700.jpg";
 
 - (void)setupGameField {
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    
     UIEdgeInsets gameFieldLimit = UIEdgeInsetsMake(0., 30., 0., 0.);
     
     self.gameFieldLimit = gameFieldLimit;

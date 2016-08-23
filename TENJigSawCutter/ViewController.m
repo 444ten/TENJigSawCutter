@@ -60,10 +60,12 @@
 
 - (IBAction)onShuffle:(UIButton *)sender {
     PJWPuzzleParameterModel *parameterModel = self.parameterModel;
-    CGFloat mostLeft  = parameterModel.mostLeftCenter;
-    CGFloat mostRight = parameterModel.mostRightCenter;
-    CGFloat mostUp    = parameterModel.mostUpCenter;
-    CGFloat mostDown  = parameterModel.mostDownCenter;
+    CGRect gameFieldRect = parameterModel.gameFieldRect;
+    
+    CGFloat mostLeft  = gameFieldRect.origin.x + parameterModel.sliceWidth  / 2;
+    CGFloat mostRight = gameFieldRect.origin.x + gameFieldRect.size.width  - parameterModel.sliceWidth / 2;
+    CGFloat mostUp    = gameFieldRect.origin.y + parameterModel.sliceHeight / 2;
+    CGFloat mostDown  = gameFieldRect.origin.y + gameFieldRect.size.height - parameterModel.sliceHeight / 2;
     
     for (PJWTileImageView *tileView in self.tileSet) {
         if (tileView.tileModel.linkedTileHashTable.count == 1) {
