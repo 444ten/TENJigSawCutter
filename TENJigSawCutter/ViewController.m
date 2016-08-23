@@ -191,31 +191,33 @@
     PJWSegmentModel *segmentModel = [[PJWSegmentModel alloc] initWithTileView:recognizerView];
     UIEdgeInsets segmentInsets = segmentModel.segmentInsets;
     
-    
+    UIEdgeInsets gameFieldLimit = parameterModel.gameFieldLimit;
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+
     NSLog(@"center %.1f offset %.1f inset %.1f", center.y, offset.y, segmentInsets.top);
     
     CGFloat delta;
     
 //left side
-    delta = center.x + offset.x - segmentInsets.left + 0.f - parameterModel.limitLeft;
+    delta = center.x + offset.x - segmentInsets.left + 0.f - gameFieldLimit.left;
     if (delta < 0) {
         offset.x -= delta;
     }
 
 //right side
-    delta = center.x + offset.x + segmentInsets.right - 1024.f + parameterModel.limitRight;
+    delta = center.x + offset.x + segmentInsets.right - screenSize.width + gameFieldLimit.right;
     if (delta > 0) {
         offset.x -= delta;
     }
     
 //up side
-    delta = center.y + offset.y - segmentInsets.top + 0.f - parameterModel.limitUp;
+    delta = center.y + offset.y - segmentInsets.top + 0.f - gameFieldLimit.top;
     if (delta < 0) {
         offset.y -= delta;
     }
 
 //down side
-    delta = center.y + offset.y + segmentInsets.bottom - 768.f + parameterModel.limitDown;
+    delta = center.y + offset.y + segmentInsets.bottom - screenSize.height + gameFieldLimit.bottom;
     if (delta > 0) {
         offset.y -= delta;
     }

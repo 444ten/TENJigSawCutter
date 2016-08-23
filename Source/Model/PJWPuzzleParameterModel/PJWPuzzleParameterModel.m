@@ -71,23 +71,15 @@ static NSString * const kImageName = @"900x700.jpg";
 
 - (void)setupGameField {
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    UIEdgeInsets gameFieldLimit = UIEdgeInsetsMake(0., 30., 0., 0.);
     
-    self.limitLeft  = 30.f;
-    self.limitRight = 30.f;
-    self.limitUp    = 30.f;
-    self.limitDown  = 30.f;
+    self.gameFieldLimit = gameFieldLimit;
     
-    CGRect gameFieldRect = CGRectMake(self.limitLeft,
-                                      self.limitRight,
-                                      screenSize.width  - self.limitLeft - self.limitRight,
-                                      screenSize.height - self.limitUp   - self.limitDown );
+    CGRect gameFieldRect = CGRectMake(gameFieldLimit.left,
+                                      gameFieldLimit.top,
+                                      screenSize.width  - gameFieldLimit.left - gameFieldLimit.right,
+                                      screenSize.height - gameFieldLimit.top   - gameFieldLimit.bottom );
     self.gameFieldRect = gameFieldRect;
-    
-    self.mostLeftCenter  = gameFieldRect.origin.x + self.sliceWidth  / 2;
-    self.mostRightCenter = gameFieldRect.origin.x + gameFieldRect.size.width  - self.sliceWidth / 2;
-    self.mostUpCenter    = gameFieldRect.origin.y + self.sliceHeight / 2;
-    self.mostDownCenter  = gameFieldRect.origin.y + gameFieldRect.size.height - self.sliceHeight / 2;
-
 }
 
 @end
