@@ -46,7 +46,7 @@
         NSInteger col = viewModel.col;
         UIEdgeInsets viewInsets = viewModel.bezierInsets;
         
-//left
+//most left tile
         PJWTileModel *leftModel = leftView.tileModel;
         if (col < leftModel.col) {
             leftView = view;
@@ -56,7 +56,7 @@
             }
         }
         
-//right
+//most right tile
         PJWTileModel *rightModel = rightView.tileModel;
         if (col > rightModel.col) {
             rightView = view;
@@ -66,7 +66,7 @@
             }
         }
         
-//up
+//most up tile
         PJWTileModel *upModel = upView.tileModel;
         if (row < upModel.row) {
             upView = view;
@@ -76,7 +76,7 @@
             }
         }
         
-//down
+//most down tile
         PJWTileModel *downModel = downView.tileModel;
         if (row > downModel.row) {
             downView = view;
@@ -85,24 +85,32 @@
                 downView = view;
             }
         }
-        
     }
     
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    CGFloat anchorWidth = parameterModel.anchorWidth;
+    CGFloat halfSliceWidth = parameterModel.sliceWidth / 2;
+    CGFloat anchorHeight = parameterModel.anchorHeight;
+    CGFloat halfSliceHeight = parameterModel.sliceHeight / 2;
+    
     NSInteger tileRow = tileModel.row;
     NSInteger tileCol = tileModel.col;
-    
+
+//left inset
     PJWTileModel *leftModel = leftView.tileModel;
-    CGFloat leftInset = (tileCol - leftModel.col + 0.5) * parameterModel.sliceWidth - leftModel.bezierInsets.left;
+    CGFloat leftInset = halfSliceWidth + (tileCol - leftModel.col) * anchorWidth - leftModel.bezierInsets.left;
 
+//right inset
     PJWTileModel *rightModel = rightView.tileModel;
-    CGFloat rightInset = (rightModel.col - tileCol + 0.5) * parameterModel.sliceWidth - rightModel.bezierInsets.right;
+    CGFloat rightInset = halfSliceWidth + (rightModel.col - tileCol) * anchorWidth - rightModel.bezierInsets.right;
 
+//up inset
     PJWTileModel *upModel = upView.tileModel;
-    CGFloat upInset = (tileRow - upModel.row + 0.5) * parameterModel.sliceHeight - upModel.bezierInsets.top;
+    CGFloat upInset = halfSliceHeight + (tileRow - upModel.row) * anchorHeight - upModel.bezierInsets.top;
   
+//down inset
     PJWTileModel *downModel = downView.tileModel;
-    CGFloat downInset = (downModel.row - tileRow + 0.5) * parameterModel.sliceHeight - downModel.bezierInsets.bottom;
+    CGFloat downInset = halfSliceHeight + (downModel.row - tileRow ) * anchorHeight - downModel.bezierInsets.bottom;
     
     return UIEdgeInsetsMake(upInset, leftInset, downInset, rightInset);
 }

@@ -66,13 +66,15 @@
     CGFloat mostDown  = parameterModel.mostDownCenter;
     
     for (PJWTileImageView *tileView in self.tileSet) {
-        UIEdgeInsets bezierInsets = tileView.tileModel.bezierInsets;
-        CGFloat left  = bezierInsets.left;
-        CGFloat right = bezierInsets.right;
-        CGFloat up    = bezierInsets.top;
-        CGFloat down  = bezierInsets.bottom;
-        
         if (tileView.tileModel.linkedTileHashTable.count == 1) {
+            [self.view bringSubviewToFront:tileView];
+            
+            UIEdgeInsets bezierInsets = tileView.tileModel.bezierInsets;
+            CGFloat left  = bezierInsets.left;
+            CGFloat right = bezierInsets.right;
+            CGFloat up    = bezierInsets.top;
+            CGFloat down  = bezierInsets.bottom;
+            
             CGPoint center;
             if (TENHeadOrTile) {
                 center.x = mostLeft - left + arc4random_uniform(mostRight + right - mostLeft - left);
@@ -82,7 +84,7 @@
                 center.y = mostUp - up     + arc4random_uniform(mostDown  + down  - mostUp   - up  );
             }
             
-            [UIView animateWithDuration:1.0
+            [UIView animateWithDuration:0.3
                              animations:^{
                                  tileView.center = center;
                              }];
@@ -130,12 +132,12 @@
 
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
-    parameterModel.fullWidth = 900.f;
-    parameterModel.countWidth = 4;
+    parameterModel.fullWidth = 800.f;
+    parameterModel.countWidth = 20;
     parameterModel.overlapRatioWidth = 0.5;
     
-    parameterModel.fullHeight = 700.f;
-    parameterModel.countHeight = 3;
+    parameterModel.fullHeight = 600.f;
+    parameterModel.countHeight = 15;
     parameterModel.overlapRatioHeight = 0.5;
     
     [parameterModel setup];
@@ -190,39 +192,33 @@
     UIEdgeInsets segmentInsets = segmentModel.segmentInsets;
     
     
-    NSLog(@"center %.1f offset %.1f inset %.1f", center.x, offset.x, segmentInsets.left);
+    NSLog(@"center %.1f offset %.1f inset %.1f", center.y, offset.y, segmentInsets.top);
     
+    CGFloat delta;
     
-//    if (center.x + offset.x - segmentInsets.left < 0) {
-//        offset.x = segmentInsets.left - center.x;
-//    }
-    
-    CGFloat delta = center.x + offset.x - segmentInsets.left;
-    
+//left side
+    delta = center.x + offset.x - segmentInsets.left + 0.f - parameterModel.limitLeft;
     if (delta < 0) {
         offset.x -= delta;
     }
+
+//right side
+    delta = center.x + offset.x + segmentInsets.right - 1024.f + parameterModel.limitRight;
+    if (delta > 0) {
+        offset.x -= delta;
+    }
     
-//    center.x += offset.x;
-//    center.y += offset.y;
+//up side
+    delta = center.y + offset.y - segmentInsets.top + 0.f - parameterModel.limitUp;
+    if (delta < 0) {
+        offset.y -= delta;
+    }
 
-//    if (center.x < parameterModel.mostLeftCenter - recognizerView.tileModel.bezierInsets.left) {
-//        center.x = parameterModel.mostLeftCenter - recognizerView.tileModel.bezierInsets.left;
-//    }
-//    
-//    if (center.x > parameterModel.mostRightCenter) {
-//        center.x = parameterModel.mostRightCenter;
-//    }
-//
-//    if (center.y < parameterModel.mostUpCenter) {
-//        center.y = parameterModel.mostUpCenter;
-//    }
-//
-//    if (center.y > parameterModel.mostDownCenter) {
-//        center.y = parameterModel.mostDownCenter;
-//    }
-
-//    recognizerView.center = center;
+//down side
+    delta = center.y + offset.y + segmentInsets.bottom - 768.f + parameterModel.limitDown;
+    if (delta > 0) {
+        offset.y -= delta;
+    }
     
     [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
         obj.center = CGPointMake(obj.center.x + offset.x,
