@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -17,17 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aiZ-ho-XtM">
-                                <rect key="frame" x="62" y="34" width="900" height="700"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="900" id="7qu-6B-qje"/>
-                                    <constraint firstAttribute="height" constant="700" id="E8R-J0-zr7"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="Bhk-H0-XVS" appends="YES" id="O0I-do-ZJG"/>
-                                </connections>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0m8-QX-rIZ">
                                 <rect key="frame" x="8" y="730" width="42" height="30"/>
                                 <state key="normal" title="Ghost"/>
@@ -60,7 +49,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="qzC-8K-Wvd" firstAttribute="top" secondItem="Bzk-GJ-gYQ" secondAttribute="bottom" constant="40" id="7ev-ck-hOa"/>
-                            <constraint firstItem="aiZ-ho-XtM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FaH-XV-gH7"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0m8-QX-rIZ" secondAttribute="bottom" constant="8" id="LKD-Rj-Cry"/>
                             <constraint firstItem="0m8-QX-rIZ" firstAttribute="top" secondItem="jUv-UI-2OT" secondAttribute="bottom" constant="4" id="Li8-bk-GsA"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0m8-QX-rIZ" secondAttribute="bottom" id="Ugu-lN-GHi"/>
@@ -68,7 +56,6 @@
                             <constraint firstItem="Bzk-GJ-gYQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="Xgk-sn-xJL"/>
                             <constraint firstItem="0m8-QX-rIZ" firstAttribute="top" secondItem="qzC-8K-Wvd" secondAttribute="bottom" constant="40" id="YEf-dk-6Yp"/>
                             <constraint firstItem="jUv-UI-2OT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="2" id="d6O-sX-dzY"/>
-                            <constraint firstItem="aiZ-ho-XtM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="gJm-eh-T9R"/>
                             <constraint firstAttribute="trailing" secondItem="jUv-UI-2OT" secondAttribute="trailing" constant="4" id="izi-KM-55P"/>
                             <constraint firstItem="qzC-8K-Wvd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="qcC-Ba-AvU"/>
                             <constraint firstItem="0m8-QX-rIZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="uub-do-rZU"/>
@@ -85,16 +72,8 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
-                    <connections>
-                        <outlet property="originalImageView" destination="aiZ-ho-XtM" id="nvj-gf-53i"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Bhk-H0-XVS">
-                    <connections>
-                        <action selector="tapOriginalImage:" destination="BYZ-38-t0r" id="uKN-Vo-7Zr"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="288" y="459"/>
         </scene>

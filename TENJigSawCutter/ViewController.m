@@ -14,8 +14,7 @@
 #import "PJWSegmentModel.h"
 
 @interface ViewController ()
-@property (strong, nonatomic) IBOutlet UIImageView *originalImageView;
-
+@property (nonatomic, strong)   UIImageView             *ghostView;
 @property (nonatomic, strong)   PJWPuzzleParameterModel *parameterModel;
 
 @property (nonatomic, strong)   PJWTilesModel           *tilesModel;
@@ -34,8 +33,6 @@
     [super viewDidLoad];
     self.parameterModel = [PJWPuzzleParameterModel sharedInstance];
     
-    self.originalImageView.image = self.parameterModel.originImage;
-    
     [self onRestart:nil];
 }
 
@@ -47,16 +44,12 @@
 #pragma mark Accessors
 - (void)setGhostPresent:(BOOL)ghostPresent {
     _ghostPresent = ghostPresent;
-    self.originalImageView.alpha = ghostPresent ? 0.3 : 0.0;
+    self.ghostView.alpha = ghostPresent ? 0.3 : 0.0;
 }
 
 
 #pragma mark -
 #pragma mark Interface Handling
-
-- (IBAction)tapOriginalImage:(UITapGestureRecognizer *)sender {
-//    [self.view bringSubviewToFront:sender.view];
-}
 
 - (IBAction)onShuffle:(UIButton *)sender {
     PJWPuzzleParameterModel *parameterModel = self.parameterModel;
@@ -117,6 +110,8 @@
     
     [self setupParameterModel];
     
+    [self setupGhost];
+    
     self.tilesModel = [PJWTilesModel new];
     self.tileSet = self.tilesModel.tileSet;
     
@@ -143,6 +138,23 @@
     parameterModel.overlapRatioHeight = 0.5;
     
     [parameterModel setup];
+}
+
+- (void)setupGhost {
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    PJWPuzzleParameterModel *parameterModel = self.parameterModel;
+    
+    UIImageView *ghostView = [[UIImageView alloc] initWithFrame:
+                              CGRectMake(0, 0, parameterModel.fullWidth, parameterModel.fullHeight)];
+    
+    ghostView.image = parameterModel.originImage;
+    ghostView.center = CGPointMake(screenSize.width/2, screenSize.height/2);
+    ghostView.contentMode = UIViewContentModeTopLeft;
+    ghostView.clipsToBounds =  YES;
+    
+    [self.view addSubview:ghostView];
+    
+    self.ghostView = ghostView;
 }
 
 - (void)addTilesOnView {
@@ -177,7 +189,7 @@
 }
 
 - (void)panAction:(UIPanGestureRecognizer *)recognizer {
-    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    PJWPuzzleParameterModel *parameterModel = self.parameterModel;
     
     PJWTileImageView *recognizerView = (PJWTileImageView *)recognizer.view;
     UIView *rootView = self.view;
