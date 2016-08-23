@@ -45,8 +45,13 @@
 - (void)setGhostPresent:(BOOL)ghostPresent {
     _ghostPresent = ghostPresent;
     self.ghostView.alpha = ghostPresent ? 0.3 : 0.0;
+    
+    if (!ghostPresent) {
+        for (PJWTileImageView *obj in self.tileSet) {
+            obj.userInteractionEnabled = YES;
+        }
+    }
 }
-
 
 #pragma mark -
 #pragma mark Interface Handling
@@ -108,6 +113,8 @@
         [view removeFromSuperview];
     }
     
+    [self.ghostView removeFromSuperview];
+    
     [self setupParameterModel];
     
     [self setupGhost];
@@ -130,11 +137,11 @@
 - (void)setupParameterModel {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 800.f;
-    parameterModel.countWidth = 20;
+    parameterModel.countWidth = 4;
     parameterModel.overlapRatioWidth = 0.5;
     
     parameterModel.fullHeight = 600.f;
-    parameterModel.countHeight = 15;
+    parameterModel.countHeight = 3;
     parameterModel.overlapRatioHeight = 0.5;
     
     [parameterModel setup];
@@ -151,6 +158,7 @@
     ghostView.center = CGPointMake(screenSize.width/2, screenSize.height/2);
     ghostView.contentMode = UIViewContentModeTopLeft;
     ghostView.clipsToBounds =  YES;
+    ghostView.alpha = 0.0;
     
     [self.view addSubview:ghostView];
     
@@ -208,7 +216,7 @@
     UIEdgeInsets gameFieldLimit = parameterModel.gameFieldLimit;
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
 
-    NSLog(@"center %.1f offset %.1f inset %.1f", center.y, offset.y, segmentInsets.top);
+//    NSLog(@"center %.1f offset %.1f inset %.1f", center.y, offset.y, segmentInsets.top);
     
     CGFloat delta;
     
@@ -246,6 +254,37 @@
 
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         [self searchNeighborForView:recognizerView];
+        
+        if (self.ghostPresent) {
+            [self moveToGhostTileView:recognizerView];
+        }
+    
+    }
+}
+
+- (void)moveToGhostTileView:(PJWTileImageView *)tileView {
+    @synchronized (tileView) {
+        UIView *rootView = self.view;
+        UIImageView *ghostView = self.ghostView;
+        CGFloat deltaGhost = self.parameterModel.deltaGhost;
+        PJWTileModel *tileModel = tileView.tileModel;
+        
+        CGPoint center = [rootView convertPoint:tileView.center toView:ghostView];
+        
+        CGPoint anchor = CGPointFromValue(tileModel.anchor);
+        
+        if (fabs(center.x - anchor.x) < deltaGhost && fabs(center.y - anchor.y) < deltaGhost ) {
+            CGPoint targetPoint = [ghostView convertPoint:anchor toView:rootView];
+            
+            [tileView moveSegmentToPoint:targetPoint animated:YES];
+            
+            for (PJWTileImageView *obj in tileModel.linkedTileHashTable) {
+                obj.userInteractionEnabled = NO;
+                [rootView sendSubviewToBack:obj];
+            }
+            
+            [rootView sendSubviewToBack:ghostView];
+        }
     }
 }
 
@@ -300,39 +339,41 @@
 }
 
 - (void)searchNeighborForView:(PJWTileImageView *)tileView {
-    NSMutableSet *linkedSet = [NSMutableSet setWithSet:tileView.tileModel.linkedTileHashTable.setRepresentation];
-    NSMutableSet *freeNeighborSet = [NSMutableSet new];
-    
-    [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
-        PJWTileModel *tileModel = obj.tileModel;
+    @synchronized (tileView) {
+        NSMutableSet *linkedSet = [NSMutableSet setWithSet:tileView.tileModel.linkedTileHashTable.setRepresentation];
+        NSMutableSet *freeNeighborSet = [NSMutableSet new];
         
-        if ([self.tilesModel.calculatedTiles[tileModel.row][tileModel.col] boolValue]) {
-            [freeNeighborSet unionSet:[self.tilesModel freeNeighborsForTileView:obj]];
+        [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+            PJWTileModel *tileModel = obj.tileModel;
+            
+            if ([self.tilesModel.calculatedTiles[tileModel.row][tileModel.col] boolValue]) {
+                [freeNeighborSet unionSet:[self.tilesModel freeNeighborsForTileView:obj]];
+            }
+        }];
+        
+        if (freeNeighborSet.count == 0) {
+            return;
         }
-    }];
-    
-    if (freeNeighborSet.count == 0) {
-        return;
+        
+        PJWTileImageView *targetView = freeNeighborSet.allObjects[0];
+        [tileView moveToTargetView:targetView];
+        
+        [linkedSet unionSet:freeNeighborSet];
+        
+        NSHashTable *linkedTileHashTable = [NSHashTable weakObjectsHashTable];
+        
+        [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+            [linkedTileHashTable unionHashTable:obj.tileModel.linkedTileHashTable];
+        }];
+        
+        
+        [linkedTileHashTable.setRepresentation enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+            [obj moveToTargetView:tileView];
+            obj.tileModel.linkedTileHashTable = linkedTileHashTable;
+        }];
+        
+        [self.tilesModel updateCalculatedTilesWithView:tileView];
     }
-    
-    PJWTileImageView *targetView = freeNeighborSet.allObjects[0];
-    [tileView moveToTargetView:targetView];
-    
-    [linkedSet unionSet:freeNeighborSet];
-
-    NSHashTable *linkedTileHashTable = [NSHashTable weakObjectsHashTable];
-
-    [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
-        [linkedTileHashTable unionHashTable:obj.tileModel.linkedTileHashTable];
-    }];
-
-
-    [linkedTileHashTable.setRepresentation enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
-        [obj moveToTargetView:tileView];
-        obj.tileModel.linkedTileHashTable = linkedTileHashTable;
-    }];
-    
-    [self.tilesModel updateCalculatedTilesWithView:tileView];
 }
 
 - (UILongPressGestureRecognizer *)longPressRecognizer {

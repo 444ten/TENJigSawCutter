@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7642F82D1D6C69E4003799AD /* PJWOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7642F82B1D6C69E4003799AD /* PJWOptionsViewController.m */; };
+		7642F82E1D6C69E4003799AD /* PJWOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7642F82C1D6C69E4003799AD /* PJWOptionsViewController.xib */; };
 		7682ED051D67377300D4590F /* PJWSegmentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7682ED041D67377300D4590F /* PJWSegmentModel.m */; };
 		7682ED1F1D6AE93B00D4590F /* TENGCDObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7682ED1E1D6AE93B00D4590F /* TENGCDObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		76C9BBBF1D5498820067833D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBBE1D5498820067833D /* main.m */; };
@@ -29,6 +31,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7642F82A1D6C69E4003799AD /* PJWOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWOptionsViewController.h; sourceTree = "<group>"; };
+		7642F82B1D6C69E4003799AD /* PJWOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWOptionsViewController.m; sourceTree = "<group>"; };
+		7642F82C1D6C69E4003799AD /* PJWOptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PJWOptionsViewController.xib; sourceTree = "<group>"; };
 		7682ED031D67377300D4590F /* PJWSegmentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWSegmentModel.h; sourceTree = "<group>"; };
 		7682ED041D67377300D4590F /* PJWSegmentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWSegmentModel.m; sourceTree = "<group>"; };
 		7682ED1D1D6AE93B00D4590F /* TENGCDObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TENGCDObject.h; sourceTree = "<group>"; };
@@ -75,6 +80,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7642F8291D6C69CB003799AD /* PJWOptionsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7642F82A1D6C69E4003799AD /* PJWOptionsViewController.h */,
+				7642F82B1D6C69E4003799AD /* PJWOptionsViewController.m */,
+				7642F82C1D6C69E4003799AD /* PJWOptionsViewController.xib */,
+			);
+			path = PJWOptionsViewController;
+			sourceTree = "<group>";
+		};
 		7682ED021D67376500D4590F /* PJWSegmentModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +216,7 @@
 		76C9BBF91D5C747F0067833D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				7642F8291D6C69CB003799AD /* PJWOptionsViewController */,
 				76C9BC021D5DC9110067833D /* PJWCropImageView */,
 				76C9BBFE1D5C753C0067833D /* PJWTileImageView */,
 			);
@@ -303,6 +319,7 @@
 			files = (
 				76C9BBCD1D5498820067833D /* LaunchScreen.storyboard in Resources */,
 				76C9BBD51D54A60B0067833D /* 04.jpg in Resources */,
+				7642F82E1D6C69E4003799AD /* PJWOptionsViewController.xib in Resources */,
 				76C9BBEB1D59DDCD0067833D /* 900x700.jpg in Resources */,
 				76C9BBD71D584A030067833D /* 200x200.png in Resources */,
 				76C9BBCA1D5498820067833D /* Assets.xcassets in Resources */,
@@ -330,6 +347,7 @@
 				7682ED051D67377300D4590F /* PJWSegmentModel.m in Sources */,
 				76C9BBBF1D5498820067833D /* main.m in Sources */,
 				76C9BC011D5C754F0067833D /* PJWTileImageView.m in Sources */,
+				7642F82D1D6C69E4003799AD /* PJWOptionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

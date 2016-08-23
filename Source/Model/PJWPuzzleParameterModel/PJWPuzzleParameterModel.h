@@ -36,6 +36,8 @@
 @property (nonatomic, assign)   CGFloat     sliceHeight;
 @property (nonatomic, assign)   CGFloat     anchorHeight;
 
+@property (nonatomic, assign)   CGFloat     deltaGhost;
+
 @property (nonatomic, strong)   PJWOffsetCornerModel    *offsetCornerModel;
 @property (nonatomic, strong)   PJWOffsetSideModel      *offsetSideModel;
 
