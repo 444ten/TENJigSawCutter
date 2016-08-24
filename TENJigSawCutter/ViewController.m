@@ -62,7 +62,10 @@
     
     if (!ghostPresent) {
         for (PJWTileImageView *obj in self.tileSet) {
-            obj.userInteractionEnabled = YES;
+            PJWTileModel *tileModel = obj.tileModel;
+            
+            tileModel.isGhostFix = NO;
+            obj.userInteractionEnabled = !tileModel.isBorderFix;
         }
     }
 }
@@ -70,6 +73,15 @@
 - (void)setBorderPresent:(BOOL)borderPresent {
     _borderPresent = borderPresent;
     self.ghostView.layer.borderWidth = borderPresent ? 1.0 : 0.0;
+    
+    if (!borderPresent) {
+        for (PJWTileImageView *obj in self.tileSet) {
+            PJWTileModel *tileModel = obj.tileModel;
+            
+            tileModel.isBorderFix = NO;
+            obj.userInteractionEnabled = !tileModel.isGhostFix;
+        }
+    }
 }
 
 #pragma mark -
@@ -320,6 +332,7 @@
                 [sideTile moveSegmentToPoint:targetPoint animated:YES];
                 
                 for (PJWTileImageView *obj in tileModel.linkedTileHashTable) {
+                    obj.tileModel.isBorderFix = YES;
                     obj.userInteractionEnabled = NO;
                     [rootView sendSubviewToBack:obj];
                 }
@@ -348,6 +361,7 @@
             [tileView moveSegmentToPoint:targetPoint animated:YES];
             
             for (PJWTileImageView *obj in tileModel.linkedTileHashTable) {
+                obj.tileModel.isGhostFix = YES;
                 obj.userInteractionEnabled = NO;
                 [rootView sendSubviewToBack:obj];
             }

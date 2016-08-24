@@ -13,7 +13,10 @@
 @interface PJWTileModel : NSObject
 @property (nonatomic, assign)   NSInteger   row;
 @property (nonatomic, assign)   NSInteger   col;
+
 @property (nonatomic, assign)   BOOL        isSide;
+@property (nonatomic, assign)   BOOL        isBorderFix;
+@property (nonatomic, assign)   BOOL        isGhostFix;
 
 @property (nonatomic, strong)   UIBezierPath    *bezierPath;
 @property (nonatomic, assign)   UIEdgeInsets    bezierInsets;
