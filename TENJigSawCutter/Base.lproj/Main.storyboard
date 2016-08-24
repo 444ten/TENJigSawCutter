@@ -52,10 +52,19 @@
                                     <action selector="onBorder:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4dQ-qf-I5b"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZW3-SK-2EN">
+                                <rect key="frame" x="8" y="450" width="43" height="30"/>
+                                <state key="normal" title="Edges"/>
+                                <connections>
+                                    <action selector="onEdges:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CI5-ua-ESE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ZW3-SK-2EN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="5zY-IW-gXR"/>
                             <constraint firstItem="qzC-8K-Wvd" firstAttribute="top" secondItem="Bzk-GJ-gYQ" secondAttribute="bottom" constant="40" id="7ev-ck-hOa"/>
+                            <constraint firstItem="BtG-0L-cte" firstAttribute="top" secondItem="ZW3-SK-2EN" secondAttribute="bottom" constant="40" id="IxX-6R-7SZ"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0m8-QX-rIZ" secondAttribute="bottom" constant="8" id="LKD-Rj-Cry"/>
                             <constraint firstItem="0m8-QX-rIZ" firstAttribute="top" secondItem="jUv-UI-2OT" secondAttribute="bottom" constant="4" id="Li8-bk-GsA"/>
                             <constraint firstItem="BtG-0L-cte" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="SbV-GX-nzb"/>

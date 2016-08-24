@@ -24,6 +24,7 @@
 
 @property (nonatomic, assign)   BOOL    ghostPresent;
 @property (nonatomic, assign)   BOOL    borderPresent;
+@property (nonatomic, assign)   BOOL    edgesPresent;
 
 @end
 
@@ -84,8 +85,25 @@
     }
 }
 
+- (void)setEdgesPresent:(BOOL)edgesPresent {
+    _edgesPresent = edgesPresent;
+
+    for (PJWTileImageView *obj in self.tileSet) {
+        if (!obj.tileModel.isSide) {
+            obj.alpha = edgesPresent ? 0.0 : 1.0;
+        }
+    }
+    
+    
+}
+
 #pragma mark -
 #pragma mark Interface Handling
+
+- (IBAction)onEdges:(UIButton *)sender {
+    self.edgesPresent = !self.edgesPresent;
+}
+
 - (IBAction)onBorder:(UIButton *)sender {
     self.borderPresent = !self.borderPresent;
 }
@@ -292,7 +310,7 @@
     [recognizer setTranslation:CGPointZero inView:rootView];
 
     if (recognizer.state == UIGestureRecognizerStateEnded) {
-        [self searchNeighborForView:recognizerView];
+        [self moveToNeighborTileView:recognizerView];
         
         if (self.ghostPresent) {
             [self moveToGhostTileView:recognizerView];
@@ -343,7 +361,6 @@
     }
 }
 
-
 - (void)moveToGhostTileView:(PJWTileImageView *)tileView {
     @synchronized (tileView) {
         UIView *rootView = self.view;
@@ -370,6 +387,45 @@
         }
     }
 }
+
+- (void)moveToNeighborTileView:(PJWTileImageView *)tileView {
+    @synchronized (tileView) {
+        NSMutableSet *linkedSet = [NSMutableSet setWithSet:tileView.tileModel.linkedTileHashTable.setRepresentation];
+        NSMutableSet *freeNeighborSet = [NSMutableSet new];
+        
+        [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+            PJWTileModel *tileModel = obj.tileModel;
+            
+            if ([self.tilesModel.calculatedTiles[tileModel.row][tileModel.col] boolValue]) {
+                [freeNeighborSet unionSet:[self.tilesModel freeNeighborsForTileView:obj]];
+            }
+        }];
+        
+        if (freeNeighborSet.count == 0) {
+            return;
+        }
+        
+        PJWTileImageView *targetView = freeNeighborSet.allObjects[0];
+        [tileView moveToTargetView:targetView];
+        
+        [linkedSet unionSet:freeNeighborSet];
+        
+        NSHashTable *linkedTileHashTable = [NSHashTable weakObjectsHashTable];
+        
+        [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+            [linkedTileHashTable unionHashTable:obj.tileModel.linkedTileHashTable];
+        }];
+        
+        
+        [linkedTileHashTable.setRepresentation enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+            [obj moveToTargetView:tileView];
+            obj.tileModel.linkedTileHashTable = linkedTileHashTable;
+        }];
+        
+        [self.tilesModel updateCalculatedTilesWithView:tileView];
+    }
+}
+
 
 - (UITapGestureRecognizer *)tapRecognizer {
     UITapGestureRecognizer *result = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -418,44 +474,6 @@
                 index--;
             }
         }
-    }
-}
-
-- (void)searchNeighborForView:(PJWTileImageView *)tileView {
-    @synchronized (tileView) {
-        NSMutableSet *linkedSet = [NSMutableSet setWithSet:tileView.tileModel.linkedTileHashTable.setRepresentation];
-        NSMutableSet *freeNeighborSet = [NSMutableSet new];
-        
-        [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
-            PJWTileModel *tileModel = obj.tileModel;
-            
-            if ([self.tilesModel.calculatedTiles[tileModel.row][tileModel.col] boolValue]) {
-                [freeNeighborSet unionSet:[self.tilesModel freeNeighborsForTileView:obj]];
-            }
-        }];
-        
-        if (freeNeighborSet.count == 0) {
-            return;
-        }
-        
-        PJWTileImageView *targetView = freeNeighborSet.allObjects[0];
-        [tileView moveToTargetView:targetView];
-        
-        [linkedSet unionSet:freeNeighborSet];
-        
-        NSHashTable *linkedTileHashTable = [NSHashTable weakObjectsHashTable];
-        
-        [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
-            [linkedTileHashTable unionHashTable:obj.tileModel.linkedTileHashTable];
-        }];
-        
-        
-        [linkedTileHashTable.setRepresentation enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
-            [obj moveToTargetView:tileView];
-            obj.tileModel.linkedTileHashTable = linkedTileHashTable;
-        }];
-        
-        [self.tilesModel updateCalculatedTilesWithView:tileView];
     }
 }
 
