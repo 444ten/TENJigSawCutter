@@ -18,12 +18,14 @@
 @property (nonatomic, assign)   CGRect          gameFieldRect;
 @property (nonatomic, assign)   UIEdgeInsets    gameFieldLimit;
 
+@property (nonatomic, strong)   NSNumber    *cutterType;
+
 @property (nonatomic, assign)   CGFloat     fullWidth;
-@property (nonatomic, assign)   NSInteger   countWidth;
+@property (nonatomic, readonly) NSInteger   countWidth;
 @property (nonatomic, assign)   CGFloat     overlapRatioWidth;
 
 @property (nonatomic, assign)   CGFloat     fullHeight;
-@property (nonatomic, assign)   NSInteger   countHeight;
+@property (nonatomic, readonly) NSInteger   countHeight;
 @property (nonatomic, assign)   CGFloat     overlapRatioHeight;
 
 

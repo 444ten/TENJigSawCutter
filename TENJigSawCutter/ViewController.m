@@ -36,12 +36,11 @@
     [super viewDidLoad];
     
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    parameterModel.cutterType = @(4);
     parameterModel.fullWidth = 800.f;
-    parameterModel.countWidth = 15;
     parameterModel.overlapRatioWidth = 0.5;
     
     parameterModel.fullHeight = 600.f;
-    parameterModel.countHeight = 10;
     parameterModel.overlapRatioHeight = 0.5;
 
     self.parameterModel = parameterModel;

@@ -14,6 +14,9 @@ static NSString * const kImageName = @"900x700.jpg";
 
 @implementation PJWPuzzleParameterModel
 
+@dynamic countWidth;
+@dynamic countHeight;
+
 #pragma mark -
 #pragma mark Class Methods
 
@@ -41,6 +44,17 @@ static NSString * const kImageName = @"900x700.jpg";
 }
 
 #pragma mark -
+#pragma mark Accessors
+
+- (NSInteger)countWidth {
+    return [[PJWConstants presetCutterType][self.cutterType][0] integerValue];
+}
+
+- (NSInteger)countHeight {
+    return [[PJWConstants presetCutterType][self.cutterType][1] integerValue];
+}
+
+#pragma mark -
 #pragma mark Public Methods
 
 - (void)setup {
@@ -48,7 +62,7 @@ static NSString * const kImageName = @"900x700.jpg";
     [self setupGameField];
     self.offsetCornerModel = [PJWOffsetCornerModel new];
     self.offsetSideModel = [PJWOffsetSideModel new];
-    
+        
     self.deltaGhost = 40.;
 }
 

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7642F82D1D6C69E4003799AD /* PJWOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7642F82B1D6C69E4003799AD /* PJWOptionsViewController.m */; };
 		7642F82E1D6C69E4003799AD /* PJWOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7642F82C1D6C69E4003799AD /* PJWOptionsViewController.xib */; };
+		7650B2AE1D6DA38F002D4E94 /* PJWConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7650B2AD1D6DA38F002D4E94 /* PJWConstants.m */; };
 		7682ED051D67377300D4590F /* PJWSegmentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7682ED041D67377300D4590F /* PJWSegmentModel.m */; };
 		7682ED1F1D6AE93B00D4590F /* TENGCDObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7682ED1E1D6AE93B00D4590F /* TENGCDObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		76C9BBBF1D5498820067833D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBBE1D5498820067833D /* main.m */; };
@@ -34,6 +35,9 @@
 		7642F82A1D6C69E4003799AD /* PJWOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWOptionsViewController.h; sourceTree = "<group>"; };
 		7642F82B1D6C69E4003799AD /* PJWOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWOptionsViewController.m; sourceTree = "<group>"; };
 		7642F82C1D6C69E4003799AD /* PJWOptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PJWOptionsViewController.xib; sourceTree = "<group>"; };
+		7650B2AC1D6DA38F002D4E94 /* PJWConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWConstants.h; sourceTree = "<group>"; };
+		7650B2AD1D6DA38F002D4E94 /* PJWConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWConstants.m; sourceTree = "<group>"; };
+		7650B2AF1D6DA506002D4E94 /* PJWJigSaw.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PJWJigSaw.pch; sourceTree = "<group>"; };
 		7682ED031D67377300D4590F /* PJWSegmentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWSegmentModel.h; sourceTree = "<group>"; };
 		7682ED041D67377300D4590F /* PJWSegmentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWSegmentModel.m; sourceTree = "<group>"; };
 		7682ED1D1D6AE93B00D4590F /* TENGCDObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TENGCDObject.h; sourceTree = "<group>"; };
@@ -90,6 +94,15 @@
 			path = PJWOptionsViewController;
 			sourceTree = "<group>";
 		};
+		7650B2AB1D6DA385002D4E94 /* PJWConstants */ = {
+			isa = PBXGroup;
+			children = (
+				7650B2AC1D6DA38F002D4E94 /* PJWConstants.h */,
+				7650B2AD1D6DA38F002D4E94 /* PJWConstants.m */,
+			);
+			path = PJWConstants;
+			sourceTree = "<group>";
+		};
 		7682ED021D67376500D4590F /* PJWSegmentModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +153,7 @@
 				76C9BBD61D584A030067833D /* 200x200.png */,
 				76C9BBEA1D59DDCD0067833D /* 900x700.jpg */,
 				76C9BBBD1D5498820067833D /* Supporting Files */,
+				7650B2AF1D6DA506002D4E94 /* PJWJigSaw.pch */,
 			);
 			path = TENJigSawCutter;
 			sourceTree = "<group>";
@@ -179,6 +193,7 @@
 		76C9BBE61D59AD050067833D /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				7650B2AB1D6DA385002D4E94 /* PJWConstants */,
 				76C9BBE71D59AD150067833D /* TENMacros.h */,
 				76C9BBE81D59AD150067833D /* TENMacros.m */,
 			);
@@ -336,6 +351,7 @@
 			files = (
 				76C9BBE91D59AD150067833D /* TENMacros.m in Sources */,
 				76C9BBF81D5C442F0067833D /* PJWOffsetSideModel.m in Sources */,
+				7650B2AE1D6DA38F002D4E94 /* PJWConstants.m in Sources */,
 				76C9BC051D5DC91C0067833D /* PJWCropImageView.m in Sources */,
 				7682ED1F1D6AE93B00D4590F /* TENGCDObject.m in Sources */,
 				76C9BBEF1D5B227E0067833D /* PJWOffsetCornerModel.m in Sources */,
@@ -467,6 +483,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/TENJigSawCutter/PJWJigSaw.pch";
 				INFOPLIST_FILE = TENJigSawCutter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -482,6 +500,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/TENJigSawCutter/PJWJigSaw.pch";
 				INFOPLIST_FILE = TENJigSawCutter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
