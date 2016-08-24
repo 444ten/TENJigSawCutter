@@ -57,6 +57,26 @@ static NSString * const kImageName = @"900x700.jpg";
 
 - (void)setupOriginImage {
     self.originImage = [UIImage imageNamed:kImageName];
+    
+    UIGraphicsBeginImageContextWithOptions(self.originImage.size, NO, 0.0f);
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGRect area = CGRectMake(0, 0, self.originImage.size.width, self.originImage.size.height);
+    
+    CGContextScaleCTM(ctx, 1, -1);
+    CGContextTranslateCTM(ctx, 0, -area.size.height);
+    
+    CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
+    
+    CGContextSetAlpha(ctx, 0.3);
+    
+    CGContextDrawImage(ctx, area, self.originImage.CGImage);
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    self.ghostImage = newImage;
 }
 
 - (void)calculateSlice {

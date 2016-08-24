@@ -23,6 +23,7 @@
 @property (nonatomic, strong)   NSSet                   *tileSet;
 
 @property (nonatomic, assign)   BOOL    ghostPresent;
+@property (nonatomic, assign)   BOOL    borderPresent;
 
 @end
 
@@ -36,11 +37,11 @@
     
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     parameterModel.fullWidth = 800.f;
-    parameterModel.countWidth = 4;
+    parameterModel.countWidth = 15;
     parameterModel.overlapRatioWidth = 0.5;
     
     parameterModel.fullHeight = 600.f;
-    parameterModel.countHeight = 3;
+    parameterModel.countHeight = 10;
     parameterModel.overlapRatioHeight = 0.5;
 
     self.parameterModel = parameterModel;
@@ -54,9 +55,11 @@
 
 #pragma mark -
 #pragma mark Accessors
+
 - (void)setGhostPresent:(BOOL)ghostPresent {
     _ghostPresent = ghostPresent;
-    self.ghostView.alpha = ghostPresent ? 0.3 : 0.0;
+    
+    self.ghostView.image = ghostPresent ? self.parameterModel.ghostImage : nil;
     
     if (!ghostPresent) {
         for (PJWTileImageView *obj in self.tileSet) {
@@ -65,8 +68,16 @@
     }
 }
 
+- (void)setBorderPresent:(BOOL)borderPresent {
+    _borderPresent = borderPresent;
+    self.ghostView.layer.borderWidth = borderPresent ? 1.0 : 0.0;
+}
+
 #pragma mark -
 #pragma mark Interface Handling
+- (IBAction)onBorder:(UIButton *)sender {
+    self.borderPresent = !self.borderPresent;
+}
 
 - (IBAction)onShuffle:(UIButton *)sender {
     PJWPuzzleParameterModel *parameterModel = self.parameterModel;
@@ -173,7 +184,7 @@
     ghostView.center = CGPointMake(screenSize.width/2, screenSize.height/2);
     ghostView.contentMode = UIViewContentModeTopLeft;
     ghostView.clipsToBounds =  YES;
-    ghostView.alpha = 0.0;
+    ghostView.layer.borderColor = [UIColor blackColor].CGColor;
     
     [self.view addSubview:ghostView];
     

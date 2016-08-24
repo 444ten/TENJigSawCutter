@@ -13,6 +13,7 @@
 
 @interface PJWPuzzleParameterModel : NSObject
 @property (nonatomic, strong)   UIImage     *originImage;
+@property (nonatomic, strong)   UIImage     *ghostImage;
 
 @property (nonatomic, assign)   CGRect          gameFieldRect;
 @property (nonatomic, assign)   UIEdgeInsets    gameFieldLimit;
