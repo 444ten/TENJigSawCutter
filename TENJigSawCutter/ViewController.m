@@ -155,6 +155,8 @@
     }
     
     [self.ghostView removeFromSuperview];
+    self.ghostPresent = NO;
+    self.borderPresent = NO;
     
     [self setupParameterModel];
     
@@ -298,22 +300,33 @@
         UIImageView *ghostView = self.ghostView;
         CGFloat deltaGhost = self.parameterModel.deltaGhost;
         PJWTileModel *tileModel = tileView.tileModel;
+
+        PJWTileImageView *sideTile = nil;
         
-        CGPoint center = [rootView convertPoint:tileView.center toView:ghostView];
-        
-        CGPoint anchor = CGPointFromValue(tileModel.anchor);
-        
-        if (fabs(center.x - anchor.x) < deltaGhost && fabs(center.y - anchor.y) < deltaGhost ) {
-            CGPoint targetPoint = [ghostView convertPoint:anchor toView:rootView];
-            
-            [tileView moveSegmentToPoint:targetPoint animated:YES];
-            
-            for (PJWTileImageView *obj in tileModel.linkedTileHashTable) {
-                obj.userInteractionEnabled = NO;
-                [rootView sendSubviewToBack:obj];
+        for (PJWTileImageView *obj in tileModel.linkedTileHashTable) {
+            if (obj.tileModel.isSide) {
+                sideTile = obj;
+                break;
             }
+        }
+        
+        if (sideTile) {
+            CGPoint center = [rootView convertPoint:sideTile.center toView:ghostView];
             
-            [rootView sendSubviewToBack:ghostView];
+            CGPoint anchor = CGPointFromValue(sideTile.tileModel.anchor);
+            
+            if (fabs(center.x - anchor.x) < deltaGhost && fabs(center.y - anchor.y) < deltaGhost ) {
+                CGPoint targetPoint = [ghostView convertPoint:anchor toView:rootView];
+                
+                [sideTile moveSegmentToPoint:targetPoint animated:YES];
+                
+                for (PJWTileImageView *obj in tileModel.linkedTileHashTable) {
+                    obj.userInteractionEnabled = NO;
+                    [rootView sendSubviewToBack:obj];
+                }
+                
+                [rootView sendSubviewToBack:ghostView];
+            }
         }
     }
 }
