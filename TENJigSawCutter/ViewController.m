@@ -285,8 +285,39 @@
             [self moveToGhostTileView:recognizerView];
         }
     
+        if (self.borderPresent) {
+            [self moveToBorderTileView:recognizerView];
+        }
+        
     }
 }
+
+- (void)moveToBorderTileView:(PJWTileImageView *)tileView {
+    @synchronized (tileView) {
+        UIView *rootView = self.view;
+        UIImageView *ghostView = self.ghostView;
+        CGFloat deltaGhost = self.parameterModel.deltaGhost;
+        PJWTileModel *tileModel = tileView.tileModel;
+        
+        CGPoint center = [rootView convertPoint:tileView.center toView:ghostView];
+        
+        CGPoint anchor = CGPointFromValue(tileModel.anchor);
+        
+        if (fabs(center.x - anchor.x) < deltaGhost && fabs(center.y - anchor.y) < deltaGhost ) {
+            CGPoint targetPoint = [ghostView convertPoint:anchor toView:rootView];
+            
+            [tileView moveSegmentToPoint:targetPoint animated:YES];
+            
+            for (PJWTileImageView *obj in tileModel.linkedTileHashTable) {
+                obj.userInteractionEnabled = NO;
+                [rootView sendSubviewToBack:obj];
+            }
+            
+            [rootView sendSubviewToBack:ghostView];
+        }
+    }
+}
+
 
 - (void)moveToGhostTileView:(PJWTileImageView *)tileView {
     @synchronized (tileView) {

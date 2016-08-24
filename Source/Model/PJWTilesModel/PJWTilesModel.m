@@ -174,22 +174,27 @@
 
 - (void)setup {
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    NSInteger countHeight = parameterModel.countHeight;
+    NSInteger countWidth = parameterModel.countWidth;
     
     NSMutableArray *tiles = [NSMutableArray new];
     NSMutableArray *calculatedTiles = [NSMutableArray new];
     
-    for (NSInteger row = 0; row < parameterModel.countHeight; row++) {
+    
+    for (NSInteger row = 0; row < countHeight; row++) {
         
         NSMutableArray *rowArray = [NSMutableArray new];
         NSMutableArray *rowNoncalculatedArray = [NSMutableArray new];
         
-        for (NSInteger col = 0; col < parameterModel.countWidth; col++) {
+        for (NSInteger col = 0; col < countWidth; col++) {
             PJWTileModel *tileModel = [[PJWTileModel alloc] initWithRow:row column:col];
             
             PJWTileImageView *tileImageView = [[PJWTileImageView alloc]
                                                initWithImage:[self cropImageForTileModel:tileModel]];
             
             [tileModel.linkedTileHashTable addObject:tileImageView];
+            tileModel.isSide = (row == 0) || (row == countHeight - 1) || (col == 0) || (col == countWidth - 1);
+        
             tileImageView.tileModel = tileModel;
             
             [rowArray addObject:tileImageView];
