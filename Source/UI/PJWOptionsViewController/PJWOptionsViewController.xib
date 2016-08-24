@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PJWOptionsViewController">
             <connections>
+                <outlet property="countLabel" destination="oWL-Ed-3Lr" id="1tf-3N-gea"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,11 +16,53 @@
             <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="11" translatesAutoresizingMaskIntoConstraints="NO" id="cUy-rN-IQQ">
-                    <rect key="frame" x="274" y="232" width="405" height="31"/>
-                </slider>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEr-db-1T7">
+                    <rect key="frame" x="160" y="128" width="705" height="511"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gPM-TQ-f7h">
+                            <rect key="frame" x="120" y="403" width="48" height="30"/>
+                            <state key="normal" title="Cancel"/>
+                            <connections>
+                                <action selector="onCancel:" destination="-1" eventType="touchUpInside" id="Gdt-Ct-qAK"/>
+                            </connections>
+                        </button>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="12" translatesAutoresizingMaskIntoConstraints="NO" id="wyu-IS-nvO">
+                            <rect key="frame" x="37" y="39" width="631" height="31"/>
+                            <connections>
+                                <action selector="changeCountTiles:" destination="-1" eventType="valueChanged" id="Nqj-yG-T4i"/>
+                            </connections>
+                        </slider>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWL-Ed-3Lr">
+                            <rect key="frame" x="280" y="110" width="145" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2He-q0-xHe">
+                            <rect key="frame" x="473" y="403" width="34" height="30"/>
+                            <state key="normal" title="Start"/>
+                            <connections>
+                                <action selector="onStart:" destination="-1" eventType="touchUpInside" id="xxg-r7-TRc"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="oWL-Ed-3Lr" firstAttribute="centerX" secondItem="nEr-db-1T7" secondAttribute="centerX" id="Tda-Hr-B9E"/>
+                        <constraint firstItem="oWL-Ed-3Lr" firstAttribute="top" secondItem="wyu-IS-nvO" secondAttribute="bottom" constant="41" id="dZx-MP-jiS"/>
+                        <constraint firstItem="wyu-IS-nvO" firstAttribute="top" secondItem="nEr-db-1T7" secondAttribute="top" constant="39" id="qXy-wT-OGL"/>
+                        <constraint firstItem="wyu-IS-nvO" firstAttribute="leading" secondItem="nEr-db-1T7" secondAttribute="leading" constant="39" id="wUM-6G-3RH"/>
+                        <constraint firstAttribute="trailing" secondItem="wyu-IS-nvO" secondAttribute="trailing" constant="39" id="ykc-Mq-Bm7"/>
+                    </constraints>
+                </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.0" alpha="0.74385480182926833" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="nEr-db-1T7" secondAttribute="bottom" constant="129" id="RGy-d8-xsQ"/>
+                <constraint firstAttribute="trailing" secondItem="nEr-db-1T7" secondAttribute="trailing" constant="159" id="lLZ-r7-4Pu"/>
+                <constraint firstItem="nEr-db-1T7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="128" id="wUU-62-7rD"/>
+                <constraint firstItem="nEr-db-1T7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="160" id="zEu-h1-3d6"/>
+            </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
         </view>

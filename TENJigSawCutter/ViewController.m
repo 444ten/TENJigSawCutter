@@ -13,7 +13,9 @@
 #import "PJWTileImageView.h"
 #import "PJWSegmentModel.h"
 
-@interface ViewController ()
+#import "PJWOptionsViewController.h"
+
+@interface ViewController () <PJWOptionsViewControllerProtocol>
 @property (nonatomic, strong)   UIImageView             *ghostView;
 @property (nonatomic, strong)   PJWPuzzleParameterModel *parameterModel;
 
@@ -31,9 +33,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.parameterModel = [PJWPuzzleParameterModel sharedInstance];
     
-    [self onRestart:nil];
+    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
+    parameterModel.fullWidth = 800.f;
+    parameterModel.countWidth = 4;
+    parameterModel.overlapRatioWidth = 0.5;
+    
+    parameterModel.fullHeight = 600.f;
+    parameterModel.countHeight = 3;
+    parameterModel.overlapRatioHeight = 0.5;
+
+    self.parameterModel = parameterModel;
+
+    [self startGame];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -109,6 +121,24 @@
 }
 
 - (IBAction)onRestart:(UIButton *)sender {
+    PJWOptionsViewController *vc = [PJWOptionsViewController new];
+    vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    vc.delegate = self;
+    
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (IBAction)onGhost:(UIButton *)sender {
+    self.ghostPresent = !self.ghostPresent;
+}
+
+
+
+#pragma mark -
+#pragma mark Private Methods
+
+- (void)startGame {
     for (UIImageView *view in self.tileSet) {
         [view removeFromSuperview];
     }
@@ -127,24 +157,9 @@
     [self addTilesOnView];
 }
 
-- (IBAction)onGhost:(UIButton *)sender {
-    self.ghostPresent = !self.ghostPresent;
-}
-
-#pragma mark -
-#pragma mark Private Methods
-
 - (void)setupParameterModel {
-    PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
-    parameterModel.fullWidth = 800.f;
-    parameterModel.countWidth = 4;
-    parameterModel.overlapRatioWidth = 0.5;
     
-    parameterModel.fullHeight = 600.f;
-    parameterModel.countHeight = 3;
-    parameterModel.overlapRatioHeight = 0.5;
-    
-    [parameterModel setup];
+    [self.parameterModel setup];
 }
 
 - (void)setupGhost {

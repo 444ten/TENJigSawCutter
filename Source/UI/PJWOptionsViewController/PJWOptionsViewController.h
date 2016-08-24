@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol PJWOptionsViewControllerProtocol
+- (void)startGame;
+
+@end
+
 @interface PJWOptionsViewController : UIViewController
+@property (nonatomic, weak) id<PJWOptionsViewControllerProtocol>  delegate;
+
 
 @end
