@@ -26,6 +26,8 @@
 @property (nonatomic, assign)   BOOL    borderPresent;
 @property (nonatomic, assign)   BOOL    edgesPresent;
 
+@property (strong, nonatomic) IBOutlet UIButton *edgesButton;
+
 @end
 
 @implementation ViewController
@@ -88,6 +90,9 @@
 - (void)setEdgesPresent:(BOOL)edgesPresent {
     _edgesPresent = edgesPresent;
 
+    [self.edgesButton setTitle: edgesPresent ? @"View All" : @"Edges"
+                      forState:UIControlStateNormal];
+    
     for (PJWTileImageView *obj in self.tileSet) {
         if (!obj.tileModel.isSide) {
             obj.alpha = edgesPresent ? 0.0 : 1.0;
@@ -117,11 +122,21 @@
     CGFloat mostUp    = gameFieldRect.origin.y + parameterModel.sliceHeight / 2;
     CGFloat mostDown  = gameFieldRect.origin.y + gameFieldRect.size.height - parameterModel.sliceHeight / 2;
     
-    for (PJWTileImageView *tileView in self.tileSet) {
-        if (tileView.tileModel.linkedTileHashTable.count == 1) {
-            [self.view bringSubviewToFront:tileView];
+    for (PJWTileImageView *obj in self.tileSet) {
+        PJWTileModel *tileModel = obj.tileModel;
+        
+        if (tileModel.isGhostFix || tileModel.isBorderFix) {
+            continue;
+        }
+        
+        if (self.edgesPresent && !tileModel.isSide) {
+            continue;
+        }
+        
+        if (tileModel.linkedTileHashTable.count == 1) {
+            [self.view bringSubviewToFront:obj];
             
-            UIEdgeInsets bezierInsets = tileView.tileModel.bezierInsets;
+            UIEdgeInsets bezierInsets = tileModel.bezierInsets;
             CGFloat left  = bezierInsets.left;
             CGFloat right = bezierInsets.right;
             CGFloat up    = bezierInsets.top;
@@ -138,7 +153,7 @@
             
             [UIView animateWithDuration:0.3
                              animations:^{
-                                 tileView.center = center;
+                                 obj.center = center;
                              }];
         }
     }
@@ -186,6 +201,7 @@
     [self.ghostView removeFromSuperview];
     self.ghostPresent = NO;
     self.borderPresent = NO;
+    self.edgesPresent = NO;
     
     [self setupParameterModel];
     
@@ -193,8 +209,6 @@
     
     self.tilesModel = [PJWTilesModel new];
     self.tileSet = self.tilesModel.tileSet;
-    
-    self.ghostPresent = NO;
     
     [self addTilesOnView];
 }
@@ -211,7 +225,6 @@
     UIImageView *ghostView = [[UIImageView alloc] initWithFrame:
                               CGRectMake(0, 0, parameterModel.fullWidth, parameterModel.fullHeight)];
     
-    ghostView.image = parameterModel.originImage;
     ghostView.center = CGPointMake(screenSize.width/2, screenSize.height/2);
     ghostView.contentMode = UIViewContentModeTopLeft;
     ghostView.clipsToBounds =  YES;
@@ -330,24 +343,14 @@
         CGFloat deltaGhost = self.parameterModel.deltaGhost;
         PJWTileModel *tileModel = tileView.tileModel;
 
-        PJWTileImageView *sideTile = nil;
-        
-        for (PJWTileImageView *obj in tileModel.linkedTileHashTable) {
-            if (obj.tileModel.isSide) {
-                sideTile = obj;
-                break;
-            }
-        }
-        
-        if (sideTile) {
-            CGPoint center = [rootView convertPoint:sideTile.center toView:ghostView];
-            
-            CGPoint anchor = CGPointFromValue(sideTile.tileModel.anchor);
+        if (tileModel.isSide) {
+            CGPoint center = [rootView convertPoint:tileView.center toView:ghostView];
+            CGPoint anchor = CGPointFromValue(tileModel.anchor);
             
             if (fabs(center.x - anchor.x) < deltaGhost && fabs(center.y - anchor.y) < deltaGhost ) {
                 CGPoint targetPoint = [ghostView convertPoint:anchor toView:rootView];
                 
-                [sideTile moveSegmentToPoint:targetPoint animated:YES];
+                [tileView moveSegmentToPoint:targetPoint animated:YES];
                 
                 for (PJWTileImageView *obj in tileModel.linkedTileHashTable) {
                     obj.tileModel.isBorderFix = YES;
@@ -393,13 +396,14 @@
         NSMutableSet *linkedSet = [NSMutableSet setWithSet:tileView.tileModel.linkedTileHashTable.setRepresentation];
         NSMutableSet *freeNeighborSet = [NSMutableSet new];
         
-        [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+//seek free neighbors
+        for (PJWTileImageView *obj in linkedSet) {
             PJWTileModel *tileModel = obj.tileModel;
             
             if ([self.tilesModel.calculatedTiles[tileModel.row][tileModel.col] boolValue]) {
                 [freeNeighborSet unionSet:[self.tilesModel freeNeighborsForTileView:obj]];
             }
-        }];
+        }
         
         if (freeNeighborSet.count == 0) {
             return;
@@ -411,16 +415,26 @@
         [linkedSet unionSet:freeNeighborSet];
         
         NSHashTable *linkedTileHashTable = [NSHashTable weakObjectsHashTable];
+        BOOL isSide = NO;
         
-        [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
-            [linkedTileHashTable unionHashTable:obj.tileModel.linkedTileHashTable];
-        }];
-        
-        
-        [linkedTileHashTable.setRepresentation enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
+//generate common hashTable
+        for (PJWTileImageView *obj in linkedSet) {
+            PJWTileModel *tileModel = obj.tileModel;
+            
+            [linkedTileHashTable unionHashTable:tileModel.linkedTileHashTable];
+            if (!isSide && tileModel.isSide) {
+                isSide = YES;
+            }
+        }
+
+//move segment
+        for (PJWTileImageView *obj in linkedTileHashTable) {
+            PJWTileModel *tileModel = obj.tileModel;
+
             [obj moveToTargetView:tileView];
-            obj.tileModel.linkedTileHashTable = linkedTileHashTable;
-        }];
+            tileModel.linkedTileHashTable = linkedTileHashTable;
+            tileModel.isSide = isSide;
+        }
         
         [self.tilesModel updateCalculatedTilesWithView:tileView];
     }

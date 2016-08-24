@@ -85,9 +85,10 @@
 
 - (NSSet *)freeNeighborsForTileView:(PJWTileImageView *)tileView {
     PJWTileModel *tileModel = tileView.tileModel;
-    
     NSInteger row = tileModel.row;
     NSInteger col = tileModel.col;
+    
+    NSArray *tiles = self.tiles;
     
     NSMutableSet *result = [NSMutableSet new];
     
