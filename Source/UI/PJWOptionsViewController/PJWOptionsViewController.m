@@ -59,9 +59,9 @@
     self.cutterTypeSlider.value = [parameterModel.cutterType integerValue];
     
     self.countLabel.text = [NSString stringWithFormat:@"%d x %d = %d",
-                            parameterModel.countWidth,
-                            parameterModel.countHeight,
-                            parameterModel.countWidth * parameterModel.countHeight];
+                            (int)parameterModel.countWidth,
+                            (int)parameterModel.countHeight,
+                            (int)(parameterModel.countWidth * parameterModel.countHeight)];
     
 }
 

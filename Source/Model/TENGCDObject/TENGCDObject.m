@@ -34,17 +34,17 @@
     dispatch_queue_t queue = dispatch_queue_create([@"testQueue" cStringUsingEncoding:kCFStringEncodingUTF8],
                                                    DISPATCH_QUEUE_CONCURRENT);
     
-    NSLog(@"A... %d", obj.retainCount);
+    NSLog(@"A... %d", (int)obj.retainCount);
     dispatch_sync(queue, ^{
-        NSLog(@"B... %d", obj.retainCount);
+        NSLog(@"B... %d", (int)obj.retainCount);
         dispatch_async(queue, ^{
-            NSLog(@"C... %d", obj.retainCount);
+            NSLog(@"C... %d", (int)obj.retainCount);
         });
         
-        NSLog(@"D... %d", obj.retainCount);
+        NSLog(@"D... %d", (int)obj.retainCount);
     });
     sleep(1);
-    NSLog(@"E... %d", obj.retainCount);
+    NSLog(@"E... %d", (int)obj.retainCount);
 
 }
 

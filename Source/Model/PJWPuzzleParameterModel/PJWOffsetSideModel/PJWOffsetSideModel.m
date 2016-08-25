@@ -10,11 +10,11 @@
 #import "PJWPuzzleParameterModel.h"
 #import "TENMacros.h"
 
-static const CGFloat kArcHeightMaxRatio     = 0.5;
-static const CGFloat kCurlRatio             = 0.5;
+//static const CGFloat kArcHeightMaxRatio     = 0.5;
+//static const CGFloat kCurlRatio             = 0.5;
 
 static const CGFloat kArcWidthMinRatio      = 0.3;
-static const CGFloat kArcWidthDeltaRatio    = 0.5;
+//static const CGFloat kArcWidthDeltaRatio    = 0.5;
 
 @implementation PJWOffsetSideModel
 
