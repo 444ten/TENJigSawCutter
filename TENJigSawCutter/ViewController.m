@@ -62,10 +62,7 @@
     
     if (!ghostPresent) {
         for (PJWTileImageView *obj in self.tileSet) {
-            PJWTileModel *tileModel = obj.tileModel;
-            
-            tileModel.isGhostFix = NO;
-            obj.userInteractionEnabled = !tileModel.isBorderFix;
+            obj.tileModel.isGhostFix = NO;
         }
     }
     
@@ -80,7 +77,7 @@
     
     for (PJWTileImageView *obj in self.tileSet) {
         if (!obj.tileModel.isSide) {
-            obj.alpha = edgesPresent ? 0.4 : 1.0;
+            obj.alpha = edgesPresent ? 0.0 : 1.0;
         }
     }
     
@@ -95,10 +92,7 @@
     
     if (!borderPresent) {
         for (PJWTileImageView *obj in self.tileSet) {
-            PJWTileModel *tileModel = obj.tileModel;
-            
-            tileModel.isBorderFix = NO;
-            obj.userInteractionEnabled = !tileModel.isGhostFix;
+            obj.tileModel.isBorderFix = NO;
         }
     }
 
@@ -256,8 +250,13 @@
 - (void)panAction:(UIPanGestureRecognizer *)recognizer {
     PJWPuzzleParameterModel *parameterModel = self.parameterModel;
     PJWTileImageView *recognizerView = (PJWTileImageView *)recognizer.view;
+    PJWTileModel *tileModel = recognizerView.tileModel;
     
-    if (parameterModel.edgesPresent && !recognizerView.tileModel.isSide) {
+    
+    if (   (parameterModel.edgesPresent  && !tileModel.isSide     )
+        || (parameterModel.ghostPresent  &&  tileModel.isGhostFix )
+        || (parameterModel.borderPresent &&  tileModel.isBorderFix) )
+    {
         return;
     }
 
@@ -345,7 +344,6 @@
                 
                 for (PJWTileImageView *obj in tileModel.linkedTileHashTable) {
                     obj.tileModel.isBorderFix = YES;
-                    obj.userInteractionEnabled = NO;
                     [rootView sendSubviewToBack:obj];
                 }
                 
@@ -373,7 +371,6 @@
             
             for (PJWTileImageView *obj in tileModel.linkedTileHashTable) {
                 obj.tileModel.isGhostFix = YES;
-                obj.userInteractionEnabled = NO;
                 [rootView sendSubviewToBack:obj];
             }
             

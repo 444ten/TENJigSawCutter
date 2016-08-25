@@ -43,7 +43,7 @@
     NSEnumerator *enumerator = [self.tileModel.linkedTileHashTable objectEnumerator];
     PJWTileImageView *view;
     while (view = [enumerator nextObject]) {
-        [self.superview bringSubviewToFront:view];
+//        [self.superview bringSubviewToFront:view];
         
         [UIView animateWithDuration:animated ? 0.20 : 0.0
                          animations:^{
