@@ -12,6 +12,11 @@
 #import "PJWOffsetSideModel.h"
 
 @interface PJWPuzzleParameterModel : NSObject
+
+@property (nonatomic, assign)   BOOL    ghostPresent;
+@property (nonatomic, assign)   BOOL    borderPresent;
+@property (nonatomic, assign)   BOOL    edgesPresent;
+
 @property (nonatomic, strong)   UIImage     *originImage;
 @property (nonatomic, strong)   UIImage     *ghostImage;
 

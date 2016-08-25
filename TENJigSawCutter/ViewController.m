@@ -22,10 +22,6 @@
 @property (nonatomic, strong)   PJWTilesModel           *tilesModel;
 @property (nonatomic, strong)   NSSet                   *tileSet;
 
-@property (nonatomic, assign)   BOOL    ghostPresent;
-@property (nonatomic, assign)   BOOL    borderPresent;
-@property (nonatomic, assign)   BOOL    edgesPresent;
-
 @property (strong, nonatomic) IBOutlet UIButton *edgesButton;
 
 @end
@@ -56,12 +52,13 @@
 }
 
 #pragma mark -
-#pragma mark Accessors
+#pragma mark Interface Handling
 
-- (void)setGhostPresent:(BOOL)ghostPresent {
-    _ghostPresent = ghostPresent;
+- (IBAction)onGhost:(UIButton *)sender {
+    PJWPuzzleParameterModel *parameterModel = self.parameterModel;
+    BOOL ghostPresent = !parameterModel.ghostPresent;
     
-    self.ghostView.image = ghostPresent ? self.parameterModel.ghostImage : nil;
+    self.ghostView.image = ghostPresent ? parameterModel.ghostImage : nil;
     
     if (!ghostPresent) {
         for (PJWTileImageView *obj in self.tileSet) {
@@ -71,10 +68,29 @@
             obj.userInteractionEnabled = !tileModel.isBorderFix;
         }
     }
+    
+    parameterModel.ghostPresent = ghostPresent;
 }
 
-- (void)setBorderPresent:(BOOL)borderPresent {
-    _borderPresent = borderPresent;
+- (IBAction)onEdges:(UIButton *)sender {
+    PJWPuzzleParameterModel *parameterModel = self.parameterModel;
+    BOOL edgesPresent = !parameterModel.edgesPresent;
+    
+    [self.edgesButton setTitle: edgesPresent ? @"View All" : @"Edges" forState:UIControlStateNormal];
+    
+    for (PJWTileImageView *obj in self.tileSet) {
+        if (!obj.tileModel.isSide) {
+            obj.alpha = edgesPresent ? 0.4 : 1.0;
+        }
+    }
+    
+    parameterModel.edgesPresent = edgesPresent;
+}
+
+- (IBAction)onBorder:(UIButton *)sender {
+    PJWPuzzleParameterModel *parameterModel = self.parameterModel;
+    BOOL borderPresent = !parameterModel.borderPresent;
+    
     self.ghostView.layer.borderWidth = borderPresent ? 1.0 : 0.0;
     
     if (!borderPresent) {
@@ -85,32 +101,9 @@
             obj.userInteractionEnabled = !tileModel.isGhostFix;
         }
     }
-}
 
-- (void)setEdgesPresent:(BOOL)edgesPresent {
-    _edgesPresent = edgesPresent;
-
-    [self.edgesButton setTitle: edgesPresent ? @"View All" : @"Edges"
-                      forState:UIControlStateNormal];
     
-    for (PJWTileImageView *obj in self.tileSet) {
-        if (!obj.tileModel.isSide) {
-            obj.alpha = edgesPresent ? 0.0 : 1.0;
-        }
-    }
-    
-    
-}
-
-#pragma mark -
-#pragma mark Interface Handling
-
-- (IBAction)onEdges:(UIButton *)sender {
-    self.edgesPresent = !self.edgesPresent;
-}
-
-- (IBAction)onBorder:(UIButton *)sender {
-    self.borderPresent = !self.borderPresent;
+    parameterModel.borderPresent = borderPresent;
 }
 
 - (IBAction)onShuffle:(UIButton *)sender {
@@ -129,7 +122,7 @@
             continue;
         }
         
-        if (self.edgesPresent && !tileModel.isSide) {
+        if (parameterModel.edgesPresent && !tileModel.isSide) {
             continue;
         }
         
@@ -184,12 +177,6 @@
     [self presentViewController:vc animated:YES completion:nil];
 }
 
-- (IBAction)onGhost:(UIButton *)sender {
-    self.ghostPresent = !self.ghostPresent;
-}
-
-
-
 #pragma mark -
 #pragma mark Private Methods
 
@@ -199,9 +186,6 @@
     }
     
     [self.ghostView removeFromSuperview];
-    self.ghostPresent = NO;
-    self.borderPresent = NO;
-    self.edgesPresent = NO;
     
     [self setupParameterModel];
     
@@ -211,6 +195,9 @@
     self.tileSet = self.tilesModel.tileSet;
     
     [self addTilesOnView];
+    
+    [self.edgesButton setTitle:[PJWPuzzleParameterModel sharedInstance].edgesPresent ? @"View All" : @"Edges"
+                      forState:UIControlStateNormal];
 }
 
 - (void)setupParameterModel {
@@ -325,11 +312,11 @@
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         [self moveToNeighborTileView:recognizerView];
         
-        if (self.ghostPresent) {
+        if (parameterModel.ghostPresent) {
             [self moveToGhostTileView:recognizerView];
         }
     
-        if (self.borderPresent) {
+        if (parameterModel.borderPresent) {
             [self moveToBorderTileView:recognizerView];
         }
         

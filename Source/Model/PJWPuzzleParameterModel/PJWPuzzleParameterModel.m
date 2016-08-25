@@ -62,7 +62,11 @@ static NSString * const kImageName = @"900x700.jpg";
     [self setupGameField];
     self.offsetCornerModel = [PJWOffsetCornerModel new];
     self.offsetSideModel = [PJWOffsetSideModel new];
-        
+    
+    self.ghostPresent = NO;
+    self.borderPresent = NO;
+    self.edgesPresent = NO;
+    
     self.deltaGhost = 40.;
 }
 
