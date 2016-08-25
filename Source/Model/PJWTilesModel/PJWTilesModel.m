@@ -120,12 +120,18 @@
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
     PJWTileModel *tileModel = tileView.tileModel;
     
+    
 //side/corner tile
     if (row < 0 || row >= parameterModel.countHeight || col < 0 || col >= parameterModel.countWidth) {
         return NO;
     }
 
     PJWTileImageView *neighborTileView = self.tiles[row][col];
+
+//"edges" mode
+    if (parameterModel.edgesPresent && !neighborTileView.tileModel.isSide) {
+        return NO;
+    }
     
 //already in segment
     if ([tileModel.linkedTileHashTable containsObject:neighborTileView]) {

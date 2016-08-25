@@ -255,8 +255,12 @@
 
 - (void)panAction:(UIPanGestureRecognizer *)recognizer {
     PJWPuzzleParameterModel *parameterModel = self.parameterModel;
-    
     PJWTileImageView *recognizerView = (PJWTileImageView *)recognizer.view;
+    
+    if (parameterModel.edgesPresent && !recognizerView.tileModel.isSide) {
+        return;
+    }
+
     UIView *rootView = self.view;
     NSSet *linkedSet = recognizerView.tileModel.linkedTileHashTable.setRepresentation;
     
