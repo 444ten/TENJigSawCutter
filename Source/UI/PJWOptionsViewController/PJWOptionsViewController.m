@@ -34,7 +34,7 @@
 
 - (IBAction)onStart:(id)sender {
     [self dismissViewControllerAnimated:NO completion:^{
-        [self.delegate startGame];        
+        [self.delegate restartGame];
     }];
 }
 

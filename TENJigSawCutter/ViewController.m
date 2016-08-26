@@ -48,7 +48,7 @@
     
     self.parameterModel = parameterModel;
 
-    [self startGame];
+    [self restartGame];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -104,52 +104,7 @@
 }
 
 - (IBAction)onShuffle:(UIButton *)sender {
-    PJWPuzzleParameterModel *parameterModel = self.parameterModel;
-    CGSize gameSize   = parameterModel.gameRect.size;
-    
-    CGFloat halfSliceWidth  = parameterModel.sliceWidth  / 2;
-    CGFloat halfSliceHeight = parameterModel.sliceHeight / 2;
-    
-    CGFloat mostLeft  = halfSliceWidth;
-    CGFloat mostRight = gameSize.width - halfSliceWidth;
-    CGFloat mostUp    = halfSliceHeight;
-    CGFloat mostDown  = gameSize.height - halfSliceHeight;
-    
-    for (PJWTileImageView *obj in self.tileSet) {
-        PJWTileModel *tileModel = obj.tileModel;
-        
-        if (tileModel.isGhostFix || tileModel.isBorderFix) {
-            continue;
-        }
-        
-        if (parameterModel.edgesPresent && !tileModel.isSide) {
-            continue;
-        }
-        
-        if (tileModel.linkedTileHashTable.count == 1) {
-            [self.gameView bringSubviewToFront:obj];
-            
-            UIEdgeInsets bezierInsets = tileModel.bezierInsets;
-            CGFloat left  = bezierInsets.left;
-            CGFloat right = bezierInsets.right;
-            CGFloat up    = bezierInsets.top;
-            CGFloat down  = bezierInsets.bottom;
-            
-            CGPoint center;
-            if (TENHeadOrTile) {
-                center.x = mostLeft - left + arc4random_uniform(mostRight + right - mostLeft - left);
-                center.y = TENHeadOrTile ? mostUp   - up   : mostDown  + down ;
-            } else {
-                center.x = TENHeadOrTile ? mostLeft - left : mostRight + right;
-                center.y = mostUp - up     + arc4random_uniform(mostDown  + down  - mostUp   - up  );
-            }
-            
-            [UIView animateWithDuration:0.3
-                             animations:^{
-                                 obj.center = center;
-                             }];
-        }
-    }
+    [self shuffleTilesAlongSide:YES];
 }
 
 - (IBAction)onOrder:(UIButton *)sender {
@@ -229,7 +184,6 @@
 
 - (void)addTilesOnPuzzleView {
     UIView *gameView = self.gameView;
-    PJWPuzzleParameterModel *parameterModel = self.parameterModel;
 
     for (PJWTileImageView *tileView in self.tileSet) {
         
@@ -238,14 +192,67 @@
         [tileView addGestureRecognizer:[self panRecognizer]];
         [tileView addGestureRecognizer:[self tapRecognizer]];
         //        [imageView addGestureRecognizer:[self longPressRecognizer]];
-
-        CGPoint center = CGPointFromValue(tileView.tileModel.anchor);
-        center.x += parameterModel.widthOffset;
-        center.y += parameterModel.heightOffset;
-        
-        tileView.center = center;
-        
         [gameView addSubview:tileView];
+    }
+}
+
+- (void)shuffleTilesAlongSide:(BOOL)alongSide {
+    PJWPuzzleParameterModel *parameterModel = self.parameterModel;
+    CGSize gameSize   = parameterModel.gameRect.size;
+    
+    CGFloat halfSliceWidth  = parameterModel.sliceWidth  / 2;
+    CGFloat halfSliceHeight = parameterModel.sliceHeight / 2;
+    
+    CGFloat mostLeft  = halfSliceWidth;
+    CGFloat mostRight = gameSize.width - halfSliceWidth;
+    CGFloat mostUp    = halfSliceHeight;
+    CGFloat mostDown  = gameSize.height - halfSliceHeight;
+    
+    for (PJWTileImageView *obj in self.tileSet) {
+        PJWTileModel *tileModel = obj.tileModel;
+        
+        if (tileModel.isGhostFix || tileModel.isBorderFix) {
+            continue;
+        }
+        
+        if (parameterModel.edgesPresent && !tileModel.isSide) {
+            continue;
+        }
+        
+        if (tileModel.linkedTileHashTable.count == 1) {
+            [self.gameView bringSubviewToFront:obj];
+            
+            UIEdgeInsets bezierInsets = tileModel.bezierInsets;
+            CGFloat left  = bezierInsets.left  ;
+            CGFloat right = bezierInsets.right ;
+            CGFloat up    = bezierInsets.top   ;
+            CGFloat down  = bezierInsets.bottom;
+            
+            CGFloat mostPlusLeft  = mostLeft  + left ;
+            CGFloat mostPlusRight = mostRight + right;
+            CGFloat mostPlusUp    = mostUp    + up   ;
+            CGFloat mostPlusDown  = mostDown  + down ;
+            
+            CGFloat mostMinusLeft = mostLeft - left;
+            CGFloat mostMinusUp   = mostUp - up;
+           
+            CGPoint center;
+            center.x = mostMinusLeft + arc4random_uniform(mostPlusRight - mostPlusLeft);
+            center.y = mostMinusUp   + arc4random_uniform(mostPlusDown  - mostPlusUp  );
+            
+            if (alongSide) {
+                if (TENHeadOrTile) {
+                    center.x = TENHeadOrTile ? mostMinusLeft : mostPlusRight;
+                } else {
+                    center.y = TENHeadOrTile ? mostMinusUp   : mostPlusDown ;
+                }
+            }
+            
+            [UIView animateWithDuration:0.3
+                             animations:^{
+                                 obj.center = center;
+                             }];
+        }
     }
 }
 
@@ -492,6 +499,14 @@
 
 - (void)longPressAction:(UILongPressGestureRecognizer *)recognizer {
     [self.gameView bringSubviewToFront:recognizer.view];
+}
+
+#pragma mark -
+#pragma mark PJWOptionsViewControllerProtocol
+
+- (void)restartGame {
+    [self startGame];
+    [self shuffleTilesAlongSide:NO];
 }
 
 @end

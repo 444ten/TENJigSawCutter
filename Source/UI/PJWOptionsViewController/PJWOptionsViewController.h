@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol PJWOptionsViewControllerProtocol
-- (void)startGame;
+- (void)restartGame;
 
 @end
 
