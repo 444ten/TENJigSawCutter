@@ -42,7 +42,7 @@
     parameterModel.cutterType = @(4);
     
     parameterModel.menuWidth = 60.;
-    parameterModel.trayWidth =  0.; //80
+    parameterModel.trayWidth =  30.; //80
     
     parameterModel.overlapRatioWidth = 0.5;
     parameterModel.overlapRatioHeight = 0.5;
@@ -107,12 +107,18 @@
 
 - (IBAction)onShuffle:(UIButton *)sender {
     PJWPuzzleParameterModel *parameterModel = self.parameterModel;
-    CGRect gameFieldRect = parameterModel.gameFieldRect;
+    CGSize gameSize   = parameterModel.gameRect.size;
+    CGSize puzzleSize = parameterModel.ghostRect.size;
     
-    CGFloat mostLeft  = gameFieldRect.origin.x + parameterModel.sliceWidth  / 2;
-    CGFloat mostRight = gameFieldRect.origin.x + gameFieldRect.size.width  - parameterModel.sliceWidth / 2;
-    CGFloat mostUp    = gameFieldRect.origin.y + parameterModel.sliceHeight / 2;
-    CGFloat mostDown  = gameFieldRect.origin.y + gameFieldRect.size.height - parameterModel.sliceHeight / 2;
+    CGFloat widthOffset  = (gameSize.width  - puzzleSize.width ) / 2;
+    CGFloat heightOffset = (gameSize.height - puzzleSize.height) / 2;
+    CGFloat halfSliceWidth  = parameterModel.sliceWidth  / 2;
+    CGFloat halfSliceHeight = parameterModel.sliceHeight / 2;
+    
+    CGFloat mostLeft  = - widthOffset + halfSliceWidth;
+    CGFloat mostRight = puzzleSize.width + widthOffset  - halfSliceWidth;
+    CGFloat mostUp    = - heightOffset + halfSliceHeight;
+    CGFloat mostDown  = puzzleSize.height + heightOffset - halfSliceHeight;
     
     for (PJWTileImageView *obj in self.tileSet) {
         PJWTileModel *tileModel = obj.tileModel;
@@ -212,7 +218,9 @@
     ghostView.center = gameView.center;
     ghostView.layer.borderColor = [UIColor blackColor].CGColor;
     
-    gameView.backgroundColor = [UIColor clearColor];
+    gameView.backgroundColor = [UIColor clearColor];;
+    gameView.layer.borderColor = [UIColor redColor].CGColor;
+    gameView.layer.borderWidth = 1.0;
     
     puzzleView.center = gameView.center;
     puzzleView.backgroundColor = [UIColor clearColor];

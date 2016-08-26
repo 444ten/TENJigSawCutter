@@ -18,61 +18,61 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0m8-QX-rIZ">
-                                <rect key="frame" x="8" y="678" width="42" height="30"/>
+                                <rect key="frame" x="8" y="320" width="42" height="30"/>
                                 <state key="normal" title="Ghost"/>
                                 <connections>
                                     <action selector="onGhost:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ow6-AP-0CE"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jUv-UI-2OT">
-                                <rect key="frame" x="8" y="458" width="50" height="30"/>
+                                <rect key="frame" x="8" y="210" width="50" height="30"/>
                                 <state key="normal" title="Restart"/>
                                 <connections>
                                     <action selector="onRestart:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8F2-Dn-oyy"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bzk-GJ-gYQ">
-                                <rect key="frame" x="8" y="278" width="50" height="30"/>
-                                <state key="normal" title="Shuffle"/>
-                                <connections>
-                                    <action selector="onShuffle:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TV6-KA-7eT"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BtG-0L-cte">
-                                <rect key="frame" x="8" y="588" width="47" height="30"/>
+                                <rect key="frame" x="8" y="265" width="47" height="30"/>
                                 <state key="normal" title="Border"/>
                                 <connections>
                                     <action selector="onBorder:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4dQ-qf-I5b"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZW3-SK-2EN">
-                                <rect key="frame" x="8" y="368" width="43" height="30"/>
+                                <rect key="frame" x="8" y="155" width="43" height="30"/>
                                 <state key="normal" title="Edges"/>
                                 <connections>
                                     <action selector="onEdges:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CI5-ua-ESE"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzC-8K-Wvd">
-                                <rect key="frame" x="8" y="80" width="40" height="30"/>
+                                <rect key="frame" x="8" y="45" width="40" height="30"/>
                                 <state key="normal" title="Order"/>
                                 <connections>
                                     <action selector="onOrder:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xSK-0M-29H"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bzk-GJ-gYQ">
+                                <rect key="frame" x="8" y="100" width="50" height="30"/>
+                                <state key="normal" title="Shuffle"/>
+                                <connections>
+                                    <action selector="onShuffle:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TV6-KA-7eT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="0m8-QX-rIZ" firstAttribute="top" secondItem="BtG-0L-cte" secondAttribute="bottom" constant="60" id="0JG-hB-GE2"/>
+                            <constraint firstItem="0m8-QX-rIZ" firstAttribute="top" secondItem="BtG-0L-cte" secondAttribute="bottom" constant="25" id="0JG-hB-GE2"/>
                             <constraint firstItem="qzC-8K-Wvd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="1zU-JY-RqT"/>
-                            <constraint firstItem="BtG-0L-cte" firstAttribute="top" secondItem="jUv-UI-2OT" secondAttribute="bottom" constant="100" id="BCe-n2-NeM"/>
-                            <constraint firstItem="ZW3-SK-2EN" firstAttribute="top" secondItem="Bzk-GJ-gYQ" secondAttribute="bottom" constant="60" id="ECZ-8h-GdJ"/>
-                            <constraint firstItem="jUv-UI-2OT" firstAttribute="top" secondItem="ZW3-SK-2EN" secondAttribute="bottom" constant="60" id="FT4-u5-Ln8"/>
+                            <constraint firstItem="BtG-0L-cte" firstAttribute="top" secondItem="jUv-UI-2OT" secondAttribute="bottom" constant="25" id="BCe-n2-NeM"/>
+                            <constraint firstItem="ZW3-SK-2EN" firstAttribute="top" secondItem="Bzk-GJ-gYQ" secondAttribute="bottom" constant="25" id="ECZ-8h-GdJ"/>
+                            <constraint firstItem="jUv-UI-2OT" firstAttribute="top" secondItem="ZW3-SK-2EN" secondAttribute="bottom" constant="25" id="FT4-u5-Ln8"/>
                             <constraint firstItem="ZW3-SK-2EN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="I7R-Kv-cX1"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0m8-QX-rIZ" secondAttribute="bottom" constant="60" id="cBk-P0-pAk"/>
                             <constraint firstItem="0m8-QX-rIZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="eNh-Xs-wDs"/>
                             <constraint firstItem="BtG-0L-cte" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="hFh-qq-Qrd"/>
+                            <constraint firstItem="Bzk-GJ-gYQ" firstAttribute="top" secondItem="qzC-8K-Wvd" secondAttribute="bottom" constant="25" id="hyE-vJ-qu5"/>
                             <constraint firstItem="Bzk-GJ-gYQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="rRY-tC-pEX"/>
-                            <constraint firstItem="qzC-8K-Wvd" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="sO7-g4-RCm"/>
+                            <constraint firstItem="qzC-8K-Wvd" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="25" id="sO7-g4-RCm"/>
                             <constraint firstItem="jUv-UI-2OT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="y4j-VM-1ZI"/>
                         </constraints>
                     </view>

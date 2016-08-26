@@ -117,7 +117,7 @@ static const CGFloat kPJWDoubleGhostInset = 200.0;
 - (void)setupGameField {
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     
-    self.gameRect = CGRectMake(self.menuWidth, 0,
+    self.gameRect = CGRectMake(self.menuWidth, 0.0,
                                screenSize.width - self.menuWidth - self.trayWidth, screenSize.height);
     
     CGFloat ghostWidth = self.gameRect.size.width - kPJWDoubleGhostInset;
