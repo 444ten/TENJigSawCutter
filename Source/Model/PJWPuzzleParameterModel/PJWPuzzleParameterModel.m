@@ -110,7 +110,7 @@ static const CGFloat kPJWDoubleGhostInset = 200.0;
     CGContextDrawImage(ctx, area, originImage.CGImage);
     
     self.ghostImage = UIGraphicsGetImageFromCurrentImageContext();
-    
+  
     UIGraphicsEndImageContext();
 }
 

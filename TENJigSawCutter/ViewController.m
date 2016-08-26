@@ -159,17 +159,10 @@
 
 - (IBAction)onOrder:(UIButton *)sender {
     for (PJWTileImageView *tileView in self.tileSet) {
-        
-        if (tileView.tileModel.linkedTileHashTable.count == 1) {
-            CGPoint center = CGPointFromValue(tileView.tileModel.anchor);
-            center.x += (1024. - self.parameterModel.fullWidth) / 2.0;
-            center.y += ( 768. - self.parameterModel.fullHeight) / 2.0;
-            
-            [UIView animateWithDuration:1.0
-                             animations:^{
-                                 tileView.center = center;
-                             }];
-        }
+        [UIView animateWithDuration:1.0
+                         animations:^{
+                             tileView.center = CGPointFromValue(tileView.tileModel.anchor);
+                         }];
     }
 }
 
