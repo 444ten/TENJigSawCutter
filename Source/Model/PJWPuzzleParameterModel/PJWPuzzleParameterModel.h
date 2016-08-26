@@ -22,12 +22,11 @@
 @property (nonatomic, assign)   BOOL    borderPresent;
 @property (nonatomic, assign)   BOOL    edgesPresent;
 
+@property (nonatomic, readonly) CGFloat widthOffset;
+@property (nonatomic, readonly) CGFloat heightOffset;
+
 @property (nonatomic, strong)   UIImage     *originImage;
 @property (nonatomic, strong)   UIImage     *ghostImage;
-
-//
-@property (nonatomic, assign)   CGRect          gameFieldRect;
-@property (nonatomic, assign)   UIEdgeInsets    gameFieldLimit;
 
 @property (nonatomic, strong)   NSNumber    *cutterType;
 

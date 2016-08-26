@@ -18,7 +18,6 @@
 @interface ViewController () <PJWOptionsViewControllerProtocol>
 @property (nonatomic, strong)   UIImageView             *ghostView;
 @property (nonatomic, strong)   UIView                  *gameView;
-@property (nonatomic, strong)   UIView                  *puzzleView;
 
 @property (nonatomic, strong)   PJWPuzzleParameterModel *parameterModel;
 
@@ -108,17 +107,14 @@
 - (IBAction)onShuffle:(UIButton *)sender {
     PJWPuzzleParameterModel *parameterModel = self.parameterModel;
     CGSize gameSize   = parameterModel.gameRect.size;
-    CGSize puzzleSize = parameterModel.ghostRect.size;
     
-    CGFloat widthOffset  = (gameSize.width  - puzzleSize.width ) / 2;
-    CGFloat heightOffset = (gameSize.height - puzzleSize.height) / 2;
     CGFloat halfSliceWidth  = parameterModel.sliceWidth  / 2;
     CGFloat halfSliceHeight = parameterModel.sliceHeight / 2;
     
-    CGFloat mostLeft  = - widthOffset + halfSliceWidth;
-    CGFloat mostRight = puzzleSize.width + widthOffset  - halfSliceWidth;
-    CGFloat mostUp    = - heightOffset + halfSliceHeight;
-    CGFloat mostDown  = puzzleSize.height + heightOffset - halfSliceHeight;
+    CGFloat mostLeft  = halfSliceWidth;
+    CGFloat mostRight = gameSize.width - halfSliceWidth;
+    CGFloat mostUp    = halfSliceHeight;
+    CGFloat mostDown  = gameSize.height - halfSliceHeight;
     
     for (PJWTileImageView *obj in self.tileSet) {
         PJWTileModel *tileModel = obj.tileModel;
@@ -158,10 +154,17 @@
 }
 
 - (IBAction)onOrder:(UIButton *)sender {
+    PJWPuzzleParameterModel *parameterModel = self.parameterModel;
+
     for (PJWTileImageView *tileView in self.tileSet) {
+        
+        CGPoint center = CGPointFromValue(tileView.tileModel.anchor);
+        center.x += parameterModel.widthOffset;
+        center.y += parameterModel.heightOffset;
+
         [UIView animateWithDuration:1.0
                          animations:^{
-                             tileView.center = CGPointFromValue(tileView.tileModel.anchor);
+                             tileView.center = center;
                          }];
     }
 }
@@ -198,7 +201,6 @@
 }
 
 - (void)setupGhostGamePuzzleView {
-    [self.puzzleView removeFromSuperview];
     [self.gameView removeFromSuperview];
     [self.ghostView removeFromSuperview];
 
@@ -206,7 +208,6 @@
     
     UIImageView *ghostView  = [[UIImageView alloc] initWithFrame:parameterModel.ghostRect];
     UIView *gameView   = [[UIView alloc] initWithFrame:parameterModel.gameRect ];
-    UIView *puzzleView = [[UIView alloc] initWithFrame:parameterModel.ghostRect];
 
     ghostView.center = gameView.center;
     ghostView.layer.borderColor = [UIColor blackColor].CGColor;
@@ -215,23 +216,19 @@
     gameView.layer.borderColor = [UIColor redColor].CGColor;
     gameView.layer.borderWidth = 1.0;
     
-    puzzleView.center = gameView.center;
-    puzzleView.backgroundColor = [UIColor clearColor];
-    
     UIView *rootView = self.view;
     
     [rootView addSubview:ghostView];
     [rootView addSubview:gameView];
-    [rootView addSubview:puzzleView];
     
     self.ghostView = ghostView;
     self.gameView = gameView;
-    self.puzzleView = puzzleView;
 }
 
 - (void)addTilesOnPuzzleView {
-    UIView *puzzleView = self.puzzleView;
-    
+    UIView *gameView = self.gameView;
+    PJWPuzzleParameterModel *parameterModel = self.parameterModel;
+
     for (PJWTileImageView *tileView in self.tileSet) {
         
         tileView.userInteractionEnabled = YES;
@@ -239,10 +236,14 @@
         [tileView addGestureRecognizer:[self panRecognizer]];
         [tileView addGestureRecognizer:[self tapRecognizer]];
         //        [imageView addGestureRecognizer:[self longPressRecognizer]];
+
+        CGPoint center = CGPointFromValue(tileView.tileModel.anchor);
+        center.x += parameterModel.widthOffset;
+        center.y += parameterModel.heightOffset;
         
-        tileView.center = CGPointFromValue(tileView.tileModel.anchor);;
+        tileView.center = center;
         
-        [puzzleView addSubview:tileView];
+        [gameView addSubview:tileView];
     }
 }
 
@@ -281,37 +282,34 @@
     PJWSegmentModel *segmentModel = [[PJWSegmentModel alloc] initWithTileView:recognizerView];
     UIEdgeInsets segmentInsets = segmentModel.segmentInsets;
     
-    UIEdgeInsets gameFieldLimit = parameterModel.gameFieldLimit;
-    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-
-//    NSLog(@"center %.1f offset %.1f inset %.1f", center.y, offset.y, segmentInsets.top);
+    CGSize gameSize  = parameterModel.gameRect.size;
     
     CGFloat delta;
     
 //left side
-    delta = center.x + offset.x - segmentInsets.left + 0.f - gameFieldLimit.left;
+    delta = center.x + offset.x - segmentInsets.left;
     if (delta < 0) {
         offset.x -= delta;
     }
 
 //right side
-    delta = center.x + offset.x + segmentInsets.right - screenSize.width + gameFieldLimit.right;
+    delta = center.x + offset.x + segmentInsets.right - gameSize.width;
     if (delta > 0) {
         offset.x -= delta;
     }
     
 //up side
-    delta = center.y + offset.y - segmentInsets.top + 0.f - gameFieldLimit.top;
+    delta = center.y + offset.y - segmentInsets.top;
     if (delta < 0) {
         offset.y -= delta;
     }
 
 //down side
-    delta = center.y + offset.y + segmentInsets.bottom - screenSize.height + gameFieldLimit.bottom;
+    delta = center.y + offset.y + segmentInsets.bottom - gameSize.height;
     if (delta > 0) {
         offset.y -= delta;
     }
-    
+
     [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
         obj.center = CGPointMake(obj.center.x + offset.x,
                                  obj.center.y + offset.y);
@@ -449,16 +447,16 @@
 
 - (void)bringSegmentToFront:(PJWTileImageView *)tileView {
     NSSet *linkedSet = tileView.tileModel.linkedTileHashTable.setRepresentation;
-    UIView *rootView = self.view;
+    UIView *gameView = self.gameView;
     NSInteger count = linkedSet.count;
     
     if (count < 70) {
         [linkedSet enumerateObjectsUsingBlock:^(PJWTileImageView *obj, BOOL *stop) {
-            [rootView bringSubviewToFront:obj];
+            [gameView bringSubviewToFront:obj];
         }];
         
     } else {
-        NSArray *subViews = rootView.subviews;
+        NSArray *subViews = gameView.subviews;
         NSInteger index = subViews.count - 1;
         
         BOOL isCheckToEnd = NO;
@@ -470,7 +468,7 @@
             if ([linkedSet containsObject:view]) {
                 count--;
             } else {
-                [rootView sendSubviewToBack:view];
+                [gameView sendSubviewToBack:view];
                 isCheckToEnd = YES;
             }
             
@@ -480,7 +478,7 @@
         if (isCheckToEnd) {
             while (index >= 0) {
                 view = subViews[index];
-                [rootView sendSubviewToBack:view];
+                [gameView sendSubviewToBack:view];
                 index--;
             }
         }

@@ -16,6 +16,13 @@ static NSString * const kImageName = @"900x700.jpg";
 
 static const CGFloat kPJWDoubleGhostInset = 200.0;
 
+@interface PJWPuzzleParameterModel ()
+@property (nonatomic, assign) CGFloat widthOffset;
+@property (nonatomic, assign) CGFloat heightOffset;
+
+@end
+
+
 @implementation PJWPuzzleParameterModel
 
 @dynamic fullWidth;
@@ -117,10 +124,10 @@ static const CGFloat kPJWDoubleGhostInset = 200.0;
 - (void)setupGameField {
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     
-    self.gameRect = CGRectMake(self.menuWidth, 0.0,
+    CGRect gameRect = CGRectMake(self.menuWidth, 0.0,
                                screenSize.width - self.menuWidth - self.trayWidth, screenSize.height);
     
-    CGFloat ghostWidth = self.gameRect.size.width - kPJWDoubleGhostInset;
+    CGFloat ghostWidth = gameRect.size.width - kPJWDoubleGhostInset;
     CGFloat ghostHeight = ghostWidth / 4 * 3;
     
     if (ghostHeight > (screenSize.height - kPJWDoubleGhostInset)) {
@@ -128,18 +135,14 @@ static const CGFloat kPJWDoubleGhostInset = 200.0;
         ghostWidth = ghostHeight * 4 / 3;
     }
     
-    self.ghostRect = CGRectMake(0, 0, ghostWidth, ghostHeight);
+    CGRect ghostRect = CGRectMake(0, 0, ghostWidth, ghostHeight);
     
     
-    UIEdgeInsets gameFieldLimit = UIEdgeInsetsMake(0., 60., 0., 0.);
+    self.gameRect = gameRect;
+    self.ghostRect = ghostRect;
     
-    self.gameFieldLimit = gameFieldLimit;
-    
-    CGRect gameFieldRect = CGRectMake(gameFieldLimit.left,
-                                      gameFieldLimit.top,
-                                      screenSize.width  - gameFieldLimit.left - gameFieldLimit.right,
-                                      screenSize.height - gameFieldLimit.top   - gameFieldLimit.bottom );
-    self.gameFieldRect = gameFieldRect;
+    self.widthOffset  = (gameRect.size.width  - ghostWidth) / 2;
+    self.heightOffset = (gameRect.size.height - ghostHeight) / 2;
 }
 
 
