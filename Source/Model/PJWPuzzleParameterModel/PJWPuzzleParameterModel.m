@@ -8,11 +8,18 @@
 
 #import "PJWPuzzleParameterModel.h"
 
+#import "UIImage+Resize.h"
+
 //static NSString * const kImageName = @"04.jpg";
 //static NSString * const kImageName = @"200x200";
 static NSString * const kImageName = @"900x700.jpg";
 
+static const CGFloat kPJWDoubleGhostInset = 200.0;
+
 @implementation PJWPuzzleParameterModel
+
+@dynamic fullWidth;
+@dynamic fullHeight;
 
 @dynamic countWidth;
 @dynamic countHeight;
@@ -37,7 +44,6 @@ static NSString * const kImageName = @"900x700.jpg";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [self setupOriginImage];
     }
     
     return self;
@@ -45,6 +51,14 @@ static NSString * const kImageName = @"900x700.jpg";
 
 #pragma mark -
 #pragma mark Accessors
+
+- (CGFloat)fullWidth {
+    return self.ghostRect.size.width;
+}
+
+- (CGFloat)fullHeight {
+    return self.ghostRect.size.height;
+}
 
 - (NSInteger)countWidth {
     return [[PJWConstants presetCutterType][self.cutterType][0] integerValue];
@@ -58,8 +72,11 @@ static NSString * const kImageName = @"900x700.jpg";
 #pragma mark Public Methods
 
 - (void)setup {
-    [self calculateSlice];
     [self setupGameField];
+    [self calculateSlice];
+    
+    [self setupOriginImage];
+    
     self.offsetCornerModel = [PJWOffsetCornerModel new];
     self.offsetSideModel = [PJWOffsetSideModel new];
     
@@ -74,28 +91,57 @@ static NSString * const kImageName = @"900x700.jpg";
 #pragma mark Private Methods
 
 - (void)setupOriginImage {
-    self.originImage = [UIImage imageNamed:kImageName];
+    UIImage *selectedImage = [UIImage imageNamed:kImageName];
+    UIImage *originImage = [UIImage imageWithImage:selectedImage scaledToFillToSize:self.ghostRect.size];
     
-    UIGraphicsBeginImageContextWithOptions(self.originImage.size, NO, 0.0f);
+    CGSize originSize = originImage.size;
+    
+    self.originImage = originImage;
+    
+    UIGraphicsBeginImageContextWithOptions(originSize, NO, 0.0f);
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGRect area = CGRectMake(0, 0, self.originImage.size.width, self.originImage.size.height);
+    CGRect area = CGRectMake(0, 0, originSize.width, originSize.height);
     
     CGContextScaleCTM(ctx, 1, -1);
     CGContextTranslateCTM(ctx, 0, -area.size.height);
-    
     CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
-    
     CGContextSetAlpha(ctx, 0.3);
+    CGContextDrawImage(ctx, area, originImage.CGImage);
     
-    CGContextDrawImage(ctx, area, self.originImage.CGImage);
-    
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    self.ghostImage = UIGraphicsGetImageFromCurrentImageContext();
     
     UIGraphicsEndImageContext();
-    
-    self.ghostImage = newImage;
 }
+
+- (void)setupGameField {
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    
+    self.gameRect = CGRectMake(self.menuWidth, 0,
+                               screenSize.width - self.menuWidth - self.trayWidth, screenSize.height);
+    
+    CGFloat ghostWidth = self.gameRect.size.width - kPJWDoubleGhostInset;
+    CGFloat ghostHeight = ghostWidth / 4 * 3;
+    
+    if (ghostHeight > (screenSize.height - kPJWDoubleGhostInset)) {
+        ghostHeight = screenSize.height - kPJWDoubleGhostInset;
+        ghostWidth = ghostHeight * 4 / 3;
+    }
+    
+    self.ghostRect = CGRectMake(0, 0, ghostWidth, ghostHeight);
+    
+    
+    UIEdgeInsets gameFieldLimit = UIEdgeInsetsMake(0., 60., 0., 0.);
+    
+    self.gameFieldLimit = gameFieldLimit;
+    
+    CGRect gameFieldRect = CGRectMake(gameFieldLimit.left,
+                                      gameFieldLimit.top,
+                                      screenSize.width  - gameFieldLimit.left - gameFieldLimit.right,
+                                      screenSize.height - gameFieldLimit.top   - gameFieldLimit.bottom );
+    self.gameFieldRect = gameFieldRect;
+}
+
 
 - (void)calculateSlice {
     self.baseWidth = self.fullWidth / (self.countWidth + self.overlapRatioWidth * (self.countWidth + 1));
@@ -109,18 +155,5 @@ static NSString * const kImageName = @"900x700.jpg";
     self.anchorHeight = self.baseHeight + self.overlapHeight;
 }
 
-- (void)setupGameField {
-    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    
-    UIEdgeInsets gameFieldLimit = UIEdgeInsetsMake(0., 60., 0., 0.);
-    
-    self.gameFieldLimit = gameFieldLimit;
-    
-    CGRect gameFieldRect = CGRectMake(gameFieldLimit.left,
-                                      gameFieldLimit.top,
-                                      screenSize.width  - gameFieldLimit.left - gameFieldLimit.right,
-                                      screenSize.height - gameFieldLimit.top   - gameFieldLimit.bottom );
-    self.gameFieldRect = gameFieldRect;
-}
 
 @end

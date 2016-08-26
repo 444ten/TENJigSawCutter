@@ -10,6 +10,7 @@
 		7642F82D1D6C69E4003799AD /* PJWOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7642F82B1D6C69E4003799AD /* PJWOptionsViewController.m */; };
 		7642F82E1D6C69E4003799AD /* PJWOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7642F82C1D6C69E4003799AD /* PJWOptionsViewController.xib */; };
 		7650B2AE1D6DA38F002D4E94 /* PJWConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7650B2AD1D6DA38F002D4E94 /* PJWConstants.m */; };
+		7650B2B51D7018EE002D4E94 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 7650B2B41D7018EE002D4E94 /* UIImage+Resize.m */; };
 		7682ED051D67377300D4590F /* PJWSegmentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7682ED041D67377300D4590F /* PJWSegmentModel.m */; };
 		7682ED1F1D6AE93B00D4590F /* TENGCDObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7682ED1E1D6AE93B00D4590F /* TENGCDObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		76C9BBBF1D5498820067833D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBBE1D5498820067833D /* main.m */; };
@@ -38,6 +39,8 @@
 		7650B2AC1D6DA38F002D4E94 /* PJWConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWConstants.h; sourceTree = "<group>"; };
 		7650B2AD1D6DA38F002D4E94 /* PJWConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWConstants.m; sourceTree = "<group>"; };
 		7650B2AF1D6DA506002D4E94 /* PJWJigSaw.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PJWJigSaw.pch; sourceTree = "<group>"; };
+		7650B2B31D7018EE002D4E94 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		7650B2B41D7018EE002D4E94 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		7682ED031D67377300D4590F /* PJWSegmentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWSegmentModel.h; sourceTree = "<group>"; };
 		7682ED041D67377300D4590F /* PJWSegmentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWSegmentModel.m; sourceTree = "<group>"; };
 		7682ED1D1D6AE93B00D4590F /* TENGCDObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TENGCDObject.h; sourceTree = "<group>"; };
@@ -101,6 +104,31 @@
 				7650B2AD1D6DA38F002D4E94 /* PJWConstants.m */,
 			);
 			path = PJWConstants;
+			sourceTree = "<group>";
+		};
+		7650B2B01D7018A1002D4E94 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				7650B2B11D7018A1002D4E94 /* Categories */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		7650B2B11D7018A1002D4E94 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				7650B2B21D7018C4002D4E94 /* UIImage+Resize */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		7650B2B21D7018C4002D4E94 /* UIImage+Resize */ = {
+			isa = PBXGroup;
+			children = (
+				7650B2B31D7018EE002D4E94 /* UIImage+Resize.h */,
+				7650B2B41D7018EE002D4E94 /* UIImage+Resize.m */,
+			);
+			path = "UIImage+Resize";
 			sourceTree = "<group>";
 		};
 		7682ED021D67376500D4590F /* PJWSegmentModel */ = {
@@ -169,6 +197,7 @@
 		76C9BBD81D58AA5A0067833D /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				7650B2B01D7018A1002D4E94 /* Library */,
 				76C9BBF91D5C747F0067833D /* UI */,
 				76C9BBE61D59AD050067833D /* Resource */,
 				76C9BBD91D58AA5A0067833D /* Model */,
@@ -358,6 +387,7 @@
 				76C9BBF41D5B46260067833D /* PJWPuzzleParameterModel.m in Sources */,
 				76C9BC0D1D619BD40067833D /* PJWTileModel.m in Sources */,
 				76C9BBC51D5498820067833D /* ViewController.m in Sources */,
+				7650B2B51D7018EE002D4E94 /* UIImage+Resize.m in Sources */,
 				76C9BC091D619B7F0067833D /* PJWTilesModel.m in Sources */,
 				76C9BBC21D5498820067833D /* AppDelegate.m in Sources */,
 				7682ED051D67377300D4590F /* PJWSegmentModel.m in Sources */,

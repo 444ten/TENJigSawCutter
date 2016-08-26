@@ -17,6 +17,9 @@
 
 @interface ViewController () <PJWOptionsViewControllerProtocol>
 @property (nonatomic, strong)   UIImageView             *ghostView;
+@property (nonatomic, strong)   UIImageView             *gameView;
+@property (nonatomic, strong)   UIImageView             *puzzleView;
+
 @property (nonatomic, strong)   PJWPuzzleParameterModel *parameterModel;
 
 @property (nonatomic, strong)   PJWTilesModel           *tilesModel;
@@ -35,13 +38,15 @@
     [super viewDidLoad];
     
     PJWPuzzleParameterModel *parameterModel = [PJWPuzzleParameterModel sharedInstance];
-    parameterModel.cutterType = @(4);
-    parameterModel.fullWidth = 800.f;
-    parameterModel.overlapRatioWidth = 0.5;
-    
-    parameterModel.fullHeight = 600.f;
-    parameterModel.overlapRatioHeight = 0.5;
 
+    parameterModel.cutterType = @(4);
+    
+    parameterModel.menuWidth = 60.;
+    parameterModel.trayWidth =  0.; //80
+    
+    parameterModel.overlapRatioWidth = 0.5;
+    parameterModel.overlapRatioHeight = 0.5;
+    
     self.parameterModel = parameterModel;
 
     [self startGame];
@@ -183,12 +188,12 @@
     
     [self setupParameterModel];
     
-    [self setupGhost];
+    [self setupGhostAndGameView];
     
     self.tilesModel = [PJWTilesModel new];
     self.tileSet = self.tilesModel.tileSet;
     
-    [self addTilesOnView];
+//    [self addTilesOnView];
     
     [self.edgesButton setTitle:[PJWPuzzleParameterModel sharedInstance].edgesPresent ? @"View All" : @"Edges"
                       forState:UIControlStateNormal];
@@ -199,16 +204,21 @@
     [self.parameterModel setup];
 }
 
-- (void)setupGhost {
+- (void)setupGhostAndGameView {
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     PJWPuzzleParameterModel *parameterModel = self.parameterModel;
     
-    UIImageView *ghostView = [[UIImageView alloc] initWithFrame:
-                              CGRectMake(0, 0, parameterModel.fullWidth, parameterModel.fullHeight)];
+    UIImageView *ghostView = [[UIImageView alloc] initWithFrame:parameterModel.ghostRect];
+
+    UIImageView *gameView = [[UIImageView alloc] initWithFrame:parameterModel.gameRect];
+    UIImageView *puzzleView = [[UIImageView alloc] initWithFrame:parameterModel.ghostRect];
+
     
-    ghostView.center = CGPointMake(screenSize.width/2, screenSize.height/2);
-    ghostView.contentMode = UIViewContentModeTopLeft;
-    ghostView.clipsToBounds =  YES;
+    ghostView.center = gameView.center;
+//    ghostView.contentMode = UIViewContentModeTopLeft;
+//    ghostView.clipsToBounds =  YES;
+    
+    
     ghostView.layer.borderColor = [UIColor blackColor].CGColor;
     
     [self.view addSubview:ghostView];
