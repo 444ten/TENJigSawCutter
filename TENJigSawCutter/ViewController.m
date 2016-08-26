@@ -17,8 +17,8 @@
 
 @interface ViewController () <PJWOptionsViewControllerProtocol>
 @property (nonatomic, strong)   UIImageView             *ghostView;
-@property (nonatomic, strong)   UIImageView             *gameView;
-@property (nonatomic, strong)   UIImageView             *puzzleView;
+@property (nonatomic, strong)   UIView                  *gameView;
+@property (nonatomic, strong)   UIView                  *puzzleView;
 
 @property (nonatomic, strong)   PJWPuzzleParameterModel *parameterModel;
 
@@ -180,20 +180,14 @@
 #pragma mark Private Methods
 
 - (void)startGame {
-    for (UIImageView *view in self.tileSet) {
-        [view removeFromSuperview];
-    }
-    
-    [self.ghostView removeFromSuperview];
-    
     [self setupParameterModel];
     
-    [self setupGhostAndGameView];
+    [self setupGhostGamePuzzleView];
     
     self.tilesModel = [PJWTilesModel new];
     self.tileSet = self.tilesModel.tileSet;
     
-//    [self addTilesOnView];
+    [self addTilesOnPuzzleView];
     
     [self.edgesButton setTitle:[PJWPuzzleParameterModel sharedInstance].edgesPresent ? @"View All" : @"Edges"
                       forState:UIControlStateNormal];
@@ -204,30 +198,38 @@
     [self.parameterModel setup];
 }
 
-- (void)setupGhostAndGameView {
-    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+- (void)setupGhostGamePuzzleView {
+    [self.puzzleView removeFromSuperview];
+    [self.gameView removeFromSuperview];
+    [self.ghostView removeFromSuperview];
+
     PJWPuzzleParameterModel *parameterModel = self.parameterModel;
     
-    UIImageView *ghostView = [[UIImageView alloc] initWithFrame:parameterModel.ghostRect];
+    UIImageView *ghostView  = [[UIImageView alloc] initWithFrame:parameterModel.ghostRect];
+    UIView *gameView   = [[UIView alloc] initWithFrame:parameterModel.gameRect ];
+    UIView *puzzleView = [[UIView alloc] initWithFrame:parameterModel.ghostRect];
 
-    UIImageView *gameView = [[UIImageView alloc] initWithFrame:parameterModel.gameRect];
-    UIImageView *puzzleView = [[UIImageView alloc] initWithFrame:parameterModel.ghostRect];
-
-    
     ghostView.center = gameView.center;
-//    ghostView.contentMode = UIViewContentModeTopLeft;
-//    ghostView.clipsToBounds =  YES;
-    
-    
     ghostView.layer.borderColor = [UIColor blackColor].CGColor;
     
-    [self.view addSubview:ghostView];
+    gameView.backgroundColor = [UIColor clearColor];
+    
+    puzzleView.center = gameView.center;
+    puzzleView.backgroundColor = [UIColor clearColor];
+    
+    UIView *rootView = self.view;
+    
+    [rootView addSubview:ghostView];
+    [rootView addSubview:gameView];
+    [rootView addSubview:puzzleView];
     
     self.ghostView = ghostView;
+    self.gameView = gameView;
+    self.puzzleView = puzzleView;
 }
 
-- (void)addTilesOnView {
-    UIView *rootView = self.view;
+- (void)addTilesOnPuzzleView {
+    UIView *puzzleView = self.puzzleView;
     
     for (PJWTileImageView *tileView in self.tileSet) {
         
@@ -237,14 +239,9 @@
         [tileView addGestureRecognizer:[self tapRecognizer]];
         //        [imageView addGestureRecognizer:[self longPressRecognizer]];
         
+        tileView.center = CGPointFromValue(tileView.tileModel.anchor);;
         
-        CGPoint center = CGPointFromValue(tileView.tileModel.anchor);
-        center.x += (1024. - self.parameterModel.fullWidth) / 2.0;
-        center.y += ( 768. - self.parameterModel.fullHeight) / 2.0;
-        
-        tileView.center = center;
-        
-        [rootView addSubview:tileView];
+        [puzzleView addSubview:tileView];
     }
 }
 
