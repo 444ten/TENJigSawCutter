@@ -10,12 +10,6 @@
 
 #import "UIImage+Resize.h"
 
-//static NSString * const kImageName = @"04.jpg";
-//static NSString * const kImageName = @"200x200";
-static NSString * const kImageName = @"900x700.jpg";
-
-static const CGFloat kPJWDoubleGhostInset = 200.0;
-
 @interface PJWPuzzleParameterModel ()
 @property (nonatomic, assign) CGFloat widthOffset;
 @property (nonatomic, assign) CGFloat heightOffset;
@@ -98,27 +92,30 @@ static const CGFloat kPJWDoubleGhostInset = 200.0;
 #pragma mark Private Methods
 
 - (void)setupOriginImage {
-    UIImage *selectedImage = [UIImage imageNamed:kImageName];
-    UIImage *originImage = [UIImage imageWithImage:selectedImage scaledToFillToSize:self.ghostRect.size];
-    
-    CGSize originSize = originImage.size;
-    
-    self.originImage = originImage;
-    
-    UIGraphicsBeginImageContextWithOptions(originSize, NO, 0.0f);
-    
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGRect area = CGRectMake(0, 0, originSize.width, originSize.height);
-    
-    CGContextScaleCTM(ctx, 1, -1);
-    CGContextTranslateCTM(ctx, 0, -area.size.height);
-    CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
-    CGContextSetAlpha(ctx, 0.3);
-    CGContextDrawImage(ctx, area, originImage.CGImage);
-    
-    self.ghostImage = UIGraphicsGetImageFromCurrentImageContext();
-  
-    UIGraphicsEndImageContext();
+    @synchronized (self.originImage) {    
+        UIImage *selectedImage = [UIImage imageNamed:kImageName];
+        UIImage *originImage = [selectedImage resizedImageWithContentMode:UIViewContentModeScaleAspectFill
+                                                                   bounds:self.ghostRect.size
+                                                     interpolationQuality:kCGInterpolationHigh];
+        CGSize originSize = originImage.size;
+        
+        self.originImage = originImage;
+        
+        UIGraphicsBeginImageContextWithOptions(originSize, NO, 0.0f);
+        
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGRect area = CGRectMake(0, 0, originSize.width, originSize.height);
+        
+        CGContextScaleCTM(ctx, 1, -1);
+        CGContextTranslateCTM(ctx, 0, -area.size.height);
+        CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
+        CGContextSetAlpha(ctx, 0.3);
+        CGContextDrawImage(ctx, area, originImage.CGImage);
+        
+        self.ghostImage = UIGraphicsGetImageFromCurrentImageContext();
+        
+        UIGraphicsEndImageContext();
+    }
 }
 
 - (void)setupGameField {
@@ -127,11 +124,13 @@ static const CGFloat kPJWDoubleGhostInset = 200.0;
     CGRect gameRect = CGRectMake(self.menuWidth, 0.0,
                                screenSize.width - self.menuWidth - self.trayWidth, screenSize.height);
     
-    CGFloat ghostWidth = gameRect.size.width - kPJWDoubleGhostInset;
+    CGFloat doubleGhostInset = self.isLargerPieces ? kPJWDoubleGhostInsetSmall : kPJWDoubleGhostInsetBig;
+    
+    CGFloat ghostWidth = gameRect.size.width - doubleGhostInset;
     CGFloat ghostHeight = ghostWidth / 4 * 3;
     
-    if (ghostHeight > (screenSize.height - kPJWDoubleGhostInset)) {
-        ghostHeight = screenSize.height - kPJWDoubleGhostInset;
+    if (ghostHeight > (screenSize.height - doubleGhostInset)) {
+        ghostHeight = screenSize.height - doubleGhostInset;
         ghostWidth = ghostHeight * 4 / 3;
     }
     

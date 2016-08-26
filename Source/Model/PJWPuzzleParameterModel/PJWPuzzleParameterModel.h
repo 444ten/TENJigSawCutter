@@ -21,6 +21,7 @@
 @property (nonatomic, assign)   BOOL    ghostPresent;
 @property (nonatomic, assign)   BOOL    borderPresent;
 @property (nonatomic, assign)   BOOL    edgesPresent;
+@property (nonatomic, assign)   BOOL    isLargerPieces;
 
 @property (nonatomic, readonly) CGFloat widthOffset;
 @property (nonatomic, readonly) CGFloat heightOffset;

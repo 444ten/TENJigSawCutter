@@ -100,7 +100,6 @@
         }
     }
 
-    
     parameterModel.borderPresent = borderPresent;
 }
 
@@ -128,7 +127,7 @@
         }
         
         if (tileModel.linkedTileHashTable.count == 1) {
-            [self.view bringSubviewToFront:obj];
+            [self.gameView bringSubviewToFront:obj];
             
             UIEdgeInsets bezierInsets = tileModel.bezierInsets;
             CGFloat left  = bezierInsets.left;
@@ -178,11 +177,19 @@
     [self presentViewController:vc animated:YES completion:nil];
 }
 
+- (IBAction)onLarger:(UIButton *)sender {
+    PJWPuzzleParameterModel *parameterModel = self.parameterModel;
+
+    parameterModel.isLargerPieces = !parameterModel.isLargerPieces;
+    
+    [self startGame];
+}
+
 #pragma mark -
 #pragma mark Private Methods
 
 - (void)startGame {
-    [self setupParameterModel];
+    [self.parameterModel setup];
     
     [self setupGhostGamePuzzleView];
     
@@ -193,11 +200,6 @@
     
     [self.edgesButton setTitle:[PJWPuzzleParameterModel sharedInstance].edgesPresent ? @"View All" : @"Edges"
                       forState:UIControlStateNormal];
-}
-
-- (void)setupParameterModel {
-    
-    [self.parameterModel setup];
 }
 
 - (void)setupGhostGamePuzzleView {
@@ -269,14 +271,14 @@
         return;
     }
 
-    UIView *rootView = self.view;
+    UIView *gameView = self.gameView;
     NSSet *linkedSet = recognizerView.tileModel.linkedTileHashTable.setRepresentation;
     
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         [self bringSegmentToFront:recognizerView];
     }
     
-    CGPoint offset = [recognizer translationInView:rootView];
+    CGPoint offset = [recognizer translationInView:gameView];
     CGPoint center = recognizerView.center;
 
     PJWSegmentModel *segmentModel = [[PJWSegmentModel alloc] initWithTileView:recognizerView];
@@ -315,8 +317,7 @@
                                  obj.center.y + offset.y);
     }];
 
-    
-    [recognizer setTranslation:CGPointZero inView:rootView];
+    [recognizer setTranslation:CGPointZero inView:gameView];
 
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         [self moveToNeighborTileView:recognizerView];
@@ -334,26 +335,24 @@
 
 - (void)moveToBorderTileView:(PJWTileImageView *)tileView {
     @synchronized (tileView) {
-        UIView *rootView = self.view;
+        UIView *gameView = self.gameView;
         UIImageView *ghostView = self.ghostView;
         CGFloat deltaGhost = self.parameterModel.deltaGhost;
         PJWTileModel *tileModel = tileView.tileModel;
 
         if (tileModel.isSide) {
-            CGPoint center = [rootView convertPoint:tileView.center toView:ghostView];
+            CGPoint center = [gameView convertPoint:tileView.center toView:ghostView];
             CGPoint anchor = CGPointFromValue(tileModel.anchor);
             
             if (fabs(center.x - anchor.x) < deltaGhost && fabs(center.y - anchor.y) < deltaGhost ) {
-                CGPoint targetPoint = [ghostView convertPoint:anchor toView:rootView];
+                CGPoint targetPoint = [ghostView convertPoint:anchor toView:gameView];
                 
                 [tileView moveSegmentToPoint:targetPoint animated:YES];
                 
                 for (PJWTileImageView *obj in tileModel.linkedTileHashTable) {
                     obj.tileModel.isBorderFix = YES;
-                    [rootView sendSubviewToBack:obj];
+                    [gameView sendSubviewToBack:obj];
                 }
-                
-                [rootView sendSubviewToBack:ghostView];
             }
         }
     }
@@ -361,26 +360,24 @@
 
 - (void)moveToGhostTileView:(PJWTileImageView *)tileView {
     @synchronized (tileView) {
-        UIView *rootView = self.view;
+        UIView *gameView = self.gameView;
         UIImageView *ghostView = self.ghostView;
         CGFloat deltaGhost = self.parameterModel.deltaGhost;
         PJWTileModel *tileModel = tileView.tileModel;
         
-        CGPoint center = [rootView convertPoint:tileView.center toView:ghostView];
+        CGPoint center = [gameView convertPoint:tileView.center toView:ghostView];
         
         CGPoint anchor = CGPointFromValue(tileModel.anchor);
         
         if (fabs(center.x - anchor.x) < deltaGhost && fabs(center.y - anchor.y) < deltaGhost ) {
-            CGPoint targetPoint = [ghostView convertPoint:anchor toView:rootView];
+            CGPoint targetPoint = [ghostView convertPoint:anchor toView:gameView];
             
             [tileView moveSegmentToPoint:targetPoint animated:YES];
             
             for (PJWTileImageView *obj in tileModel.linkedTileHashTable) {
                 obj.tileModel.isGhostFix = YES;
-                [rootView sendSubviewToBack:obj];
+                [gameView sendSubviewToBack:obj];
             }
-            
-            [rootView sendSubviewToBack:ghostView];
         }
     }
 }
@@ -494,7 +491,7 @@
 }
 
 - (void)longPressAction:(UILongPressGestureRecognizer *)recognizer {
-    [self.view bringSubviewToFront:recognizer.view];
+    [self.gameView bringSubviewToFront:recognizer.view];
 }
 
 @end
