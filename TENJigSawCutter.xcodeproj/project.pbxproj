@@ -25,11 +25,11 @@
 		76C9BBEB1D59DDCD0067833D /* 900x700.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76C9BBEA1D59DDCD0067833D /* 900x700.jpg */; };
 		76C9BBEF1D5B227E0067833D /* PJWOffsetCornerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBEE1D5B227E0067833D /* PJWOffsetCornerModel.m */; };
 		76C9BBF41D5B46260067833D /* PJWPuzzleParameterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBF31D5B46260067833D /* PJWPuzzleParameterModel.m */; };
-		76C9BBF81D5C442F0067833D /* PJWOffsetSideModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BBF71D5C442F0067833D /* PJWOffsetSideModel.m */; };
 		76C9BC011D5C754F0067833D /* PJWTileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BC001D5C754F0067833D /* PJWTileImageView.m */; };
 		76C9BC051D5DC91C0067833D /* PJWCropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BC041D5DC91C0067833D /* PJWCropImageView.m */; };
 		76C9BC091D619B7F0067833D /* PJWTilesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BC081D619B7F0067833D /* PJWTilesModel.m */; };
 		76C9BC0D1D619BD40067833D /* PJWTileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C9BC0C1D619BD40067833D /* PJWTileModel.m */; };
+		76F92BA91D742BFD008D4447 /* PJWOffsetSideModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F92BA81D742BFD008D4447 /* PJWOffsetSideModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,8 +64,6 @@
 		76C9BBEE1D5B227E0067833D /* PJWOffsetCornerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWOffsetCornerModel.m; sourceTree = "<group>"; };
 		76C9BBF21D5B46260067833D /* PJWPuzzleParameterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWPuzzleParameterModel.h; sourceTree = "<group>"; };
 		76C9BBF31D5B46260067833D /* PJWPuzzleParameterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWPuzzleParameterModel.m; sourceTree = "<group>"; };
-		76C9BBF61D5C442F0067833D /* PJWOffsetSideModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWOffsetSideModel.h; sourceTree = "<group>"; };
-		76C9BBF71D5C442F0067833D /* PJWOffsetSideModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWOffsetSideModel.m; sourceTree = "<group>"; };
 		76C9BBFF1D5C754F0067833D /* PJWTileImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWTileImageView.h; sourceTree = "<group>"; };
 		76C9BC001D5C754F0067833D /* PJWTileImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWTileImageView.m; sourceTree = "<group>"; };
 		76C9BC031D5DC91C0067833D /* PJWCropImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWCropImageView.h; sourceTree = "<group>"; };
@@ -74,6 +72,8 @@
 		76C9BC081D619B7F0067833D /* PJWTilesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWTilesModel.m; sourceTree = "<group>"; };
 		76C9BC0B1D619BD40067833D /* PJWTileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWTileModel.h; sourceTree = "<group>"; };
 		76C9BC0C1D619BD40067833D /* PJWTileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWTileModel.m; sourceTree = "<group>"; };
+		76F92BA71D742BFD008D4447 /* PJWOffsetSideModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJWOffsetSideModel.h; sourceTree = "<group>"; };
+		76F92BA81D742BFD008D4447 /* PJWOffsetSideModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJWOffsetSideModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,13 +208,13 @@
 		76C9BBD91D58AA5A0067833D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				76F92BA61D742BFD008D4447 /* PJWOffsetSideModel */,
 				7682ED1C1D6AE92D00D4590F /* TENGCDObject */,
 				7682ED021D67376500D4590F /* PJWSegmentModel */,
 				76C9BC0A1D619BC50067833D /* PJWTileModel */,
 				76C9BC061D619B700067833D /* PJWTilesModel */,
 				76C9BBF11D5B46170067833D /* PJWPuzzleParameterModel */,
 				76C9BBEC1D5B223B0067833D /* PJWOffsetCornerModel */,
-				76C9BBF51D5C44050067833D /* PJWOffsetSideModel */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -245,16 +245,6 @@
 				76C9BBF31D5B46260067833D /* PJWPuzzleParameterModel.m */,
 			);
 			path = PJWPuzzleParameterModel;
-			sourceTree = "<group>";
-		};
-		76C9BBF51D5C44050067833D /* PJWOffsetSideModel */ = {
-			isa = PBXGroup;
-			children = (
-				76C9BBF61D5C442F0067833D /* PJWOffsetSideModel.h */,
-				76C9BBF71D5C442F0067833D /* PJWOffsetSideModel.m */,
-			);
-			name = PJWOffsetSideModel;
-			path = PJWPuzzleParameterModel/PJWOffsetSideModel;
 			sourceTree = "<group>";
 		};
 		76C9BBF91D5C747F0067833D /* UI */ = {
@@ -301,6 +291,15 @@
 				76C9BC0C1D619BD40067833D /* PJWTileModel.m */,
 			);
 			path = PJWTileModel;
+			sourceTree = "<group>";
+		};
+		76F92BA61D742BFD008D4447 /* PJWOffsetSideModel */ = {
+			isa = PBXGroup;
+			children = (
+				76F92BA71D742BFD008D4447 /* PJWOffsetSideModel.h */,
+				76F92BA81D742BFD008D4447 /* PJWOffsetSideModel.m */,
+			);
+			path = PJWOffsetSideModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -379,7 +378,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				76C9BBE91D59AD150067833D /* TENMacros.m in Sources */,
-				76C9BBF81D5C442F0067833D /* PJWOffsetSideModel.m in Sources */,
 				7650B2AE1D6DA38F002D4E94 /* PJWConstants.m in Sources */,
 				76C9BC051D5DC91C0067833D /* PJWCropImageView.m in Sources */,
 				7682ED1F1D6AE93B00D4590F /* TENGCDObject.m in Sources */,
@@ -392,6 +390,7 @@
 				76C9BBC21D5498820067833D /* AppDelegate.m in Sources */,
 				7682ED051D67377300D4590F /* PJWSegmentModel.m in Sources */,
 				76C9BBBF1D5498820067833D /* main.m in Sources */,
+				76F92BA91D742BFD008D4447 /* PJWOffsetSideModel.m in Sources */,
 				76C9BC011D5C754F0067833D /* PJWTileImageView.m in Sources */,
 				7642F82D1D6C69E4003799AD /* PJWOptionsViewController.m in Sources */,
 			);
